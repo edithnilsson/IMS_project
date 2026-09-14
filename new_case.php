@@ -1,6 +1,11 @@
 <?php
-//Insert data for a new case
-//
+/*Insert data for a new case
+
+For testing type in terminal:
+& "C:\MAMP\bin\php\php8.3.1\php.exe" -S localhost:xxxx (ex: 8080, 8000 etc)
+Type in browser:
+http://localhost:xxxx/new_case.php
+*/
 ?>
 
 <!DOCTYPE html>
@@ -29,12 +34,23 @@
 
     <form>
         <label for="pathogen">Pathogen:</label>
-        <select name="pathogen" id=pathogen">
-            <option value="">Select Pathogen</option>
-            <option value="staphylococcus_aureus">Staphylococcus aureus</option>
+        <input list="pathogen-options" id="pathogen" name="pathogen" autocomplete="off">
+        <datalist id="pathogen-options">
+            <option value="MRSA">
+            <option value="SARS-CoV-2">
+        </datalist>
+    </form>
+
+    
+    <form>
+        <label for="pathogen">Pathogen:</label>
+        <select name="pathogen" id="pathogen" autocomplete="off">
+            <option value="" disabled selected>Select Pathogen</option>
+            <option value="mrsa">MRSA</option>
             <option value="sars_cov_2">SARS-CoV-2</option>
         </select>
     </form>
+
 </body>
 
 </html>
