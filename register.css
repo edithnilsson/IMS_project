@@ -1,0 +1,32 @@
+/*
+Just messing around, change the design here :)
+*/
+
+.logo {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+.inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10%;
+    gap: 5px;
+}
+
+.button {
+    border-color: #f25d5d;
+    font-size: 20px;
+    border-radius: 12px;
+    box-shadow: 24px;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+    background-color: #f25d5d;
+    color:whitesmoke;
+}
