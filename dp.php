@@ -1,16 +1,21 @@
 <?php
-// code from L4
+/*
+ Adjust MAMP settings to match your setup
+  MAMP > Preferences > Ports
+  Go to this webpage to see http://localhost/MAMP/?language=English and click on SQL for the correct passwords
+ */ 
+ 
 $servername = "localhost";
-# go to this webpage to see http://localhost/MAMP/?language=English and click on SQL for the corretc passwords
 $username = "root"; 
 $password = "root";
 $dbname = "code grading";
+$port = 3306;
+
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
 // Check connection
 if ($conn->connect_error) {
-die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
-# Commenting if successful, not necessary after a while
-#echo " <br> Connected successfully :)";
 ?>
