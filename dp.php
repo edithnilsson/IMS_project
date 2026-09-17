@@ -9,7 +9,7 @@ $servername = "localhost";
 $username = "root"; 
 $password = "root";
 $dbname = "code grading";
-$port = 8888;
+$port = 3306;
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
