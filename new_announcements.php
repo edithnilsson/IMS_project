@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Europe/Stockholm');
+
 $servername = "localhost:3333";
 $username = "root";
 $password = "root";
