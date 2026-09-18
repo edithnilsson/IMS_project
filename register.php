@@ -12,24 +12,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-/*    if ($username === "" || $password === "") {
-        echo "Username or password can't be empty";
-    }elseif{
-        //Username cant contain spaces
-    }elseif{
-        //Username can only contain letters/numbers/underscores/punctuation
-    }elseif{
-        //Password needs to be atleast 6(?) chars and include a letter + number + special character(?)
-    }else{
+    if (empty($username)){
+        echo "Username can not be empty";
+    } elseif (empty($password)){
+        echo "Password can not be empty";
+    } elseif (str_contains($username, " ")){
+        echo "Username can not contain spaces";
+    } elseif (
+        strlen($password) <8 || //At least 8 characters long
+        !preg_match("/[A-Z]/", $password) || //At least 1 uppercase letter
+        !preg_match("/[a-z]/", $password) || //At least 1 lowercase letter
+        !preg_match("/[0-9]/", $password) || //At least 1 number
+        !preg_match('/[^A-Za-z0-9]/', $password) //At least 1 special character
+    ) {
+        echo "Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character";
+    } else {
         //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+           // Just for testing, echos can be removed
+        echo "Username: " . $username; 
+        echo "Password: " . $password;
+        echo "Hashed password: " . $hashed_password;
     }
-*/
-
-    // Just for testing, echos can be removed
-    echo "Username: " . $username; 
-    echo "Password: " . $password;
-    echo "Hashed password: " . $hashed_password;
 
  /* Add this codeblock when database is up + change to the database name
 
@@ -61,9 +65,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <img src="images/logo.png" class="logo">
 
     <form action="register.php" method="POST" class="inputs">
-        Username: <input type="text" name="username" required>
+        Username: <input type="text" name="username">
 
-        Password: <input type=password name="password" required>
+        Password: <input type=password name="password">
 
         <input type="submit" value="Register" class="button">
     </form>
