@@ -5,7 +5,7 @@ password_hash() creates a new password hash with a random generated salt
 ID and the hashed password will be stored in the database
 */
 
-//require "dp.php";
+//require "db.php";
 
 //If form was submitted (user registered), insert username and password into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
