@@ -12,8 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+/*    if ($username === "" || $password === "") {
+        echo "Username or password can't be empty";
+    }elseif{
+        //Username cant contain spaces
+    }elseif{
+        //Username can only contain letters/numbers/underscores/punctuation
+    }elseif{
+        //Password needs to be atleast 6(?) chars and include a letter + number + special character(?)
+    }else{
+        //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    }
+*/
 
     // Just for testing, echos can be removed
     echo "Username: " . $username; 
@@ -42,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="css/register.css">
     <title>InfecTractious Register</title>
 </head>
 <body>
