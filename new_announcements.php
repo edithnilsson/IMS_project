@@ -80,7 +80,9 @@ if (!$pathogen_result) {
     <div class="page">
 
         <div class="logo">
-            <img src="Pictures/Logo.png" alt="Logo">
+            <a href="homepage.php">
+                <img src="Pictures/Logo.png" alt="Logo">
+            </a>
         </div>
 
 

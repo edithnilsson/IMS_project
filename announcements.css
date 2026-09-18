@@ -29,7 +29,7 @@ body {
 
 /* logo */
 
-.logo img {
+.logo a img {
     display: block;
     width: 350px;
     height: auto;
@@ -40,6 +40,10 @@ body {
     border: 2px solid #519bd2;
 }
 
+.logo a {
+    display: inline-block;
+    line-height: 0;
+}
 
 /* announcement header and the text area */
 
