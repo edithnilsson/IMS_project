@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Username can not be empty";
     } elseif (empty($password)){
         echo "Password can not be empty";
-    } elseif (str_contains($username, " ")){
-        echo "Username can not contain spaces";
+    } elseif (!preg_match("/^[A-Za-z0-9]+$/", $username)){ // ^ marks start of string, $ marks end of string, + go through the string one index at a time
+        echo "Username can only contain letters and numbers";
     } elseif (
         strlen($password) <8 || //At least 8 characters long
         !preg_match("/[A-Z]/", $password) || //At least 1 uppercase letter
