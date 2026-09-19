@@ -47,12 +47,12 @@ body {
 
 /* announcement header and the text area */
 
-.announcement {
+.message {
     width: 100%;
     margin-bottom: 15px;
 }
 
-.announcement h3 {
+.message h3 {
     margin-top: 0;
     margin-bottom: 2px;
     font-family: 'Shrikhand';
@@ -105,9 +105,44 @@ textarea {
 
 /* actual inputs (dropdown boxes, the date area, threat, icon) */
 
-/* select elements (pathogen, ward) and the date element */
+/* dropdown pathogen and ward */
 
-.input-row select,
+.choices {
+    width: 150px !important;
+    margin: 0 !important;
+}
+
+.choices__placeholder {
+    color: black !important;
+    opacity: 1 !important;
+}
+
+.choices__inner {
+    width: 150px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    background: linear-gradient(90deg, #cdffd8, #94d9ff) !important;
+    border-radius: 10px !important;
+    border: 2px solid #545454 !important;
+    min-height: auto !important;
+}
+
+.choices.is-open .choices__placeholder {
+    display: none;
+}
+
+.choices__list--dropdown .choices__list {
+    max-height: 150px !important;
+    overflow-y: auto !important;
+}
+
+.choices__list--dropdown .choices__item {
+    white-space: nowrap !important;
+}
+
+/* date element */
+
 .input-row input[type="date"] {
     width: 150px;
     box-sizing: border-box;

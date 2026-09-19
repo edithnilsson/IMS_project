@@ -17,33 +17,39 @@ if (mysqli_connect_error()) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $severity = $_POST['severity'];
+    // Fetch data from POST request
     $pathogen_id = $_POST['pathogen'];
     $department_id = $_POST['department'];
+    $severity = $_POST['severity'];
     $warning_date = $_POST['warning_date'];
-    $announcement = $_POST['announcement'];
+    $message = $_POST['message'];
     $icon = $_POST['icon'];
 
     //Temporary value for now but actually will need to log whoever is logged in
-    $user_id = 1;
+    $user_id = '550e8400-e29b-41d4-a716-446655440001';
 
-    $sql = "INSERT INTO Warning 
-        (user_id, pathogen_id, department_id, warning_severity_level, warning_date, warning_message, warning_icon)
-        VALUES
-        ('$user_id', '$pathogen_id', '$department_id', '$severity', '$warning_date', '$announcement', '$icon')";
+    $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon)
+    VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?)";
 
-    if (mysqli_query($link, $sql)) {
+    $stmt = $link->prepare($sql);
+
+    $stmt->bind_param("siiissi", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon);
+
+    $result = $stmt->execute();
+
+    if ($result) {
         echo "<script>alert('Warning created successfully!');</script>";
     } else {
-        echo "<script>alert('Error creating warning: " . mysqli_error($link) . "');</script>";
+        echo "<script>alert('Error creating warning: " . $stmt->error . "');</script>";
     }
+
+    $stmt->close();
 }
 
 
 //Get departments for the dropdown
 
 $sql = "SELECT department_id, department_name FROM Department";
-
 $dept_result = mysqli_query($link, $sql);
 
 if (!$dept_result) {
@@ -51,26 +57,27 @@ if (!$dept_result) {
 }
 
 
+
 //Get pathogens for the dropdown
 
 $sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
-
 $pathogen_result = mysqli_query($link, $sql);
 
 if (!$pathogen_result) {
     die("Error getting pathogens: " . mysqli_error($link));
 }
-
 ?>
 
 <!DOCTYPE html>
+
 <html>
 
 <head>
 
     <title>Create Warning</title>
 
-    <link rel="stylesheet" href="./announcements.css?v=2">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+    <link rel="stylesheet" href="./announcements.css">
 
 </head>
 
@@ -80,24 +87,22 @@ if (!$pathogen_result) {
     <img class="top-decoration" src="Pictures/virus_tr_nobg.png" alt="">
 
     <div class="page">
-
         <div class="logo">
             <a href="homepage.php">
                 <img src="Pictures/Logo.png" alt="Logo">
             </a>
         </div>
 
-
         <form method="POST" action="">
 
             <!-- ANNOUNCEMENT AREA -->
 
-            <div class="announcement">
+            <div class="message">
 
                 <h3>Write announcement</h3>
 
                 <textarea
-                    name="announcement"
+                    name="message"
                     placeholder="Write the announcement here..."
                     required
                 ></textarea>
@@ -116,48 +121,41 @@ if (!$pathogen_result) {
 
                         <h3>Pathogen</h3>
 
-                        <select name="pathogen" required>
+                        <select name="pathogen" id="pathogen" required>
 
                             <option value="" hidden>
                                 Select pathogen
                             </option>
 
                             <?php
-
                             while ($row = mysqli_fetch_assoc($pathogen_result)) {
-
                                 echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
-
                             }
-
                             ?>
 
                         </select>
+
                     </div>
 
                     <div class="input-row">
 
                         <h3>Ward</h3>
 
-                        <select name="department" required>
+                        <select name="department" id="department" required>
 
                             <option value="" hidden>
                                 Select ward
                             </option>
 
                             <?php
-
                             while ($row = mysqli_fetch_assoc($dept_result)) {
-
                                 echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] . "</option>";
-
                             }
-
                             ?>
 
                         </select>
-                    </div>
 
+                    </div>
 
                     <div class="input-row">
 
@@ -172,8 +170,8 @@ if (!$pathogen_result) {
                         >
 
                     </div>
-                </div>
 
+                </div>
 
                 <!-- SECOND SECTION (THREAT AND ICONS) -->
 
@@ -198,7 +196,6 @@ if (!$pathogen_result) {
 
                             </label>
 
-
                             <label>
 
                                 <input
@@ -211,7 +208,6 @@ if (!$pathogen_result) {
 
                             </label>
 
-
                             <label>
 
                                 <input
@@ -223,7 +219,9 @@ if (!$pathogen_result) {
                                 <span class="bubble red"></span>
 
                             </label>
+
                         </div>
+
                     </div>
 
 
@@ -258,9 +256,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-
                                     <img src="images/icon1.png">
-
                                 </span>
 
                             </label>
@@ -275,9 +271,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-
                                     <img src="images/icon2.png">
-
                                 </span>
 
                             </label>
@@ -292,9 +286,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-
                                     <img src="images/icon3.png">
-
                                 </span>
 
                             </label>
@@ -309,9 +301,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-
                                     <img src="images/icon4.png">
-
                                 </span>
 
                             </label>
@@ -326,9 +316,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-
                                     <img src="images/icon5.png">
-
                                 </span>
 
                             </label>
@@ -338,7 +326,6 @@ if (!$pathogen_result) {
                     </div>
 
                 </div>
-
 
                 <!-- THIRD SECTION (BUTTON) -->
 
@@ -355,6 +342,32 @@ if (!$pathogen_result) {
         </form>
 
     </div>
+
+    <!-- choices.js script for the searchable dropdown of pathogen and ward -->
+
+    <!-- https://github.com/Choices-js/Choices#setup -->
+
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+    <script>
+
+        const pathogenSelect = new Choices('#pathogen', {
+            searchEnabled: true,
+            searchPlaceholderValue: 'Select pathogen',
+            itemSelectText: '',
+            searchChoices: true,
+            fuseOptions: {threshold: 0}
+        });
+
+        const departmentSelect = new Choices('#department', {
+        searchEnabled: true,
+        searchPlaceholderValue: 'Select ward',
+        itemSelectText: '',
+        searchChoices: true,
+        fuseOptions: {threshold: 0}
+    });
+
+    </script>
 
 </body>
 
