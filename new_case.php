@@ -16,41 +16,216 @@ http://localhost:xxxx/new_case.php
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfecTracker</title>
     <style>
+        :root {
+            --primary-blue: #35a0e1;
+            --input-bg-blue: #e2ecf9;
+            --dark-blue: #3a7ca5;
+            --light-blue-bg: #e6f0fa;
+            --input-bg-green: #e2f2e5;
+            --text-color: #1a1a1a;
+        }
+
         img {
             display: block;
             margin: auto;
         }
+    /* --- Main Content --- */
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+            z-index: 10;
+        }
 
         h1 {
+            font-family: 'Shrikhand';
+            font-style: italic;
+            font-weight: 800;
+            color: var(--primary-blue);
+            font-size: 35px;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }   
+        
+    /* --- Form Layout --- */
+        .form-grid {
+            display: grid;
+            grid-template-columns: auto 1fr auto 1fr;
+            gap: 20px 15px;
+            align-items: center;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+    
+    /* Placeholder styles for the small icons */
+        .icon-placeholder {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+        }
+            /* Input Styling */
+        input[type="text"], select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #7a9cba;
+            border-radius: 4px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 0.95rem;
+            box-shadow: inset 1px 1px 3px rgba(0,0,0,0.1);
+            outline: none;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 5px rgba(88, 155, 212, 0.5);
+        }
+
+        /* Specific Input Backgrounds based on image */
+        .input-green {
+            background-color: var(--input-bg-green);
+        }
+
+        .input-blue {
+            background-color: var(--input-bg-blue);
+        }
+
+    /* Date specific styling */
+        .date-group {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .date-group input {
             text-align: center;
+            padding: 8px 5px;
+        }
+        
+        .date-group .day { width: 50px; }
+        .date-group .month { width: 90px; }
+        .date-group .year { width: 70px; }
+
+        /* Custom Dropdown Arrow */
+        .select-wrapper {
+            position: relative;
+        }
+        
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: #333;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            padding-right: 30px;
+        }
+
+        /* --- Submit Button --- */
+        .submit-btn {
+            grid-column: 1 / -1;
+            justify-self: center;
+            margin-top: 40px;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 40px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--dark-blue);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
         }
     </style>
 </head>
 
-<body>
-    <img src="placeholder.png" width="600" height="300" class="top-logo">
+<!-- Main Content Area -->
+    <main>
+        <img src="Pictures\Logo.png" width="600" height="300" class="top-logo">
 
-    <h1>Log a Case</h1>
+        <h1>Log a Case</h1>
 
-    <form>
-        <label for="pathogen">Pathogen:</label>
-        <input list="pathogen-options" id="pathogen" name="pathogen" autocomplete="off">
-        <datalist id="pathogen-options">
-            <option value="MRSA">
-            <option value="SARS-CoV-2">
-        </datalist>
-    </form>
+        <form class="form-grid">
+            
+            <!-- Row 1: Pathogen & Patient ID -->
+            <label class="form-label" for="pathogen">
+                Pathogen 
+                <span class="icon-placeholder">🦠</span> <!-- Replace with icon image -->
+            </label>
+            <div class="select-wrapper">
+                <select id="pathogen" class="input-green">
+                    <option value="" disabled selected>Select Pathogen</option>
+                    <option value="covid">COVID-19</option>
+                    <option value="flu">Influenza</option>
+                </select>
+            </div>
 
-    
-    <form>
-        <label for="pathogen">Pathogen:</label>
-        <select name="pathogen" id="pathogen" autocomplete="off">
-            <option value="" disabled selected>Select Pathogen</option>
-            <option value="mrsa">MRSA</option>
-            <option value="sars_cov_2">SARS-CoV-2</option>
-        </select>
-    </form>
+            <label class="form-label" for="patient-id">
+                Patient ID 
+                <span class="icon-placeholder">👤</span> <!-- Replace with icon image -->
+            </label>
+            <input type="text" id="patient-id" class="input-blue" placeholder="Enter Patient ID">
+
+            <!-- Row 2: Date & Ward -->
+            <label class="form-label">
+                Date 
+                <span class="icon-placeholder">📅</span> <!-- Replace with icon image -->
+            </label>
+            <div class="date-group">
+                <input type="text" class="input-green day" value="17" aria-label="Day">
+                <input type="text" class="input-green month" value="October" aria-label="Month">
+                <input type="text" class="input-green year" value="2026" aria-label="Year">
+            </div>
+
+            <label class="form-label" for="ward">
+                Ward 
+                <span class="icon-placeholder">🏥</span> <!-- Replace with icon image -->
+            </label>
+            <div class="select-wrapper">
+                <select id="ward" class="input-green">
+                    <option value="" disabled selected>Select Ward</option>
+                    <option value="icu">ICU</option>
+                    <option value="general">General</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </main>
 
 </body>
+</html>
 
 </html>
