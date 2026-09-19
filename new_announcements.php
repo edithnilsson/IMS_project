@@ -202,7 +202,7 @@ if (!$pathogen_result) {
                                     type="radio"
                                     name="severity"
                                     value="2"
-                                >
+                                    >
 
                                 <span class="bubble yellow"></span>
 
@@ -360,12 +360,12 @@ if (!$pathogen_result) {
         });
 
         const departmentSelect = new Choices('#department', {
-        searchEnabled: true,
-        searchPlaceholderValue: 'Select ward',
-        itemSelectText: '',
-        searchChoices: true,
-        fuseOptions: {threshold: 0}
-    });
+            searchEnabled: true,
+            searchPlaceholderValue: 'Select ward',
+            itemSelectText: '',
+            searchChoices: true,
+            fuseOptions: {threshold: 0}
+        });
 
     </script>
 
