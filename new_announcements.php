@@ -345,7 +345,7 @@ if (!$pathogen_result) {
 
     <!-- choices.js script for the searchable dropdown of pathogen and ward -->
 
-    <!-- https://github.com/Choices-js/Choices#setup -->
+    <!-- https://github.com/Ch  oices-js/Choices#setup -->
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
