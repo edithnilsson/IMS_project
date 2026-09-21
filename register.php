@@ -11,11 +11,26 @@ ID and the hashed password will be stored in the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
+    $first_name = $_POST["first_name"];
+    $last_name = $_POST["last_name"];
+    $email = $_POST["email"];
+    $phone_number = $_POST["phone_number"];
+    $role = $_POST["role"];
 
     if (empty($username)){
-        echo "Username can not be empty";
+        echo "<script>alert('Username can not be empty');</script>";
     } elseif (empty($password)){
         echo "Password can not be empty";
+    } elseif (empty($first_name)) {
+        echo "First Name can not be empty";
+    } elseif (empty($last_name)){
+        echo "Last Name can not be empty";  
+    } elseif (empty($email)) {
+        echo "Email can not be empty";
+    } elseif (empty($phone_number)) {
+        echo "Phone number can not be empty";
+    } elseif (empty($role)) {
+        echo "Role can not be empty";
     } elseif (!preg_match("/^[A-Za-z0-9]+$/", $username)){ // ^ marks start of string, $ marks end of string, + go through the string one index at a time
         echo "Username can only contain letters and numbers";
     } elseif (
@@ -29,25 +44,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-           // Just for testing, echos can be removed
-        echo "Username: " . $username; 
-        echo "Password: " . $password;
-        echo "Hashed password: " . $hashed_password;
+
+        $sql = "INSERT into System_user (user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role) values (?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role);
+        $result = $stmt->execute();
+
+        if ($result) {
+            echo "Successfully registered";
+        } else {
+            echo "Registration failed";
+        }
     }
-
- /* Add this codeblock when database is up + change to the database name
-
-    $sql = "INSERT into PLACE_dbname_HOLDER (username, password) values (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $hashed_password);
-    $result = $stmt->execute();
-
-    if ($result) {
-        echo "Successfully registered";
-    } else {
-        echo "Registration failed";
-    }
-*/
 }
 
 ?>
@@ -58,19 +66,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/register.css">
-    <title>InfecTractious Register</title>
+    <title>InfTraction Register</title>
 </head>
 <body>
+    <!-- Logo and background -->
+    <img src="/Pictures/logo_nobackground.png" class= "logo">
 
-    <img src="images/logo.png" class="logo">
+    <a href="index.php" class="login-link">Already Registered? Click here to login</a>
 
+    <!-- Register form --> 
     <form action="register.php" method="POST" class="inputs">
-        Username: <input type="text" name="username">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username">
 
-        Password: <input type=password name="password">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password">
+
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" placeholder="Enter first name">
+
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" placeholder="Enter last name">
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter email">
+
+        <label for="phone_number">Phone Number</label>
+        <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
+
+        <label for="role">Role</label>
+        <select id="role" name="role">
+            <option value="doctor">Doctor</option>
+            <option value="epidemiologist">Epidemiologist</option>
+        </select>
 
         <input type="submit" value="Register" class="button">
     </form>
 
 </body>
 </html>
+
+

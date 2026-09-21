@@ -1,32 +1,53 @@
 /*
 Just messing around, change the design here :)
 */
+body {
+    background-image: linear-gradient(90deg, #cdffd8, #94d9ff);
+    margin: 0;
+}
 
-.logo {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-        }
+img.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    height: auto;
+}
 
 .inputs {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 10%;
-    gap: 5px;
+    width: 400px;
+    margin: 20px auto;
+}
+
+.inputs label {
+    display: block;
+    margin-bottom: 4px;
+}
+
+input, select {
+    width: 300px; 
+    height: 35px; 
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    margin-bottom: 15px;
 }
 
 .button {
-    border-color: #f25d5d;
-    font-size: 20px;
-    border-radius: 12px;
-    box-shadow: 24px;
-    transition-duration: 0.4s;
+    display: block;
+    width: 150px;
+    background-color: #519bd2;
+    color: #004aad;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid #004aad;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 6px 16px;
 }
 
-.button:hover {
-    background-color: #f25d5d;
-    color:whitesmoke;
+.login-link {
+    display: block;
+    text-align: center;
+    margin-top: 15px;
 }
