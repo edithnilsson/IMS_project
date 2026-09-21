@@ -11,7 +11,37 @@
 
 
 ## About 
- THis should include a description of the project, list technologies that we used and the feautres that are covered.
+ ## About
+
+InfTraction is a web-based infection surveillance system designed to support the logging and monitoring of infections within a hospital. The system aims to support the early detection of unusual patterns and increases in infection rates, allowing healthcare professionals to investigate potential causes and take preventive measures before a larger outbreak occurs.
+
+Doctors can report infection cases using structured forms, including information such as patient ID, pathogen, date, ward and additional comments. The reported information is stored in a relational database and used to display statistics and visualisations of infection trends.
+Epidemiologists can monitor reported infection data, identify unusual patterns and, when necessary, create announcements to inform hospital staff and communicate warnings and preventative measures.
+The current system focuses on infection reporting, monitoring and communication within a hospital environment.
+
+### Technologies Used
+
+- HTML
+- CSS
+- JavaScript
+- PHP
+- MySQL
+- Apache
+- MAMP
+- Git and GitHub
+
+### Features
+
+- User registration and login
+- Infection case reporting
+- Patient ID, pathogen, date and ward selection
+- Additional comments when reporting a case
+- Storage of infection data in a relational database
+- Infection statistics and visualisations
+- Monitoring of infection trends
+- Identification of unusual increases in infection cases
+- Epidemiologist announcements
+- Communication of warnings and preventative measures
 
 ## Quick Start Guide
 
