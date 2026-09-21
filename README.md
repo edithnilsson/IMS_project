@@ -47,7 +47,21 @@ The current system focuses on infection reporting, monitoring and communication 
 
 ### Prerequisites & Dependencies
 
+Before running InfTraction, the following software is required:
+- MAMP
+- PHP
+- MySQL
+- Web browser
+- Git
+
 ### Installation
+
+1. Clone the repository from GitHub.
+2. Place the project folder in the MAMP `htdocs` directory.
+3. Start Apache and MySQL using MAMP.
+4. Create the required MySQL database.
+5. Import the database schema into MySQL.
+6. Open the project in a web browser through the local MAMP server.
 
 ## Repository Architecture
 ### Frontend
@@ -76,6 +90,9 @@ After epidemiologists have identified an unusual increase in infections or other
 	Having access to virtual machines, databases and storage is a good idea not only for testing purposes but also for detecting bugs in different operating systems. In this case Google Cloud will be considered.
 **Deployment**
 	Tasks and other deployment parts of the project will follow 5 phases consisting of planning, development, testing, deploying and monitoring. 
+
+### Database
+
 
 
 ### API endpoints
