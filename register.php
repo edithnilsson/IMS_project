@@ -65,42 +65,54 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/register.css">
     <title>InfTraction Register</title>
+        <link rel="stylesheet" href="css/register.css">
+        
+
 </head>
 <body>
     <!-- Logo and background -->
     <img src="/Pictures/logo_nobackground.png" class= "logo">
+    <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
 
     <a href="index.php" class="login-link">Already Registered? Click here to login</a>
 
     <!-- Register form --> 
     <form action="register.php" method="POST" class="inputs">
-        <label for="username">Username</label>
+        <div class=column>
+        <label for="username"><img src="/Pictures/user.icon-bgremoved.png" class="icon"></label>
         <input type="text" id="username" name="username" placeholder="Enter username">
 
-        <label for="password">Password</label>
+        <label for="password"><img src="/Pictures/password.icon-bgremoved.png" class="icon"></label>
         <input type="password" id="password" name="password" placeholder="Enter password">
+        </div>
 
-        <label for="first_name">First Name</label>
+        <div class=column>
+        <label for="first_name"></label>
         <input type="text" id="first_name" name="first_name" placeholder="Enter first name">
-
-        <label for="last_name">Last Name</label>
+        <label for="last_name"></label>
         <input type="text" id="last_name" name="last_name" placeholder="Enter last name">
-
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" placeholder="Enter email">
-
-        <label for="phone_number">Phone Number</label>
-        <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
-
-        <label for="role">Role</label>
+        <label for="role"></label>
         <select id="role" name="role">
+            <option disabled selected value="Choose a Role">Choose a Role</option>
             <option value="doctor">Doctor</option>
             <option value="epidemiologist">Epidemiologist</option>
+
         </select>
+        </div>
+
+        <div class=column>
+        <label for="email"><img src="/Pictures/mail.icon-bgremoved.png" class="icon"></label>
+        <input type="email" id="email" name="email" placeholder="Enter email">
+
+        <label for="phone_number"><img src="/Pictures/phone.icon-bgremoved.png" class="icon"></label>
+
+        <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
+
+    
 
         <input type="submit" value="Register" class="button">
+        </div>
     </form>
 
 </body>

@@ -12,7 +12,8 @@ img.icon {
 
 .login_form {
     width: 400px; 
-    margin: 20px auto;}
+    margin: 20px auto;
+}
 
 .input-row { 
     display: flex; 
@@ -35,4 +36,25 @@ input {
     border-radius: 10px;
     cursor: pointer;
     float: right;
+}
+
+.login_button:hover {
+    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
+}
+
+.register_button {
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    color: #52c2ff;
+    padding: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #84d3fd;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin: 75px auto 0 auto; 
+}
+
+.register_button:hover {
+    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
 }

@@ -28,7 +28,7 @@
 </form>
 
 <button type="button" onclick="location.href='register.php'" class="register_button">
-        New User
+        Or sign up here
     </button>
 
 </body>

@@ -256,7 +256,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="images/icon1.png">
+                                    <img src="Pictures/icon1.png">
                                 </span>
 
                             </label>
@@ -271,7 +271,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="images/icon2.png">
+                                    <img src="Pictures/icon2.png">
                                 </span>
 
                             </label>
@@ -286,7 +286,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="images/icon3.png">
+                                    <img src="Pictures/icon3.png">
                                 </span>
 
                             </label>
@@ -301,7 +301,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="images/icon4.png">
+                                    <img src="Pictures/icon4.png">
                                 </span>
 
                             </label>
@@ -316,7 +316,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="images/icon5.png">
+                                    <img src="Pictures/icon5.png">
                                 </span>
 
                             </label>
