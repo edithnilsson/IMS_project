@@ -61,7 +61,7 @@ button {
         <input type= "password" id="pwd" name="pwd" placeholder= "Enter Password">
     </div>  
  
-    <button type="button" onclick="location.href='/Pictures/hp_design.php'">
+    <button type="button" onclick="location.href='homepage.php'">
         Log in
     </button>
 
