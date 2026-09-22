@@ -5,19 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <style>
-        .button {
-            color: black;
-            padding: 20px 10px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 30px;
-            margin: 6px 4px;
-            border-radius: 8px;
-            cursor: pointer;
-            }
-    </style>
+    <link rel="stylesheet" href="css/homepage.css">
 
 </head>
 <body>

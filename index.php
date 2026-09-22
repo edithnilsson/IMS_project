@@ -5,7 +5,8 @@
 
 <head>
     <title>InfTraction</title>
-            <link rel="stylesheet" href="css/index.css">
+
+            <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body style="background-image: linear-gradient(90deg, #cdffd8, #94d9ff);">
@@ -21,10 +22,13 @@
         <input type= "password" id="pwd" name="pwd" placeholder= "Enter Password">
     </div>  
  
-    <button type="button" onclick="location.href='homepage.php'">
+    <button type="button" onclick="location.href='homepage.php'" class="login_button">
         Log in
     </button>
-
 </form>
+
+<button type="button" onclick="location.href='register.php'" class="register_button">
+        New User
+    </button>
 
 </body>
