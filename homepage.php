@@ -22,8 +22,7 @@
 </head>
 <body>
     <!-- Inserts the logo picture  -->
-    <img src="Pictures/Logo.png" alt="Logo" width="300" height="133" >
-    
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
     <!-- Log out button  -->
     <a href="index.php" style="position: absolute; top: 20px; right: 20px; text-decoration: none;">
     <button style="padding: 8px 16px; background-color: #f44336; color: white; border: none; border-radius: 4px; font-weight: bold;">
