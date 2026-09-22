@@ -5,47 +5,7 @@
 
 <head>
     <title>InfTraction</title>
-    <style>
-img.logo {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: auto;}
-
-img.icon {
-    display: block;
-    float: left;
-    margin-left: auto;
-    margin-right: auto;}
-
-.login_form {
-    width: 400px; 
-    margin: 20px auto;}
-
-.input-row { 
-    display: flex; 
-    align-items: center; 
-    margin-bottom: 15px;}
-
-input {
-    width: 300px; 
-    height: 35px; 
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #004aad}
-
-button {
-    background-color: #519bd2;
-    color: #004aad;
-    font-size: 22px;
-    font-weight: bold;
-    border: 2px solid #004aad;
-    border-radius: 10px;
-    cursor: pointer;
-    float: right;
-}
-
-</style>
+            <link rel="stylesheet" href="css/index.css">
 </head>
 
 <body style="background-image: linear-gradient(90deg, #cdffd8, #94d9ff);">
