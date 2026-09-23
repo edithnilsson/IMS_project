@@ -9,7 +9,7 @@ $link = mysqli_connect($servername, $username, $password, $dbname);
 if (mysqli_connect_error()) {
     die("Connection failed: " . mysqli_connect_error());
 }
-// $warning_date = $warning_date . ' ' . date('H:i:s'); 
+
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
 ORDER BY mwarning_date DESC   

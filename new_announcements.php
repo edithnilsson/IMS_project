@@ -22,8 +22,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $department_id = $_POST['department'];
     $severity = $_POST['severity'];
     $warning_date = $_POST['warning_date'];
+    // add timestamp 
+    $warning_date = $warning_date . ' ' . date('H:i:s'); 
+
     $message = $_POST['message'];
     $icon = $_POST['icon'];
+
+    
 
     //Temporary value for now but actually will need to log whoever is logged in
     $user_id = '550e8400-e29b-41d4-a716-446655440001';
