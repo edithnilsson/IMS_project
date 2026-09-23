@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (empty($phone_number)) {
         echo "<script>alert('Phone number can not be empty');</script>";
     } elseif (empty($role)) {
-        echo "<script>alert('Role can not be empty');</script>";
+        echo "<script>alert('Please pick a role');</script>";
     } elseif (!preg_match("/^[A-Za-z0-9]+$/", $username)){ // ^ marks start of string, $ marks end of string, + go through the string one index at a time
         echo "<script>alert('Username can only contain letters and numbers');</script>";
     } elseif (
@@ -83,22 +83,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <label for="username"><img src="/Pictures/user.icon-bgremoved.png" class="icon"></label>
                 <input type="text" id="username" name="username" placeholder="Enter username">
+                <span class="error_text" id="username_error"></span>
+
                 <label for="password"><img src="/Pictures/password.icon-bgremoved.png" class="icon"></label>
                 <input type="password" id="password" name="password" placeholder="Enter password">
+                <span class="error_text" id="password_error"></span>
             </div>
 
             <!-- Middle column -->
             <div class="column">
                 <label for="first_name"></label>
                 <input type="text" id="first_name" name="first_name" placeholder="Enter first name">
+                <span class="error_text" id="first_name_error"></span>
+
                 <label for="last_name"></label>
                 <input type="text" id="last_name" name="last_name" placeholder="Enter last name">
+                <span class="error_text" id="last_name_error"></span>
+
                 <label for="role"></label>
                 <select id="role" name="role">
-                    <option disabled selected value="Choose a Role">Choose a Role</option>
+                    <option value="">Choose a Role</option>
                     <option value="doctor">Doctor</option>
                     <option value="epidemiologist">Epidemiologist</option>
                 </select>
+                <span class="error_text" id="role_error"></span>
+
                 <input type="submit" value="Register" class="button">
             </div>
 
@@ -106,11 +115,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="column">
                 <label for="email"><img src="/Pictures/mail.icon-bgremoved.png" class="icon"></label>
                 <input type="email" id="email" name="email" placeholder="Enter email">
+                <span class="error_text" id="email_error"></span>
+
                 <label for="phone_number"><img src="/Pictures/phone.icon-bgremoved.png" class="icon"></label>
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
+                <span class="error_text" id="phone_number_error"></span>
+
             </div>
         </div>
     </form>
+
+    <script src="js/register.js"></script>
+
 </body>
 </html>
 
