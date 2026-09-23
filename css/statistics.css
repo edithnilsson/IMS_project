@@ -1,0 +1,142 @@
+img.logo {
+    position: absolute;
+    width: 30%; 
+    height:auto;
+    left: 35px;
+    top: 20px;
+    z-index: -1;
+}
+
+img.virus_bl{
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 25%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.virus_tr{
+    position:absolute;
+    top: 0px;
+    right: 0px;
+    width: 25%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.rings_br{
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 25%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.icon {
+    width: 40px; 
+    height: 40px;
+    object-fit: contain;
+    align-self: center;
+}
+
+img.graph {
+    width: 550px;
+    height: auto;
+    display:block;
+}
+
+html, body{
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.inputs {
+    width: 350px;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+input {
+    height: 35px; 
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    box-sizing: border-box;
+    
+}
+
+.column {
+    display:grid;
+    grid-template-columns: 50px auto;
+    gap: 15px;
+    align-items: center;
+}
+
+input, select {
+    width: 300px; 
+    height: 50px; 
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    margin-bottom: 15px;
+}
+
+.pathogen {
+        background: linear-gradient(90deg, #cdffd8, #94d9ff);
+        width: 300px;
+}
+
+.startdate {
+        background: linear-gradient(90deg, #cdffd8, #94d9ff);
+        width: 140px;
+}
+.enddate {
+        background: linear-gradient(90deg, #94d9ff, #cdffd8);
+        width: 140px;
+}
+
+.date-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+}
+
+.search_button {
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    color: #004aad;
+    padding: 5px;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid #004aad;
+    border-radius: 10px;
+    cursor: pointer;
+    display: block;
+    margin-left: 220px;
+}
+
+.search_button:hover {
+    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
+}
+

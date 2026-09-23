@@ -9,7 +9,7 @@
             <link rel="stylesheet" href="css/login.css">
 </head>
 
-<body style="background-image: linear-gradient(90deg, #cdffd8, #94d9ff);">
+<body style="background: linear-gradient(90deg, #cdffd8, #94d9ff);">
 <img src="/Pictures/logo_nobackground.png" alt="Logo home screen" style="width: 75%;height:auto;" class= "logo">
 
 <form action="/login.code.php" method ="post" class= "login_form">
