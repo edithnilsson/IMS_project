@@ -1,3 +1,43 @@
+<?php
+$servername = "localhost:3333";
+$username = "root";
+$password = "root";
+$dbname = "infection_tracking";
+
+$link = mysqli_connect($servername, $username, $password, $dbname);
+
+if (mysqli_connect_error()) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+// $warning_date = $warning_date . ' ' . date('H:i:s'); 
+$sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
+FROM Manual_warning 
+ORDER BY mwarning_date DESC   
+LIMIT 3";
+$result = $link->query($sql);
+
+
+$mwarning_severity_level = [
+    1 =>"green",
+    2 =>"yellow",
+    3 =>"red"
+];
+
+$mwarning_icon = [
+    1 => "mask", 
+    2 => "hands",
+    3 => "warning", 
+    4 => "needle",
+    5 => "home"
+]
+
+
+
+?>
+
+
+
+<!-- HTML starts -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,129 +45,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="css/homepage.css">
+<!-- links to the css file -->
+    <link rel="stylesheet" href="test.css">
 
 </head>
 <body>
-    <!-- Inserts the logo picture  -->
-    <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
-    <!-- Log out button  -->
-    <a href="index.php" style="position: absolute; top: 20px; right: 20px; text-decoration: none;">
-    <button style="padding: 8px 16px; background-color: #f44336; color: white; border: none; border-radius: 4px; font-weight: bold;">
+
+
+ <!-- Inserts the logo picture  -->
+ <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
+ 
+ <!-- Log out button  -->
+ <a href="index.php">
+    <button class="logout_button logout_button_hover">
         Log out
     </button>
-    </a>
 
+<!--sets boarders for webpages-->
+<div class="container">
 
-
-    
-    <div style= "        
-        width: 1100px; 
-        height: 500px; 
-        display: flex;
-        gap: 60px;
-        align-items: center; 
-        padding: 20px 20px;
-        box-sizing: border-box;
-        margin: 0 auto 20px auto;">
-
+    <div class="dashboard">
         <!-- Log a case button -->  
         <a href="new_case.php" style="text-decoration: none;">
-            <button class="button">
+            <button class="logcase_button">
             <b>Log a Case</b><br> 
             Click here</button>
         </a>
 
         <!-- Placeholder for graph -->     
         <img src="Pictures/Graph_placeholder.png" alt="Logo" width="750" height="453" >
+     </div>
 
 
-    </div>
 
-
-<!-- Announcement block -->  
-<!-- Once the database is up and running use if and else to choose color, symbol and so on! -->  
-<div 
-    style= "width: 1100px; margin: 0 auto 20px auto;">
-    <h1>Announcements</h1>
-     <!--  GENERAL NOTE  -->
-    <div 
-        style="
-        background-color: #88cc00;
-        width: 1100px; 
-        height: 100px; 
-        border-radius: 8px;
-        display: flex;
-        gap: 30px;
-        align-items: center; 
-        padding: 20px 20px;
-        box-sizing: border-box;">
-
-        <!--  symbol -->
-        <span
-            style="
-            font-size: 70px;
-            line-height: 1;" >
-            &#9786;
-        </span>
-
-        <!--  message -->
-        <span> Just wash your hands and you will be fine! </span>
-    </div>
-    <br>
-
-    <!--  MEDIUM THREAT  -->
-    <div 
-        style="
-        background-color: #ffff00;
-        width: 1100px; 
-        height: 100px; 
-        border-radius: 8px;
-        display: flex;
-        gap: 30px;
-        align-items: center; 
-        padding: 20px 20px;
-        box-sizing: border-box;">
-    
-        <!--  symbol -->
-        <span
-            style="
-            font-size: 70px;
-            line-height: 1;" >
-            &#9888;
-        </span>
-
-        <!--  message -->
-        <span> Medium threat level!</span>
-    </div>
-    <br>
-
-    <!--  WARNING! SERIOUS THREAT  -->
-    <div 
-            style="
-            background-color: #ff5050;
-            width: 1100px; 
-            height: 100px; 
-            border-radius: 8px;
-            display: flex;
-            gap: 30px;
-            align-items: center; 
-            padding: 20px 20px;
-            box-sizing: border-box;">
-
-        <!-- symbol-->
-            <span
-                style="
-                font-size: 120px;
-                line-height: 1;" >
-                &#9763;
+    <div> 
+         <!-- loads the annoucements from database-->
+        <?php while ($row = $result->fetch_assoc()): ?>
+        
+        <!-- Creates an container for the annoucement based on its threat level  -->
+        <div class="announcement announcement-<?php echo $mwarning_severity_level[$row['mwarning_severity_level']]; ?>">
+             
+        
+        <!-- Inserts the chosen icon-->
+            <span 
+                class= "icon icon-<?php echo $mwarning_icon[$row['mwarning_icon']]; ?>">
             </span>
             
-        <!--  message -->
-            <span> Just wash your hands and you will be fine! </span>
-    </div>
-</div>
+        <!-- Writes the message-->
+            <?php echo ($row['mwarning_message']); ?>
 
+        <!-- Writes out the date and time-->
+            <span class="date">
+                <?php echo ($row['mwarning_date']); ?>
+            </span>
+
+        
+        </div>
+        <br>
+
+        <?php endwhile; ?>
+
+    </div>
+
+
+</div>
 
 </body>
 </html>
