@@ -1,0 +1,111 @@
+img.logo {
+  display: block;
+  width: 40%;
+  height:auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;}
+
+img.virus_bl{
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 22%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.rings_br{
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 25%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.virus_tr{
+        position:absolute;
+        top: 0px;
+        right: 0px;
+        width: 22%; 
+        height: auto;
+        }
+
+
+.hCase {
+    font-family: 'Shrikhand';
+    font-style: italic;
+    font-weight: 900;
+    color: #35a0e1;
+    font-size: 50px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    justify-self: center;
+}
+
+.inputs {
+    width: 60%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.form-column label {
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.form-row {
+    display: grid;
+    grid-template-columns: 130px 300px;
+    column-gap: 15px;
+    align-items: center;
+}
+
+input, select {
+    width: 300px; 
+    height: 50px; 
+    font-size: 20px;
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+}
+
+.comments input{
+    width: 450px; 
+}
+.submit-btn {
+    width: 30% !important;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    color: #545454;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    border: 2px solid #545454;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: auto;
+    padding: 10px;
+    padding-bottom: 10px;
+    align-self: end;
+}
+
+.submit-btn:hover {
+    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
+}
