@@ -45,7 +45,9 @@ input {
     height: 35px; 
     font-size: 16px;
     border-radius: 5px;
-    border: 1px solid #004aad}
+    border: 1px solid #004aad
+}
+
 .column {
     display:grid;
     grid-template-columns: 50px 300px;
@@ -64,6 +66,12 @@ input {
     padding: 10px;
 }
 
+.align_columns {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 60px;
+}
 
 .inputs label {
     display: block;
@@ -107,4 +115,19 @@ input, select {
     text-align: center;
     margin-top: 15px;
     margin-bottom: 25px;
+}
+
+.red_border {
+    border-color: red !important;
+    border-width: 2px !important;
+}
+
+.error_text {
+    grid-column: 1 / -1;
+    display: block;
+    color: red;
+    font-size: 15px;
+    margin-top: -27px;
+    margin-bottom: 10px;
+    padding-left: 70px;
 }

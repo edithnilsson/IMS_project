@@ -1,17 +1,115 @@
+.container{
+    max-width: 1300px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
-.button {
-    color: black;
-    padding: 20px 10px;
-    text-align: center;
+/* Logout button */
+
+.logout_button{
+    /* position */
+    position: absolute;
+    top: 20px;
+    right: 20px;
     text-decoration: none;
-    display: inline-block;
-    font-size: 30px;
-    margin: 6px 4px;
+
+    /* style */
+    padding: 8px 16px; 
+    background-color: #f44336; 
+    color: white; 
+    border: none; 
+    border-radius: 4px; 
+    font-weight: bold;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
+    cursor: pointer;; 
+}
+.logout_button:hover{
+    background-color: #ea4a3f; 
+}
+
+/* DASHBOARD - log a case and statistics  */
+
+.logcase_button {
+    padding: 16px 32px;
+    font-size: 22px;
+    background-color: #f0f0f0;
+    color: black;
+    border: 2px solid #666;
     border-radius: 8px;
     cursor: pointer;
-    }
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15); 
+}
 
-/* 
-lägg till en button hover
-lägg till element för boxarna för announcements
-lägg till all CSS här */
+.logcase_button:hover{
+    background-color: #dddddd;
+}
+
+.dashboard{
+    max-width: 1200px;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    padding: 20px 20px;
+    box-sizing: border-box;
+    margin: 0 auto 20px auto;
+}
+
+/* ANNOUNCEMENTS */
+.announcement{
+    position: relative;
+    max-width: 1200px;
+    height: 100px; 
+    border-radius: 8px;
+    display: flex;
+    gap: 30px;
+    align-items: center; 
+    padding: 20px 20px;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15); 
+}
+
+.announcement-red{
+    background-color: #ff5050;
+}
+
+.announcement-yellow{
+    background-color: #ffff00;
+}
+
+.announcement-green{
+    background-color: #88cc00;
+}
+
+
+.icon{
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.icon-mask{
+    background-image:url(Pictures/mask_icon_bgremoved.png);
+}
+.icon-needle{
+    background-image:url(Pictures/needle_icon_removebg.png);
+}
+.icon-house{
+    background-image:url(Pictures/house_icon_removebg.png);
+}
+.icon-warning{
+    background-image:url(Pictures/warning_icon_removebg.png);
+}
+.icon-hands{
+    background-image:url(Pictures/hands_icon_removebg.png);
+}
+
+.date{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    text-decoration: none;
+}
