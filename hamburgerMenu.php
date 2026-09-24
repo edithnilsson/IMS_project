@@ -15,11 +15,11 @@
         <aside class="sidebar-card">
 
             <div class="sidebar-header">
-                <button class="hamburger" aria-label="Menu Button">
+                <a href="homepage.php" class="hamburger" aria-label="Back to Home">
                     <span></span>
                     <span></span>
                     <span></span>
-                </button>
+                </a>
 
                 <img src="images/Logo.png"
                      alt="InfTraction Logo"
