@@ -5,11 +5,11 @@
   Go to this webpage to see http://localhost/MAMP/?language=English and click on SQL for the correct passwords
  */ 
  
-$servername = "localhost";
+$servername = "127.0.0.1"; /* Currently this works because it forces the connection with TCP and later picks the variable port*/
 $username = "root"; 
 $password = "root";
-$dbname = "code grading";
-$port = 3306;
+$dbname = "infection_tracking";
+$port = 3333; /* This variable is not needed if you change servername for "localhost:3333" */ 
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
