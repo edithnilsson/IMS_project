@@ -5,7 +5,7 @@ password_hash() creates a new password hash with a random generated salt
 ID and the hashed password will be stored in the database
 */
 
-//require "config/db.php";
+require "config/db.php";
 
 //If form was submitted (user registered), insert username and password into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -44,14 +44,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        //Create fast hashed verification token. 
+        $verification_token = bin2hex(random_bytes(16));
+        $token_hash = hash("sha256", $verification_token);
 
-        $sql = "INSERT into System_user (user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role) values (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT into System_user (user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role);
+        $stmt->bind_param("ssssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role, $token_hash);
         $result = $stmt->execute();
 
         if ($result) {
-            echo "<script>alert('Successfully registered');</script>";
+            $mail = require "mailer.php";
+            $mail->addAddress($email); //Send to
+            $mail->Subject = "InfTraction Account Verification";
+
+            // Create verification link
+            $host = $_SERVER['HTTP_HOST'];  //Returns the Host header from the current request 
+            $verify_link = "http://$host/verify.php?token=" . $verification_token;
+
+            // Raw unhashed token goes into the link
+            //verify.php will hash and compare the token ithat is stored n the database
+            $mail->Body = "Click the link to verify your account: <a href=\"$verify_link\">$verify_link</a>";
+            
+            // Send email
+            $mail->send();
+            echo "<script>alert('Registered! Check your email to verify your account before logging in.');</script>";
+
         } else {
             echo "<script>alert('Registration failed');</script>";
         }
