@@ -85,7 +85,7 @@ mwarning_message TEXT NOT NULL,
 PRIMARY KEY (mwarning_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
 FOREIGN KEY (pathogen_id) REFERENCES Pathogen(pathogen_id),
-FOREIGN KEY (department_id) REFERENCES Department(department_id),
+FOREIGN KEY (department_id) REFERENCES Department(department_id)
 );
 
 CREATE TABLE Threshold (
