@@ -1,3 +1,29 @@
+<?php
+$servername = "127.0.0.1"; /* Currently this works because it forces the connection with TCP and later picks the variable port*/
+$username = "root"; 
+$password = "root";
+$dbname = "infection_tracking";
+$port = 3333; /* This variable is not needed if you change servername for "localhost:3333" */ 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// --- Load dropdown data -------------------------------------------------
+$pathogens = [];
+$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
+while ($row = $res->fetch_assoc()) $pathogens[] = $row;
+
+$departments = [];
+$res = $conn->query("SELECT department_id, department_name FROM Department ORDER BY department_name");
+while ($row = $res->fetch_assoc()) $departments[] = $row;
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,10 +51,13 @@
             </label>
 
             <div class="input">
-                <select id="pathogen">
+                <select id="pathogen" name="pathogen" required>
                     <option value="" disabled selected>Select Pathogen</option>
-                    <option value="covid">COVID-19</option>
-                    <option value="flu">Influenza</option>
+                    <?php foreach ($pathogens as $p): ?>
+                        <option value="<?= (int)$p['pathogen_id'] ?>">
+                            <?= htmlspecialchars($p['pathogen_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -51,10 +80,13 @@
             </label>
 
             <div>
-                <select id="ward">
+                <select id="ward" name="ward" required>
                     <option value="" disabled selected>Select Ward</option>
-                    <option value="icu">ICU</option>
-                    <option value="general">General</option>
+                    <?php foreach ($departments as $d): ?>
+                        <option value="<?= (int)$d['department_id'] ?>">
+                            <?= htmlspecialchars($d['department_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
