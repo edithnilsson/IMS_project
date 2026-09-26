@@ -21,7 +21,7 @@ $mail->Port = 587; //Gmail port
 
 // The sending account
 $mail->Username = "inftraction.noreply@gmail.com";
-$mail->Password = "rntj urvj elsh yhug"; // Generated app password from gmail
+$mail->Password = "changepassword"; // Generated app password from gmail
 
 // What recipients see as the sender
 $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
