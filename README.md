@@ -109,6 +109,18 @@ The database uses primary and foreign keys to establish relationships between th
 
 
 ### API endpoints
+
+The current version of InfTraction does not use a separate REST API. The PHP backend communicates directly with the MySQL database.
+
+- `index.php` – user login
+- `register.php` – user registration
+- `homepage.php` – displays the main dashboard
+- `new_case.php` – submits new infection cases
+- `statistics.php` – displays infection statistics
+- `new_announcements.php` – creates manual warnings/announcements
+- `login_processing.php` – processes login requests
+- `register_processing.php` – processes registration requests
+
 ### Environment Variables
 
 The application requires the following database configuration settings:
@@ -123,6 +135,8 @@ DB_PASSWORD=password;
 
 
 ### Versioning & Changelog
+
+The project is managed using Git and GitHub. Changes to the project are tracked through Git commits and branches.
 
 
 ## Deployment
