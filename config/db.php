@@ -8,8 +8,8 @@
 $servername = "localhost";
 $username = "root"; 
 $password = "root";
-$dbname = "code grading";
-$port = 3306;
+$dbname = "infection_tracking";
+$port = 3333;
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
