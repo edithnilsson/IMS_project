@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon)
     VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = $link->prepare($sql);
+    $stmt = $conn->prepare($sql);
 
     $stmt->bind_param("siiissi", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon);
 
@@ -46,10 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //Get departments for the dropdown
 
 $sql = "SELECT department_id, department_name FROM Department";
-$dept_result = mysqli_query($link, $sql);
+$dept_result = mysqli_query($conn, $sql);
 
 if (!$dept_result) {
-    die("Error getting departments: " . mysqli_error($link));
+    die("Error getting departments: " . mysqli_error($conn));
 }
 
 
@@ -57,10 +57,10 @@ if (!$dept_result) {
 //Get pathogens for the dropdown
 
 $sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
-$pathogen_result = mysqli_query($link, $sql);
+$pathogen_result = mysqli_query($conn, $sql);
 
 if (!$pathogen_result) {
-    die("Error getting pathogens: " . mysqli_error($link));
+    die("Error getting pathogens: " . mysqli_error($conn));
 }
 ?>
 
@@ -359,6 +359,6 @@ if (!$pathogen_result) {
 
 <?php
 
-mysqli_close($link);
+mysqli_close($conn);
 
 ?>
