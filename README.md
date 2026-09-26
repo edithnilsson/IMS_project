@@ -11,7 +11,6 @@
 
 
 ## About 
- ## About
 
 InfTraction is a web-based infection surveillance system designed to support the logging and monitoring of infections within a hospital. The system aims to support the early detection of unusual patterns and increases in infection rates, allowing healthcare professionals to investigate potential causes and take preventive measures before a larger outbreak occurs.
 
@@ -109,9 +108,20 @@ InfTraction uses MySQL as its relational database management system. The databas
 The database uses primary and foreign keys to establish relationships between the tables and organise the infection-related information. The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
 
 
-
 ### API endpoints
-### Environment variables
+### Environment Variables
+
+The application requires the following database configuration settings:
+
+
+DB_HOST=localhost
+DB_PORT=3333
+DB_NAME=infection_tracking
+DB_USER=username
+DB_PASSWORD=password;
+
+
+
 ### Versioning & Changelog
 
 
