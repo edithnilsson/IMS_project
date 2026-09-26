@@ -1,20 +1,16 @@
 <?php
-$servername = "localhost:3333";
-$username = "root";
-$password = "root";
-$dbname = "infection_tracking";
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'epidemiologist', 'admin']);
 
-$link = mysqli_connect($servername, $username, $password, $dbname);
-
-if (mysqli_connect_error()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require "config/db.php";
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
 ORDER BY mwarning_date DESC   
 LIMIT 3";
-$result = $link->query($sql);
+
+$result = $conn->query($sql);
 
 
 $mwarning_severity_level = [
@@ -105,9 +101,6 @@ $mwarning_icon = [
 
         <?php endwhile; ?>
 
-        <span 
-                class= "test">
-        </span> 
     </div>
 
 

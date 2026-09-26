@@ -1,8 +1,9 @@
 <?php
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'admin']);
 
 date_default_timezone_set('Europe/Stockholm');
-
-session_start();
 
 require_once 'config/db.php';
 

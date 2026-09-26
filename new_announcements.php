@@ -1,10 +1,12 @@
 <?php
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['epidemiologist', 'admin']);
 
 date_default_timezone_set('Europe/Stockholm');
 
-session_start();
-
 require_once 'config/db.php';
+
 
 //only process the submission after the form has been submitted (if) and then insert it into the database
 
