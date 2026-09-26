@@ -1,10 +1,17 @@
+/* Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+
 img.logo {
   display: block;
-  width: 40%;
+  width: 25% !important;
   height:auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;}
+  margin-top: 60px;
+}
 
 img.virus_bl{
     position:absolute;
@@ -25,13 +32,15 @@ img.rings_br{
 }
 
 img.virus_tr{
-        position:absolute;
-        top: 0px;
-        right: 0px;
-        width: 22%; 
-        height: auto;
-        }
+    position:absolute;
+    top: 0px;
+    right: 0px;
+    width: 22%; 
+    height: auto;
+}
 
+
+/* Case heading */
 
 .hCase {
     font-family: 'Shrikhand';
@@ -43,6 +52,9 @@ img.virus_tr{
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     justify-self: center;
 }
+
+
+/* Form */
 
 .inputs {
     width: 60%;
@@ -61,13 +73,13 @@ img.virus_tr{
 }
 
 .form-column label {
+    font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     margin: 0;
     display: flex;
     align-items: center;
     gap: 5px;
 }
-
 
 .form-row {
     display: grid;
@@ -79,20 +91,33 @@ img.virus_tr{
 input, select {
     width: 300px; 
     height: 50px; 
-    font-size: 20px;
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
     border-radius: 5px;
     border: 1px solid #004aad;
     margin-bottom: 15px;
     background: linear-gradient(90deg, #94d9ff, #cdffd8);
 }
 
-.comments input{
-    width: 450px; 
+.comments textarea {
+    width: 450px;
+    height: 100px;
+    resize: vertical;
+    padding: 10px;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: black;
 }
+
 .submit-btn {
     width: 30% !important;
     background: linear-gradient(90deg, #94d9ff, #cdffd8);
     color: #545454;
+    font-family: 'Open Sans', sans-serif;
     font-size: 30px;
     font-weight: bold;
     display: flex;
@@ -107,5 +132,48 @@ input, select {
 }
 
 .submit-btn:hover {
-    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
+    opacity: 0.9;
+    transform: scale(1.05);
+    background: linear-gradient(270deg, #94d9ff, #cdffd8);
+}
+
+
+/* Choices.js dropdown styling */
+
+.choices {
+    width: 300px !important;
+    margin: 0 0 15px 0 !important;
+}
+
+.choices__placeholder {
+    color: black !important;
+    opacity: 1 !important;
+}
+
+.choices__inner {
+    width: 300px !important;
+    height: 50px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8) !important;
+    border-radius: 5px !important;
+    border: 1px solid #004aad !important;
+    min-height: auto !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+}
+
+.choices.is-open .choices__placeholder {
+    display: none;
+}
+
+.choices__list--dropdown .choices__list {
+    max-height: 150px !important;
+    overflow-y: auto !important;
+}
+
+.choices__list--dropdown .choices__item {
+    white-space: nowrap !important;
+    font-family: 'Open Sans', sans-serif !important;
 }
