@@ -113,12 +113,14 @@ The database uses primary and foreign keys to establish relationships between th
 
 The application requires the following database configuration settings:
 
-```env
+
 DB_HOST=localhost
 DB_PORT=3333
 DB_NAME=infection_tracking
 DB_USER=username
-DB_PASSWORD=password
+DB_PASSWORD=password;
+
+
 
 ### Versioning & Changelog
 
