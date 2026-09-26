@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $verification_token = bin2hex(random_bytes(16));
         $token_hash = hash("sha256", $verification_token);
 
-        $sql = "INSERT into System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT into System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash) values (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role, $token_hash);
         $result = $stmt->execute();
@@ -64,12 +64,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Raw unhashed token goes into the link
             //verify.php will hash and compare the token ithat is stored n the database
-            $mail->Body = "Click the link to verify your account: <a href=\"$verify_link\">$verify_link</a>";
-            
-            // Send email
-            $mail->send();
-            echo "<script>alert('Registered! Check your email to verify your account before logging in.');</script>";
+            $mail->Body = "
+                <img src=\"cid:logo\" width=\"700\">
+                <p>Click the link to verify your account:<br>
+                <a href=\"$verify_link\">$verify_link</a></p>";
 
+            // Send email
+            try {
+                $mail->send();
+                echo "<script>alert('Registered! Check your email to verify your account before logging in.');</script>";
+            } catch (Exception $e) {
+                echo "Mailer error: {$mail->ErrorInfo}";
+            }
         } else {
             echo "<script>alert('Registration failed');</script>";
         }
