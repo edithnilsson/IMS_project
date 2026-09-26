@@ -49,9 +49,10 @@ $mwarning_icon = [
 </head>
 <body>
 
+<?php include 'hamburger_menu.php'; ?>
 
  <!-- Inserts the logo picture  -->
- <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
+ <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" style="margin-left: 100px; >
  
  <!-- Log out button  -->
  <a href="index.php">

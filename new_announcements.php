@@ -77,6 +77,8 @@ if (!$pathogen_result) {
 
 <body>
 
+    <?php include 'hamburger_menu.php'; ?>
+
     <img class="bottom-decoration" src="Pictures/rings_br_nobg.png" alt="">
     <img class="top-decoration" src="Pictures/virus_tr_nobg.png" alt="">
 
