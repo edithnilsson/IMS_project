@@ -2,22 +2,16 @@
 
 date_default_timezone_set('Europe/Stockholm');
 
-$servername = "localhost:3333";
-$username = "root";
-$password = "root";
-$dbname = "infection_tracking";
+session_start();
 
-$link = mysqli_connect($servername, $username, $password, $dbname);
-
-if (mysqli_connect_error()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require_once 'config/db.php';
 
 //only process the submission after the form has been submitted (if) and then insert it into the database
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Fetch data from POST request
+    $user_id = $_SESSION['user_id'];
     $pathogen_id = $_POST['pathogen'];
     $department_id = $_POST['department'];
     $severity = $_POST['severity'];
@@ -28,15 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST['message'];
     $icon = $_POST['icon'];
 
-    
-
-    //Temporary value for now but actually will need to log whoever is logged in
-    $user_id = '550e8400-e29b-41d4-a716-446655440001';
-
     $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon)
     VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?)";
 
-    $stmt = $link->prepare($sql);
+    $stmt = $conn->prepare($sql);
 
     $stmt->bind_param("siiissi", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon);
 
@@ -55,10 +44,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 //Get departments for the dropdown
 
 $sql = "SELECT department_id, department_name FROM Department";
-$dept_result = mysqli_query($link, $sql);
+$dept_result = mysqli_query($conn, $sql);
 
 if (!$dept_result) {
-    die("Error getting departments: " . mysqli_error($link));
+    die("Error getting departments: " . mysqli_error($conn));
 }
 
 
@@ -66,10 +55,10 @@ if (!$dept_result) {
 //Get pathogens for the dropdown
 
 $sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
-$pathogen_result = mysqli_query($link, $sql);
+$pathogen_result = mysqli_query($conn, $sql);
 
 if (!$pathogen_result) {
-    die("Error getting pathogens: " . mysqli_error($link));
+    die("Error getting pathogens: " . mysqli_error($conn));
 }
 ?>
 
@@ -224,9 +213,7 @@ if (!$pathogen_result) {
                                 <span class="bubble red"></span>
 
                             </label>
-
                         </div>
-
                     </div>
 
 
@@ -323,34 +310,25 @@ if (!$pathogen_result) {
                                 <span class="icon">
                                     <img src="Pictures/icon5.png">
                                 </span>
-
                             </label>
-
                         </div>
-
                     </div>
-
                 </div>
 
                 <!-- THIRD SECTION (BUTTON) -->
 
                 <div class="button-section">
-
                     <button type="submit">
                         Submit
                     </button>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 
     <!-- choices.js script for the searchable dropdown of pathogen and ward -->
 
-    <!-- https://github.com/Ch  oices-js/Choices#setup -->
+    <!-- https://github.com/Choices-js/Choices#setup -->
 
     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
@@ -375,11 +353,10 @@ if (!$pathogen_result) {
     </script>
 
 </body>
-
 </html>
 
 <?php
 
-mysqli_close($link);
+mysqli_close($conn);
 
 ?>

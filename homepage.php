@@ -28,10 +28,8 @@ $mwarning_icon = [
     2 => "hands",
     3 => "warning", 
     4 => "needle",
-    5 => "home"
-]
-
-
+    5 => "house"
+];
 
 ?>
 
@@ -46,7 +44,7 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="css/homepage.css">
 
 </head>
 <body>
@@ -60,6 +58,7 @@ $mwarning_icon = [
     <button class="logout_button logout_button_hover">
         Log out
     </button>
+</a>
 
 <!--sets boarders for webpages-->
 <div class="container">
@@ -84,12 +83,13 @@ $mwarning_icon = [
         
         <!-- Creates an container for the annoucement based on its threat level  -->
         <div class="announcement announcement-<?php echo $mwarning_severity_level[$row['mwarning_severity_level']]; ?>">
-             
         
         <!-- Inserts the chosen icon-->
+        
+        
             <span 
                 class= "icon icon-<?php echo $mwarning_icon[$row['mwarning_icon']]; ?>">
-            </span>
+            </span> 
             
         <!-- Writes the message-->
             <?php echo ($row['mwarning_message']); ?>
@@ -105,6 +105,9 @@ $mwarning_icon = [
 
         <?php endwhile; ?>
 
+        <span 
+                class= "test">
+        </span> 
     </div>
 
 
