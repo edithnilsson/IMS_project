@@ -92,19 +92,19 @@
 }
 
 .icon-mask{
-    background-image:url(Pictures/mask_icon_bgremoved.png);
+    background-image: url('../Pictures/mask_icon_bgremoved.png');
 }
 .icon-needle{
-    background-image:url(Pictures/needle_icon_removebg.png);
+    background-image: url('../Pictures/needle_icon_removebg.png');
 }
 .icon-house{
-    background-image:url(Pictures/house_icon_removebg.png);
+    background-image: url('../Pictures/house_icon_removebg.png');
 }
 .icon-warning{
-    background-image:url(Pictures/warning_icon_removebg.png);
+    background-image: url('../Pictures/warning_icon_removebg.png');
 }
-.icon-hands{
-    background-image:url(Pictures/hands_icon_removebg.png);
+.icon-hands {
+    background-image: url('../Pictures/hands_icon_removebg.png');
 }
 
 .date{
@@ -113,3 +113,7 @@
     right: 10px;
     text-decoration: none;
 }
+
+
+.test{
+    background-image:url(Pictures/hands_icon_removebg.png)}
