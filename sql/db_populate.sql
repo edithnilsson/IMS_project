@@ -46,3 +46,7 @@ INSERT INTO System_user (user_id, user_username, user_password_hash, user_name, 
 VALUES
 ('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 'doctor'),
 ('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 'epidemiologist');
+
+
+INSERT INTO Patient (patient_age, patient_sex)
+VALUES (35, 'female');
