@@ -4,6 +4,18 @@ session_start();
 
 require "config/db.php";
 
+// Get CAPTCHA answer
+$captcha = $_POST['captcha'];
+
+// Check CAPTCHA
+if ($captcha !== $_SESSION['captcha_answer']) {
+    echo "<script>
+            alert('Incorrect CAPTCHA.');
+            window.location.href = 'index.php';
+          </script>";
+    exit();
+}
+
 // Get username and password from the login form
 $username = $_POST['user'];
 $password = $_POST['pwd'];
