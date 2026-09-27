@@ -151,7 +151,7 @@ DB_PASSWORD=password;
 The project is managed using Git and GitHub. Changes to the project are tracked through Git commits and branches.
 
 
-## Deployment
+### Deployment
 
 The application currently runs locally using Apache and MySQL through MAMP.
 
