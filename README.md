@@ -1,5 +1,9 @@
 # IMS_Project
 
+<p align="center">
+  <img src="Pictures/Logo.png" alt="InfTraction Logo" width="600">
+</p>
+
 
 ## Table of Contents
 -  [About](#about)
