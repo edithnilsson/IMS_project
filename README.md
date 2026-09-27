@@ -172,3 +172,10 @@ The application currently runs locally using Apache and MySQL through MAMP.
 Developed as part of the Information Management Systems course (1DL011) at Uppsala University for educational purposes.
 
 ## Authors
+
+- Manuel Borbón
+- Frida Engström
+- Edith Nilsson
+- Greta Petrenaite
+- Freddy Truong
+- Vaitheega Pria Gopalakrishnan
