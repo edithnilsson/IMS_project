@@ -2,7 +2,8 @@
 <?php
 session_start();
 
-// CAPTCHA
+## Captcha
+
 $characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
 
 $captcha = '';
@@ -12,6 +13,7 @@ for ($i = 0; $i < 5; $i++) {
 }
 
 $_SESSION['captcha_answer'] = $captcha;
+
 ?>
 
 <!DOCTYPE html>
@@ -41,7 +43,7 @@ $_SESSION['captcha_answer'] = $captcha;
              style="width: 50px; height:50px;" class="icon">
         <input type="password" id="pwd" name="pwd" placeholder="Enter Password">
     </div>
-    
+
     <div class="input-row captcha-row">
 
     <label class="captcha-label">
@@ -54,7 +56,11 @@ $_SESSION['captcha_answer'] = $captcha;
            placeholder="Enter CAPTCHA"
            required>
 
-       </div>
+          </div>
+    
+
+
+
 
     <button type="submit" class="login_button">
         Log in
