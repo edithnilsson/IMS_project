@@ -153,7 +153,22 @@ The project is managed using Git and GitHub. Changes to the project are tracked 
 
 ## Deployment
 
+The application currently runs locally using Apache and MySQL through MAMP.
+
+1. Clone or download the repository.
+2. Place the project folder inside the MAMP `htdocs` directory.
+3. Start the Apache and MySQL servers in MAMP.
+4. Create the `infection_tracking` database in MySQL.
+5. Import the required database schema.
+6. Configure the database connection in `config/db.php`.
+7. Open the application in a web browser using:
+
+   `http://localhost:3333/IMS_Project/`
+
+
 
 ## License
+
+Developed as part of the Information Management Systems course (1DL011) at Uppsala University for educational purposes.
 
 ## Authors
