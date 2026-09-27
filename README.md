@@ -90,6 +90,18 @@ After epidemiologists have identified an unusual increase in infections or other
 **Deployment**
 	Tasks and other deployment parts of the project will follow 5 phases consisting of planning, development, testing, deploying and monitoring. 
 
+### Security & Privacy Considerations
+
+- **Password Hashing:** User passwords are securely hashed using PHP's `password_hash()` function before being stored in the database. This means passwords are not stored as plain text.
+
+- **CAPTCHA:** A CAPTCHA is implemented on the login page to help prevent automated login attempts and bot activity.
+
+- **Data Minimization:** Direct patient names and personal identity numbers are not stored. The system uses an internal patient ID together with limited demographic information such as age and sex.
+
+- **Input Validation:** User input is validated before being processed. Structured dropdown menus are used for fields such as pathogens, wards and severity levels to reduce inconsistent data entry.
+
+- **Role-Based Access:** Different users have different responsibilities. Doctors can report infection cases, while epidemiologists can create official announcements and warnings.
+
 ### Database
 
 InfTraction uses MySQL as its relational database management system. The database consists of ten tables connected through primary and foreign keys.
@@ -140,6 +152,7 @@ The project is managed using Git and GitHub. Changes to the project are tracked 
 
 
 ## Deployment
+
 
 ## License
 
