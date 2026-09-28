@@ -47,6 +47,8 @@ if ($result->num_rows === 1) {
         // Store information about the logged-in user
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['user_role'] = $user['user_role'];
+        $_SESSION['last_activity'] = time();
+
 
         // Login successful
         header("Location: homepage.php");

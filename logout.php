@@ -3,7 +3,7 @@
 session_start();
 
 /*empty the array*/
-$_SESSION = array(); 
+session_unset(); 
 
 /*delete the session cookie*/
 if (ini_get("session.use_cookies")) {
@@ -15,7 +15,10 @@ if (ini_get("session.use_cookies")) {
 }
 
 
-/*delete the session cookie*/
-session_destroy()
+/*delete the session on the server*/
+session_destroy();
+
+header("Location: index.php");
+exit; 
 
 ?>

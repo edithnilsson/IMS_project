@@ -24,7 +24,7 @@
         <a href="new_announcements.php">Write Announcement</a>
     </nav>
 
-    <a href="index.php" class="sidebar-logout">
+    <a href="logout.php" class="sidebar-logout">
         Log Out
     </a>
 
