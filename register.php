@@ -72,7 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Send email
             try {
                 $mail->send();
-                echo "<script>alert('Registered! Check your email to verify your account before logging in.');</script>";
+                echo "<script>alert('Registered! Check your email to verify your account before logging in.');
+                window.location.href='index.php';</script>";
             } catch (Exception $e) {
                 echo "Mailer error: {$mail->ErrorInfo}";
             }
