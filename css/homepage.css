@@ -1,31 +1,27 @@
 .container{
-    max-width: 1300px;
     width: 100%;
     margin: 0 auto;
     padding: 0 20px;
+    position: relative;
 }
 
-/* Logout button */
+/* background */
 
-.logout_button{
-    /* position */
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    text-decoration: none;
-
-    /* style */
-    padding: 8px 16px; 
-    background-color: #f44336; 
-    color: white; 
-    border: none; 
-    border-radius: 4px; 
-    font-weight: bold;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.15);
-    cursor: pointer;; 
+img.virus_bl{
+    position:absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 22%; 
+    height: auto;
+    z-index: -1;
 }
-.logout_button:hover{
-    background-color: #ea4a3f; 
+
+img.virus_tr{
+    position:absolute;
+    top: 0px;
+    right: 0px;
+    width: 22%; 
+    height: auto;
 }
 
 /* DASHBOARD - log a case and statistics  */
@@ -33,7 +29,7 @@
 .logcase_button {
     padding: 16px 32px;
     font-size: 22px;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #d8fced 0%, #b3d2fe 100%);
     color: black;
     border: 2px solid #666;
     border-radius: 8px;
@@ -46,7 +42,7 @@
 }
 
 .dashboard{
-    max-width: 1200px;
+    max-width: 90%;
     width: 100%;
     height: auto;
     min-height: 300px;
@@ -59,10 +55,23 @@
 }
 
 /* ANNOUNCEMENTS */
+.header {
+    max-width: 90%;
+    height: 100px;
+    margin: 0 auto 0px auto;
+    display: flex;
+    align-items: center;   /* centrerar h1 vertikalt i boxen */
+}
+
+.header h1 {
+    margin: 0;   /* tar bort webbläsarens standardmarginal */
+}
+
 .announcement{
     position: relative;
-    max-width: 1200px;
+    max-width: 90%;
     height: 100px; 
+    margin: 0 auto 10px auto;
     border-radius: 8px;
     display: flex;
     gap: 30px;
@@ -74,14 +83,17 @@
 
 .announcement-red{
     background-color: #ff5050;
+    opacity: 90%;
 }
 
 .announcement-yellow{
     background-color: #ffff00;
+    opacity: 90%;
 }
 
 .announcement-green{
     background-color: #88cc00;
+    opacity: 90%;
 }
 
 
@@ -93,19 +105,19 @@
 }
 
 .icon-mask{
-    background-image:url(Pictures/mask_icon_bgremoved.png);
+    background-image: url('../Pictures/mask_icon_bgremoved.png');
 }
 .icon-needle{
-    background-image:url(Pictures/needle_icon_removebg.png);
+    background-image: url('../Pictures/needle_icon_removebg.png');
 }
 .icon-house{
-    background-image:url(Pictures/house_icon_removebg.png);
+    background-image: url('../Pictures/house_icon_removebg.png');
 }
 .icon-warning{
-    background-image:url(Pictures/warning_icon_removebg.png);
+    background-image: url('../Pictures/warning_icon_removebg.png');
 }
-.icon-hands{
-    background-image:url(Pictures/hands_icon_removebg.png);
+.icon-hands {
+    background-image: url('../Pictures/hands_icon_removebg.png');
 }
 
 .date{

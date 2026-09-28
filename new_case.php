@@ -29,10 +29,20 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
 
 <head>
     <title>InfecTracker</title>
+
     <link rel="stylesheet" href="css/cases.css">
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+    >
 </head>
+
 <body>
+
+    <?php include 'hamburger_menu.php'; ?>
 <div class="img">
+
     <img src="Pictures/Logo.png" class="logo">
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
@@ -41,13 +51,15 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
 
 <h1 class="hCase">Register a Case</h1>
 
-<form action method="POST" class="inputs">
+<form action="" method="POST" class="inputs">
+
     <div class="form-column">
 
         <div class="form-row">
+
             <label>
-                    Pathogen 
-                    <img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
+                Pathogen
+                <img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
             </label>
 
             <div class="input">
@@ -62,21 +74,26 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
             </div>
         </div>
 
+
         <div class="form-row">
+
             <label>
-                    Date/Time   
-                    <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+                Diagnosis Date
+                <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
             </label>
 
             <div>
-                <input type="datetime-local">
+                <input type="date" name="diagnosis_date" id="diagnosis-date" required
+                    max="<?php echo date('Y-m-d'); ?>"
+                >
             </div>
         </div>
 
         <div class="form-row">
+
             <label>
-                    Ward     
-                    <img src="/Pictures/ward.icon-bgremoved.png" class="icon">
+                Infection Date
+                <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
             </label>
 
             <div>
@@ -91,31 +108,97 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
             </div>
         </div>
     </div>
-    
+
+
     <div class="form-column">
 
         <div class="form-row">
+
             <label>
-                PatientID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
+                Patient ID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
             </label>
 
-            <input type="text" id="patient-id" placeholder="Enter Patient ID">
+            <input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
         </div>
 
-        <div>
-            <label class="label-inputs">
-                    
+        <div class="form-row">
+
+            <label>
+                Severity
             </label>
-            <div class="comments">
-                <input type="text" placeholder="Other Comments...">
+
+            <div> 
+                
+                <select name="severity" id="severity" required>
+
+                    <option value="" disabled selected>
+                        Select Severity
+                    </option>
+
+                    <?php
+                    while ($row = $severity_result->fetch_assoc()) {
+                        echo "<option value='" . $row['severity_id'] . "'>" . ucfirst($row['severity_name']) . "</option>";
+                    }
+                    ?>
+                </select>
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+        <div>
+
+            <label class="label-inputs"></label>
+
+            <div class="comments">
+
+                <textarea
+                    name="comments"
+                    placeholder="Other Comments..."
+                ></textarea>
+
+            </div>
+        </div>
 
 
+        <button type="submit" class="submit-btn">
+            Submit
+        </button>
     </div>
-
 </form>
 
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+<script>
+
+const pathogenSelect = new Choices('#pathogen', {
+    searchEnabled: true,
+    searchPlaceholderValue: 'Select pathogen',
+    itemSelectText: '',
+    searchChoices: true,
+    fuseOptions: {threshold: 0}
+});
+
+
+const departmentSelect = new Choices('#ward', {
+    searchEnabled: true,
+    searchPlaceholderValue: 'Select ward',
+    itemSelectText: '',
+    searchChoices: true,
+    fuseOptions: {threshold: 0}
+});
+
+
+const severitySelect = new Choices('#severity', {
+    searchEnabled: false,
+    itemSelectText: ''
+});
+
+</script>
+
+<?php
+
+$conn->close();
+
+?>
+
 </body>
+</html>

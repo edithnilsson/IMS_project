@@ -1,3 +1,10 @@
+<?php
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'epidemiologist', 'admin']);
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

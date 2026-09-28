@@ -5,7 +5,7 @@ password_hash() creates a new password hash with a random generated salt
 ID and the hashed password will be stored in the database
 */
 
-//require "config/db.php";
+require "config/db.php";
 
 //If form was submitted (user registered), insert username and password into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -45,7 +45,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //PASSWORD_DEFAULT uses bcrypt algo + generates random salt
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT into System_user (user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role) values (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role)
+        VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role);
         $result = $stmt->execute();

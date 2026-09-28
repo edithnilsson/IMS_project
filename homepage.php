@@ -1,20 +1,16 @@
 <?php
-$servername = "localhost:3333";
-$username = "root";
-$password = "root";
-$dbname = "infection_tracking";
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'epidemiologist', 'admin']);
 
-$link = mysqli_connect($servername, $username, $password, $dbname);
-
-if (mysqli_connect_error()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require "config/db.php";
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
 ORDER BY mwarning_date DESC   
 LIMIT 3";
-$result = $link->query($sql);
+
+$result = $conn->query($sql);
 
 
 $mwarning_severity_level = [
@@ -28,10 +24,8 @@ $mwarning_icon = [
     2 => "hands",
     3 => "warning", 
     4 => "needle",
-    5 => "home"
-]
-
-
+    5 => "house"
+];
 
 ?>
 
@@ -51,18 +45,21 @@ $mwarning_icon = [
 </head>
 <body>
 
+<?php include 'hamburger_menu.php'; ?>
 
  <!-- Inserts the logo picture  -->
- <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
  
- <!-- Log out button  -->
- <a href="index.php">
-    <button class="logout_button logout_button_hover">
-        Log out
-    </button>
+ 
+ 
+
 
 <!--sets boarders for webpages-->
 <div class="container">
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  >
+    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
+    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+
+
 
     <div class="dashboard">
         <!-- Log a case button -->  
@@ -81,17 +78,22 @@ $mwarning_icon = [
 
 
     <div> 
+        <div class='header header h1'>   
+            <h1> Announcements </h1>
+        </div>
+        
          <!-- loads the annoucements from database-->
         <?php while ($row = $result->fetch_assoc()): ?>
         
         <!-- Creates an container for the annoucement based on its threat level  -->
         <div class="announcement announcement-<?php echo $mwarning_severity_level[$row['mwarning_severity_level']]; ?>">
-             
         
         <!-- Inserts the chosen icon-->
+        
+        
             <span 
                 class= "icon icon-<?php echo $mwarning_icon[$row['mwarning_icon']]; ?>">
-            </span>
+            </span> 
             
         <!-- Writes the message-->
             <?php echo ($row['mwarning_message']); ?>

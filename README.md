@@ -1,5 +1,9 @@
 # IMS_Project
 
+<p align="center">
+  <img src="Pictures/Logo.png" alt="InfTraction Logo" width="600">
+</p>
+
 
 ## Table of Contents
 -  [About](#about)
@@ -11,7 +15,6 @@
 
 
 ## About 
- ## About
 
 InfTraction is a web-based infection surveillance system designed to support the logging and monitoring of infections within a hospital. The system aims to support the early detection of unusual patterns and increases in infection rates, allowing healthcare professionals to investigate potential causes and take preventive measures before a larger outbreak occurs.
 
@@ -91,6 +94,18 @@ After epidemiologists have identified an unusual increase in infections or other
 **Deployment**
 	Tasks and other deployment parts of the project will follow 5 phases consisting of planning, development, testing, deploying and monitoring. 
 
+### Security & Privacy Considerations
+
+- **Password Hashing:** User passwords are securely hashed using PHP's `password_hash()` function before being stored in the database. This means passwords are not stored as plain text.
+
+- **CAPTCHA:** A CAPTCHA is implemented on the login page to help prevent automated login attempts and bot activity.
+
+- **Data Minimization:** Direct patient names and personal identity numbers are not stored. The system uses an internal patient ID together with limited demographic information such as age and sex.
+
+- **Input Validation:** User input is validated before being processed. Structured dropdown menus are used for fields such as pathogens, wards and severity levels to reduce inconsistent data entry.
+
+- **Role-Based Access:** Different users have different responsibilities. Doctors can report infection cases, while epidemiologists can create official announcements and warnings.
+
 ### Database
 
 InfTraction uses MySQL as its relational database management system. The database consists of ten tables connected through primary and foreign keys.
@@ -109,14 +124,62 @@ InfTraction uses MySQL as its relational database management system. The databas
 The database uses primary and foreign keys to establish relationships between the tables and organise the infection-related information. The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
 
 
-
 ### API endpoints
-### Environment variables
+
+The current version of InfTraction does not use a separate REST API. The PHP backend communicates directly with the MySQL database.
+
+- `index.php` – user login
+- `register.php` – user registration
+- `homepage.php` – displays the main dashboard
+- `new_case.php` – submits new infection cases
+- `statistics.php` – displays infection statistics
+- `new_announcements.php` – creates manual warnings/announcements
+- `login_processing.php` – processes login requests
+- `register_processing.php` – processes registration requests
+
+### Environment Variables
+
+The application requires the following database configuration settings:
+
+
+DB_HOST=localhost
+DB_PORT=3333
+DB_NAME=infection_tracking
+DB_USER=username
+DB_PASSWORD=password;
+
+
+
 ### Versioning & Changelog
 
+The project is managed using Git and GitHub. Changes to the project are tracked through Git commits and branches.
 
-## Deployment
+
+### Deployment
+
+The application currently runs locally using Apache and MySQL through MAMP.
+
+1. Clone or download the repository.
+2. Place the project folder inside the MAMP `htdocs` directory.
+3. Start the Apache and MySQL servers in MAMP.
+4. Create the `infection_tracking` database in MySQL.
+5. Import the required database schema.
+6. Configure the database connection in `config/db.php`.
+7. Open the application in a web browser using:
+
+   `http://localhost:3333/IMS_Project/`
+
+
 
 ## License
 
+Developed as part of the Information Management Systems course (1DL011) at Uppsala University for educational purposes.
+
 ## Authors
+
+- Manuel Borbón
+- Frida Engström
+- Edith Nilsson
+- Greta Petrenaite
+- Freddy Truong
+- Vaitheega Pria Gopalakrishnan

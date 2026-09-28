@@ -8,22 +8,25 @@
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    padding: 80px;
-    background: #e6f5ff;
+    padding: 0px;
+    padding-left: 80px;
 }
 
-.bottom-decoration {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 420px;
+img.rings_br{
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    width: 30%; 
+    height: auto;
+    z-index: -1;
 }
 
-.top-decoration {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 400px;
+img.virus_tr{
+    position:absolute;
+    top: 0px;
+    right: 0px;
+    width: 22%; 
+    height: auto;
 }
 
 
@@ -31,18 +34,10 @@ body {
 
 .logo a img {
     display: block;
-    width: 350px;
+    width: 45%;
     height: auto;
-    margin-bottom: 30px;
-    background-color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: 2px solid #519bd2;
-}
-
-.logo a {
-    display: inline-block;
-    line-height: 0;
+    margin-bottom: 20px;
+    margin-top: 0px;
 }
 
 /* announcement header and the text area */
@@ -70,6 +65,7 @@ textarea {
     border-radius: 20px;
     border: 2px solid black;
     font-family: 'Open Sans', sans-serif;
+    font-size: 17px;
     color: black
 }
 
@@ -78,8 +74,8 @@ textarea {
 
 .three-sections {
     display: grid;
-    grid-template-columns: 280px 250px 400px;
-    column-gap: 10px;
+    grid-template-columns: 300px 250px 400px;
+    column-gap: 40px;
 }
 
 
@@ -166,8 +162,8 @@ textarea {
 }
 
 .bubble {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     display: inline-block;
     border: 2px solid transparent;
@@ -196,7 +192,7 @@ textarea {
 
 .icons {
     display: grid;
-    grid-template-columns: repeat(4, 40px);
+    grid-template-columns: repeat(3, 40px);
     gap: 15px;
     width: 180px;
     justify-content: center;
@@ -213,8 +209,9 @@ textarea {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 2px solid rgba(0, 0, 0, 0.3);
-    background-color: white
+    padding: 8px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .icons label:first-child .icon {
@@ -223,7 +220,7 @@ textarea {
 
 
 .icons input:checked + .icon {
-    border: 3px solid black;
+    border: 3px solid #169d53;
 }
 
 .icon img {
@@ -231,7 +228,18 @@ textarea {
     max-height: 100%;
 }
 
+.head-icon {
+    width: 30px;
+    height: 30px;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
 
+.head-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
 /* submit button */
 
 .button-section {
