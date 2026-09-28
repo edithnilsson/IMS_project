@@ -1,9 +1,5 @@
 <?php
-$servername = "127.0.0.1"; /* Currently this works because it forces the connection with TCP and later picks the variable port*/
-$username = "root"; 
-$password = "root";
-$dbname = "infection_tracking";
-$port = 3333; /* This variable is not needed if you change servername for "localhost:3333" */ 
+require "config/db.php";   
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
