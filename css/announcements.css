@@ -74,8 +74,8 @@ textarea {
 
 .three-sections {
     display: grid;
-    grid-template-columns: 300px 250px 400px;
-    column-gap: 40px;
+    grid-template-columns: 350px 250px 400px;
+    column-gap: 5px;
 }
 
 
@@ -104,7 +104,7 @@ textarea {
 /* dropdown pathogen and ward */
 
 .choices {
-    width: 150px !important;
+    width: 220px !important;
     margin: 0 !important;
 }
 
@@ -114,10 +114,10 @@ textarea {
 }
 
 .choices__inner {
-    width: 150px !important;
+    width: 220px !important;
     box-sizing: border-box !important;
     margin: 0 !important;
-    padding: 8px !important;
+    padding: 5px !important;
     background: linear-gradient(90deg, #cdffd8, #94d9ff) !important;
     border-radius: 10px !important;
     border: 2px solid #545454 !important;
@@ -140,7 +140,7 @@ textarea {
 /* date element */
 
 .input-row input[type="date"] {
-    width: 150px;
+    width: 220px;
     box-sizing: border-box;
     margin: 0;
     padding: 8px;
