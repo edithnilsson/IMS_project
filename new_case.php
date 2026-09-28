@@ -1,80 +1,26 @@
 <?php
-// checks if the user has permission to enter this page
-require "authenticate_check.php";
-access(['doctor', 'admin']);
+$servername = "127.0.0.1"; /* Currently this works because it forces the connection with TCP and later picks the variable port*/
+$username = "root"; 
+$password = "root";
+$dbname = "infection_tracking";
+$port = 3333; /* This variable is not needed if you change servername for "localhost:3333" */ 
 
-date_default_timezone_set('Europe/Stockholm');
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
 
-require_once 'config/db.php';
-
-// Get departments for the dropdown
-$sql = "SELECT department_id, department_name FROM Department";
-$department_result = $conn->query($sql);
-
-if (!$department_result) {
-    die("Error getting departments: " . $conn->error);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
-// Get pathogens for the dropdown
-$sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
-$pathogen_result = $conn->query($sql);
+// --- Load dropdown data -------------------------------------------------
+$pathogens = [];
+$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
+while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 
-if (!$pathogen_result) {
-    die("Error getting pathogens: " . $conn->error);
-}
-
-// Get severity levels for the dropdown
-$sql = "SELECT severity_id, severity_name FROM severity_level ORDER BY severity_id";
-$severity_result = $conn->query($sql);
-
-if (!$severity_result) {
-    die("Error getting severity levels: " . $conn->error);
-}
-
-// Register the case when the form is submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $user_id = $_SESSION['user_id'];
-    $pathogen_id = $_POST['pathogen'];
-    $diagnosis_date = $_POST['diagnosis_date'];
-    $infection_date = $_POST['infection_date'];
-    $department_id = $_POST['ward'];
-    $patient_id = $_POST['patient_id'];
-    $severity_id = $_POST['severity'];
-    $comments = $_POST['comments'];
-
-    // Insert the case into Infection_case
-    // MySQL generates the UUID for case_id
-    $sql = "INSERT INTO Infection_case
-            (case_id, user_id, department_id, pathogen_id, severity_id,
-             patient_id, case_diagnosis_date, case_infection_date, case_comments)
-            VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        die("Error preparing case registration: " . $conn->error);
-    }
-
-    $stmt->bind_param(
-        "siiiisss",
-        $user_id,
-        $department_id,
-        $pathogen_id,
-        $severity_id,
-        $patient_id,
-        $diagnosis_date,
-        $infection_date,
-        $comments
-    );
-
-    if ($stmt->execute()) {
-        echo "<script>alert('Case registered successfully!');</script>";
-    } else {
-        echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
-    }
-
-    $stmt->close();
-}
+$departments = [];
+$res = $conn->query("SELECT department_id, department_name FROM Department ORDER BY department_name");
+while ($row = $res->fetch_assoc()) $departments[] = $row;
 
 ?>
 
@@ -117,19 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </label>
 
             <div class="input">
-
-                <select name="pathogen" id="pathogen" required>
-
-                    <option value="" disabled selected>
-                        Select Pathogen
-                    </option>
-
-                    <?php
-                    while ($row = $pathogen_result->fetch_assoc()) {
-                        echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
-                    }
-                    ?>
-
+                <select id="pathogen" name="pathogen" required>
+                    <option value="" disabled selected>Select Pathogen</option>
+                    <?php foreach ($pathogens as $p): ?>
+                        <option value="<?= (int)$p['pathogen_id'] ?>">
+                            <?= htmlspecialchars($p['pathogen_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
@@ -157,34 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </label>
 
             <div>
-                <input type="date" name="infection_date" id="infection-date" required
-                    max="<?php echo date('Y-m-d'); ?>"
-                >
-            </div>
-
-        </div>
-
-        <div class="form-row">
-
-            <label>
-                Ward
-                <img src="/Pictures/ward.icon-bgremoved.png" class="icon">
-            </label>
-
-            <div>
-
-                <select name="ward" id="ward" required>
-
-                    <option value="" disabled selected>
-                        Select Ward
-                    </option>
-
-                    <?php
-                    while ($row = $department_result->fetch_assoc()) {
-                        echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] . "</option>";
-                    }
-                    ?>
-
+                <select id="ward" name="ward" required>
+                    <option value="" disabled selected>Select Ward</option>
+                    <?php foreach ($departments as $d): ?>
+                        <option value="<?= (int)$d['department_id'] ?>">
+                            <?= htmlspecialchars($d['department_name']) ?>
+                        </option>
+                    <?php endforeach; ?>
                 </select>
             </div>
         </div>
