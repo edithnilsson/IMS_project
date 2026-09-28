@@ -3,7 +3,7 @@
 require "authenticate_check.php";
 access(['doctor', 'epidemiologist', 'admin']);
 
-require "config/db.php";
+require "config/db.php";   
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
@@ -47,16 +47,11 @@ $mwarning_icon = [
 
 <?php include 'hamburger_menu.php'; ?>
 
- 
- 
- 
- 
-
 
 <!--sets boarders for webpages-->
 <div class="container">
     <!-- Inserts the logo picture  -->
-    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
+    <img src="Pictures/logo_nobackground.png" class="logo">
     
     <!-- Inserts the logo picture  -->
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
@@ -73,7 +68,7 @@ $mwarning_icon = [
         </a>
 
         <div class="graph-section">
-            <canvas id="myChart" style="width:100%;max-width:600px;height:200px;"></canvas>
+            <canvas id="myChart" style="width:100%;max-width:400px;height:auto;"></canvas>
             <p id="status" style="font-family:sans-serif;color:#555;"></p>
         </div>
      </div>

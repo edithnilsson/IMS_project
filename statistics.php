@@ -30,7 +30,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
     <link rel="stylesheet" href="css/statistics.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
-<body style="background: linear-gradient(90deg, #daf8e0, #c9ebfd);">
+<body>
 
     <?php include 'hamburger_menu.php'; ?>
     
@@ -73,7 +73,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
         </div>
     </form>
 
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    <canvas id="myChart" style="width:100%;max-width:400px"></canvas>
     <p id="status" style="font-family:sans-serif;color:#555;"></p>
 </div>
 
