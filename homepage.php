@@ -40,14 +40,14 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
 
 <?php include 'hamburger_menu.php'; ?>
 
- <!-- Inserts the logo picture  -->
+ 
  
  
  
@@ -55,7 +55,10 @@ $mwarning_icon = [
 
 <!--sets boarders for webpages-->
 <div class="container">
+    <!-- Inserts the logo picture  -->
     <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
+    
+    <!-- Inserts the logo picture  -->
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
 
