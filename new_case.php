@@ -93,6 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
+
+    <?php include 'hamburger_menu.php'; ?>
 <div class="img">
 
     <img src="Pictures/Logo.png" class="logo">
