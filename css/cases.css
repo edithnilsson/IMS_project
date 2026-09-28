@@ -6,11 +6,11 @@
 
 img.logo {
   display: block;
-  width: 25% !important;
+  width: 30% !important;
   height:auto;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 
 img.virus_bl{
@@ -45,7 +45,7 @@ img.virus_tr{
 .hCase {
     font-family: 'Shrikhand';
     font-style: italic;
-    font-weight: 900;
+    font-weight: 750;
     color: #35a0e1;
     font-size: 50px;
     margin-bottom: 30px;

@@ -1,10 +1,12 @@
 <?php
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['epidemiologist', 'admin']);
 
 date_default_timezone_set('Europe/Stockholm');
 
-session_start();
-
 require_once 'config/db.php';
+
 
 //only process the submission after the form has been submitted (if) and then insert it into the database
 
@@ -77,13 +79,13 @@ if (!$pathogen_result) {
 
 <body>
 
-    <img class="bottom-decoration" src="Pictures/rings_br_nobg.png" alt="">
-    <img class="top-decoration" src="Pictures/virus_tr_nobg.png" alt="">
-
+    <?php include 'hamburger_menu.php'; ?>
+    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+    <img src="/Pictures/rings_br_nobg.png" class="rings_br">
     <div class="page">
         <div class="logo">
             <a href="homepage.php">
-                <img src="Pictures/Logo.png" alt="Logo">
+                <img src="Pictures/logo_nobackground.png" alt="Logo">
             </a>
         </div>
 
@@ -113,7 +115,7 @@ if (!$pathogen_result) {
 
                     <div class="input-row">
 
-                        <h3>Pathogen</h3>
+                        <h3 class="head-row">Pathogen<img src="/Pictures/pathogen.icon_bgremoved.png" class="head-icon"></h3>
 
                         <select name="pathogen" id="pathogen" required>
 
@@ -133,7 +135,7 @@ if (!$pathogen_result) {
 
                     <div class="input-row">
 
-                        <h3>Ward</h3>
+                        <h3 class="head-row">Ward<img src="/Pictures/ward.icon-bgremoved.png" class="head-icon"></h3>
 
                         <select name="department" id="department" required>
 
@@ -153,7 +155,7 @@ if (!$pathogen_result) {
 
                     <div class="input-row">
 
-                        <h3>Date</h3>
+                        <h3 class="head-row">Date<img src="/Pictures/calender.icon-bgremoved.png" class="head-icon"></h3>
 
                         <input
                             type="date"
@@ -173,7 +175,7 @@ if (!$pathogen_result) {
 
                     <div class="input-row">
 
-                        <h3>Threat level</h3>
+                        <h3 class="head-row">Threat level</h3>
 
                         <div class="threat-level">
 
@@ -248,7 +250,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/icon1.png">
+                                    <img src="Pictures/mask_icon_bgremoved.png">
                                 </span>
 
                             </label>
@@ -263,7 +265,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/icon2.png">
+                                    <img src="Pictures/hands_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -278,7 +280,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/icon3.png">
+                                    <img src="Pictures/warning_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -293,7 +295,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/icon4.png">
+                                    <img src="Pictures/needle_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -308,7 +310,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/icon5.png">
+                                    <img src="Pictures/house_icon_removebg.png">
                                 </span>
                             </label>
                         </div>

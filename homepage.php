@@ -1,20 +1,16 @@
 <?php
-$servername = "localhost:3333";
-$username = "root";
-$password = "root";
-$dbname = "infection_tracking";
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'epidemiologist', 'admin']);
 
-$link = mysqli_connect($servername, $username, $password, $dbname);
-
-if (mysqli_connect_error()) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+require "config/db.php";
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
 ORDER BY mwarning_date DESC   
 LIMIT 3";
-$result = $link->query($sql);
+
+$result = $conn->query($sql);
 
 
 $mwarning_severity_level = [
@@ -44,24 +40,26 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="css/homepage.css">
-
+    <link rel="stylesheet" href="test.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
 
+<?php include 'hamburger_menu.php'; ?>
 
  <!-- Inserts the logo picture  -->
- <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" >
  
- <!-- Log out button  -->
- <a href="index.php">
-    <button class="logout_button logout_button_hover">
-        Log out
-    </button>
-</a>
+ 
+ 
+
 
 <!--sets boarders for webpages-->
 <div class="container">
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
+    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
+    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+
+
 
     <div class="dashboard">
         <!-- Log a case button -->  
@@ -71,13 +69,19 @@ $mwarning_icon = [
             Click here</button>
         </a>
 
-        <!-- Placeholder for graph -->     
-        <img src="Pictures/Graph_placeholder.png" alt="Logo" width="750" height="453" >
+        <div class="graph-section">
+            <canvas id="myChart" style="width:100%;max-width:600px;height:200px;"></canvas>
+            <p id="status" style="font-family:sans-serif;color:#555;"></p>
+        </div>
      </div>
 
 
 
     <div> 
+        <div class='header header h1'>   
+            <h1> Announcements </h1>
+        </div>
+        
          <!-- loads the annoucements from database-->
         <?php while ($row = $result->fetch_assoc()): ?>
         
@@ -105,13 +109,58 @@ $mwarning_icon = [
 
         <?php endwhile; ?>
 
-        <span 
-                class= "test">
-        </span> 
     </div>
 
 
 </div>
 
+<script>
+const ctx = document.getElementById('myChart');
+const statusEl = document.getElementById('status');
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: [], datasets: [] },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: true, position: 'bottom' } },
+        scales: {
+            y: { beginAtZero: true, title: { display: true, text: 'Cases' } },
+            x: { title: { display: true, text: 'Date' } }
+        }
+    }
+});
+
+async function loadStats(start, end) {
+    statusEl.textContent = 'Loading…';
+    const url = new URL('api/statistics_top_pathogen.php', location.href);
+    if (start) url.searchParams.set('start_date', start);
+    if (end)   url.searchParams.set('end_date', end);
+
+    try {
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) {
+            statusEl.textContent = 'API error: ' + (data.detail || data.error);
+            return;
+        }
+        if (!data.labels.length) {
+            statusEl.textContent = 'No cases found in this date range.';
+        } else {
+            statusEl.textContent = `Showing ${data.datasets.length} pathogen(s) from ${data.labels[0]} to ${data.labels[data.labels.length - 1]}.`;
+        }
+
+        chart.data.labels   = data.labels;
+        chart.data.datasets = data.datasets;
+        chart.update();
+    } catch (err) {
+        statusEl.textContent = 'Network error: ' + err.message;
+    }
+}
+
+// No filter form on the homepage, so just show the last 30 days
+loadStats();
+</script>
 </body>
 </html>
