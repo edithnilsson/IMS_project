@@ -41,13 +41,13 @@ $mwarning_icon = [
 
 <!-- links to the css file -->
     <link rel="stylesheet" href="css/homepage.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
 
 <?php include 'hamburger_menu.php'; ?>
 
- <!-- Inserts the logo picture  -->
+ 
  
  
  
@@ -55,7 +55,10 @@ $mwarning_icon = [
 
 <!--sets boarders for webpages-->
 <div class="container">
-    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  >
+    <!-- Inserts the logo picture  -->
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
+    
+    <!-- Inserts the logo picture  -->
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
 
@@ -69,8 +72,10 @@ $mwarning_icon = [
             Click here</button>
         </a>
 
-        <!-- Placeholder for graph -->     
-        <img src="Pictures/Graph_placeholder.png" alt="Logo" width="750" height="453" >
+        <div class="graph-section">
+            <canvas id="myChart" style="width:100%;max-width:600px;height:200px;"></canvas>
+            <p id="status" style="font-family:sans-serif;color:#555;"></p>
+        </div>
      </div>
 
 
@@ -112,5 +117,53 @@ $mwarning_icon = [
 
 </div>
 
+<script>
+const ctx = document.getElementById('myChart');
+const statusEl = document.getElementById('status');
+
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: [], datasets: [] },
+    options: {
+        responsive: true,
+        plugins: { legend: { display: true, position: 'bottom' } },
+        scales: {
+            y: { beginAtZero: true, title: { display: true, text: 'Cases' } },
+            x: { title: { display: true, text: 'Date' } }
+        }
+    }
+});
+
+async function loadStats(start, end) {
+    statusEl.textContent = 'Loading…';
+    const url = new URL('api/statistics_top_pathogen.php', location.href);
+    if (start) url.searchParams.set('start_date', start);
+    if (end)   url.searchParams.set('end_date', end);
+
+    try {
+        const res  = await fetch(url);
+        const data = await res.json();
+
+        if (data.error) {
+            statusEl.textContent = 'API error: ' + (data.detail || data.error);
+            return;
+        }
+        if (!data.labels.length) {
+            statusEl.textContent = 'No cases found in this date range.';
+        } else {
+            statusEl.textContent = `Showing ${data.datasets.length} pathogen(s) from ${data.labels[0]} to ${data.labels[data.labels.length - 1]}.`;
+        }
+
+        chart.data.labels   = data.labels;
+        chart.data.datasets = data.datasets;
+        chart.update();
+    } catch (err) {
+        statusEl.textContent = 'Network error: ' + err.message;
+    }
+}
+
+// No filter form on the homepage, so just show the last 30 days
+loadStats();
+</script>
 </body>
 </html>
