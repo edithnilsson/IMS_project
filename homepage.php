@@ -48,17 +48,18 @@ $mwarning_icon = [
 <?php include 'hamburger_menu.php'; ?>
 
  <!-- Inserts the logo picture  -->
- <img src="Pictures/logo_nobackground.png" alt="Logo" width="300" height="133" style="margin-left: 100px; >
  
- <!-- Log out button  -->
- <a href="index.php">
-    <button class="logout_button logout_button_hover">
-        Log out
-    </button>
-</a>
+ 
+ 
+
 
 <!--sets boarders for webpages-->
 <div class="container">
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  >
+    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
+    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+
+
 
     <div class="dashboard">
         <!-- Log a case button -->  
@@ -75,6 +76,10 @@ $mwarning_icon = [
 
 
     <div> 
+        <div class='header header h1'>   
+            <h1> Announcements </h1>
+        </div>
+        
          <!-- loads the annoucements from database-->
         <?php while ($row = $result->fetch_assoc()): ?>
         

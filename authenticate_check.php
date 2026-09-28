@@ -18,10 +18,4 @@ function access($permission) {
     exit; 
 }}
 
-
-
-// add the following as the first thing in every page: 
-
-// require 'authenticate_check.php'
-// access(['doctor', 'epidemiologist', 'admin']) - list the authurated roles - add admin as a role
 ?>
