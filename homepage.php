@@ -3,7 +3,7 @@
 require "authenticate_check.php";
 access(['doctor', 'epidemiologist', 'admin']);
 
-require "config/db.php";
+require "config/db.php";   
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
@@ -40,22 +40,20 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="test.css">
+    <link rel="stylesheet" href="css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
 
 <?php include 'hamburger_menu.php'; ?>
 
- <!-- Inserts the logo picture  -->
- 
- 
- 
-
 
 <!--sets boarders for webpages-->
 <div class="container">
-    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
+    <!-- Inserts the logo picture  -->
+    <img src="Pictures/logo_nobackground.png" class="logo">
+    
+    <!-- Inserts the logo picture  -->
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
 
@@ -70,7 +68,7 @@ $mwarning_icon = [
         </a>
 
         <div class="graph-section">
-            <canvas id="myChart" style="width:100%;max-width:600px;height:200px;"></canvas>
+            <canvas id="myChart" style="width:100%;max-width:400px;height:auto;"></canvas>
             <p id="status" style="font-family:sans-serif;color:#555;"></p>
         </div>
      </div>

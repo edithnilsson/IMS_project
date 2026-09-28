@@ -3,6 +3,24 @@
 require "authenticate_check.php";
 access(['doctor', 'epidemiologist', 'admin']);
 
+$servername = "127.0.0.1"; /* Currently this works because it forces the connection with TCP and later picks the variable port*/
+$username = "root"; 
+$password = "root";
+$dbname = "infection_tracking";
+$port = 3333; /* This variable is not needed if you change servername for "localhost:3333" */ 
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname, $port);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// --- Load dropdown data -------------------------------------------------
+$pathogens = [];
+$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
+while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 ?>
 
 <!DOCTYPE html>
@@ -12,8 +30,10 @@ access(['doctor', 'epidemiologist', 'admin']);
     <link rel="stylesheet" href="css/statistics.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
-<body style="background: linear-gradient(90deg, #daf8e0, #c9ebfd);">
+<body>
 
+    <?php include 'hamburger_menu.php'; ?>
+    
 <img src="/Pictures/logo_nobackground.png" class="logo">
 <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
 <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
@@ -29,8 +49,11 @@ access(['doctor', 'epidemiologist', 'admin']);
             </label>
             <select id="pathogen" class="pathogen">
                 <option value="" disabled selected>Select Pathogen</option>
-                <option value="covid">COVID-19</option>
-                <option value="flu">Influenza</option>
+                    <?php foreach ($pathogens as $p): ?>
+                        <option value="<?= (int)$p['pathogen_id'] ?>">
+                            <?= htmlspecialchars($p['pathogen_name']) ?>
+                    </option>
+                    <?php endforeach; ?>
             </select>
         </div>
 
@@ -50,7 +73,7 @@ access(['doctor', 'epidemiologist', 'admin']);
         </div>
     </form>
 
-    <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+    <canvas id="myChart" style="width:100%;max-width:400px"></canvas>
     <p id="status" style="font-family:sans-serif;color:#555;"></p>
 </div>
 

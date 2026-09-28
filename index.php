@@ -27,27 +27,26 @@ $_SESSION['captcha_answer'] = $captcha;
 </head>
 
 <body style="background: linear-gradient(90deg, #cdffd8, #94d9ff);">
-<img src="/Pictures/logo_nobackground.png" alt="Logo home screen" style="width: 75%;height:auto;" class= "logo">
+<img src="/Pictures/logo_nobackground.png" class= "logo">
 
 <form action="login_processing.php" method="post" class="login_form">
 
     <div class="input-row">
-        <img src="/Pictures/user.icon-bgremoved.png" alt="User Icon"
-             style="width: 50px; height:50px;" class="icon">
+        <img src="/Pictures/user.icon-bgremoved.png" class="icon">
         <input type="text" id="user" name="user" placeholder="Enter Username">
         <br><br>
     </div>
 
     <div class="input-row">
-        <img src="/Pictures/password.icon-bgremoved.png" alt="Password Icon"
-             style="width: 50px; height:50px;" class="icon">
+        <img src="/Pictures/password.icon-bgremoved.png" class="icon">
         <input type="password" id="pwd" name="pwd" placeholder="Enter Password">
     </div>
 
     <div class="input-row captcha-row">
 
     <label class="captcha-label">
-        CAPTCHA: <strong><?php echo $captcha; ?></strong>
+        <img src="/Pictures/robot.icon-bgremoved.png" class="icon_cap" >
+              <strong><?php echo $captcha; ?></strong>
     </label>
 
     <input type="text"

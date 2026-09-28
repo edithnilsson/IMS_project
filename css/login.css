@@ -1,5 +1,7 @@
 img.logo {
   display: block;
+  width: 68%;
+  height: auto;
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;}
@@ -7,8 +9,19 @@ img.logo {
 img.icon {
     display: block;
     float: left;
+    width: 40px; 
+    height: 40px;
     margin-left: auto;
     margin-right: auto;}
+
+img.icon_cap {
+    display: block;
+    float: center;
+    width: 40px; 
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;}
+
 
 .login_form {
     width: 400px; 
@@ -44,11 +57,10 @@ input {
 
 .register_button {
     background: linear-gradient(90deg, #94d9ff, #cdffd8);
-    color: #52c2ff;
-    padding: 5px;
+    color: #5b7888;
+    padding: 2px;
     font-size: 22px;
     font-weight: bold;
-    border: 2px solid #84d3fd;
     border-radius: 10px;
     cursor: pointer;
     display: block;
@@ -60,19 +72,19 @@ input {
 }
 
 .captcha-row {
-    margin-left: 24px;
+    margin-left: 20px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .captcha-label {
-    width: 69px;
-    text-align: right;
+    width: 70px;
+    text-align: center;
 }
 
 .captcha-row input {
-    width: 300px;
+    width: 400px;
     height: 35px;
     box-sizing: border-box;
 }

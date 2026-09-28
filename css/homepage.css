@@ -1,12 +1,16 @@
 .container{
     width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
     position: relative;
     box-sizing: border-box;
 }
 
 /* background */
+img.logo {
+    width: 40%;
+    height: auto;  
+    margin-left: 10px;
+}
+
 
 img.virus_bl{
     position:absolute;
@@ -28,19 +32,21 @@ img.virus_tr{
 /* DASHBOARD - log a case and statistics  */
 
 .logcase_button {
-    padding: 16px 32px;
+    padding: 20px;
     font-size: 22px;
-    background: linear-gradient(135deg, #d8fced 0%, #b3d2fe 100%);
+    background: linear-gradient(90deg, #94d9ff, #cdffd8 100%);
     color: black;
     border: 2px solid #666;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     box-shadow: 5px 5px 10px rgba(0,0,0,0.15); 
     box-sizing: border-box;
 }
 
 .logcase_button:hover{
-    background-color: #dddddd;
+    opacity: 0.9;
+    transform: scale(1.05);
+    background-color: #94d9ff;
 }
 
 .dashboard{
