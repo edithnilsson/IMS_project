@@ -55,7 +55,7 @@ $mwarning_icon = [
 
 <!--sets boarders for webpages-->
 <div class="container">
-    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  >
+    <img src="Pictures/logo_nobackground.png" alt="Logo" width="500" height="233"  style="margin-left: 10px;" >
     <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
 
@@ -70,7 +70,7 @@ $mwarning_icon = [
         </a>
 
         <!-- Placeholder for graph -->     
-        <img src="Pictures/Graph_placeholder.png" alt="Logo" width="750" height="453" >
+        <img src="Pictures/Graph_placeholder.png" alt="Graph" style="max-width: 100%; height: auto;">
      </div>
 
 
