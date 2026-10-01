@@ -21,7 +21,7 @@ $username = $_POST['user'];
 $password = $_POST['pwd'];
 
 // Find the user in the database
-$sql = "SELECT user_id, user_password_hash, user_role
+$sql = "SELECT user_id, user_password_hash, user_role, user_verification_token_hash
         FROM System_user
         WHERE user_username = ?";
 
@@ -43,6 +43,15 @@ if ($result->num_rows === 1) {
 
     // Check the entered password against the stored password hash
     if (password_verify($password, $user['user_password_hash'])) {
+
+        //Check if user has verified email
+        if ($user['user_verification_token_hash'] !== NULL){
+            echo "<script>
+                    alert('Please verify your email.');
+                    window.location.href = 'index.php';
+                  </script>";
+            exit(); //End script
+        }
 
         // Store information about the logged-in user
         $_SESSION['user_id'] = $user['user_id'];
