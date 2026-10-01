@@ -147,3 +147,29 @@ input, select {
     left: auto !important;
     z-index: 9999 !important;
 }
+.charts {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+.chart-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.chart-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    font-family: sans-serif;
+    color: #333;
+}
+.chart-card canvas {
+    max-width: 100%;
+}
+/* Line chart spans both columns */
+.chart-card:nth-child(1) {
+    grid-column: 1 / 3;
+}
