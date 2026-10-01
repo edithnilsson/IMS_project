@@ -48,10 +48,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $verification_token = bin2hex(random_bytes(16));
         $token_hash = hash("sha256", $verification_token);
 
+        // Start transaction, 
+        // First registered user will be admin
+        // If 2 users register at the same time the second user will rollback
+        $conn->begin_transaction();
+        //FOR UPDATE locks rows until transaction ends
+        $count_result = $conn->query("SELECT COUNT(*) AS user_count FROM System_user FOR UPDATE");
+        $count_row = $count_result->fetch_assoc();
+        if ($count_row["user_count"] == 0) {
+            $role = "admin";
+        }
+
         $sql = "INSERT into System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash) values (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role, $token_hash);
         $result = $stmt->execute();
+
+        if ($result) {
+            $conn->commit();
+        } else {
+            $conn->rollback();
+        }
 
         if ($result) {
             $mail = require "mailer.php";
