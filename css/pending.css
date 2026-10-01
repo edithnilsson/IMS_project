@@ -1,0 +1,91 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+
+/* Logo */
+
+img.logo {
+    width: 40%;
+    height: auto;
+    margin-left: 10px;
+}
+
+
+/* Background decorations */
+
+img.virus_bl {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 22%;
+    height: auto;
+    z-index: -1;
+}
+
+img.virus_tr {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 22%;
+    height: auto;
+}
+
+
+/* Pending message */
+
+.pending-box {
+    max-width: 600px;
+    margin: 100px auto 0 auto;
+    padding: 40px;
+    text-align: center;
+
+    background: linear-gradient(90deg, #94d9ff, #cdffd8 100%);
+
+    border: 2px solid #666;
+    border-radius: 10px;
+
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+
+    box-sizing: border-box;
+}
+
+.pending-box h1 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.pending-box p {
+    font-size: 18px;
+    margin: 12px 0;
+}
+
+
+/* Back button */
+
+.back-button {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 24px;
+
+    background-color: white;
+    color: black;
+
+    border: 2px solid #666;
+    border-radius: 10px;
+
+    text-decoration: none;
+    font-size: 17px;
+
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
+}
+
+.back-button:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
