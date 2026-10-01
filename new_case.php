@@ -1,22 +1,80 @@
 <?php
-require "config/db.php";   
+// checks if the user has permission to enter this page
+require "authenticate_check.php";
+access(['doctor', 'admin']);
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname, $port);
+date_default_timezone_set('Europe/Stockholm');
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+require_once 'config/db.php';
+
+// Get departments for the dropdown
+$sql = "SELECT department_id, department_name FROM Department";
+$department_result = $conn->query($sql);
+
+if (!$department_result) {
+die("Error getting departments: " . $conn->error);
 }
 
-// --- Load dropdown data -------------------------------------------------
-$pathogens = [];
-$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
-while ($row = $res->fetch_assoc()) $pathogens[] = $row;
+// Get pathogens for the dropdown
+$sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
+$pathogen_result = $conn->query($sql);
 
-$departments = [];
-$res = $conn->query("SELECT department_id, department_name FROM Department ORDER BY department_name");
-while ($row = $res->fetch_assoc()) $departments[] = $row;
+if (!$pathogen_result) {
+die("Error getting pathogens: " . $conn->error);
+}
+
+// Get severity levels for the dropdown
+$sql = "SELECT severity_id, severity_name FROM severity_level ORDER BY severity_id";
+$severity_result = $conn->query($sql);
+
+if (!$severity_result) {
+die("Error getting severity levels: " . $conn->error);
+}
+
+// Register the case when the form is submitted
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+$user_id = $_SESSION['user_id'];
+$pathogen_id = $_POST['pathogen'];
+$diagnosis_date = $_POST['diagnosis_date'];
+$infection_date = $_POST['infection_date'];
+$department_id = $_POST['ward'];
+$patient_id = $_POST['patient_id'];
+$severity_id = $_POST['severity'];
+$comments = $_POST['comments'];
+
+// Insert the case into Infection_case
+// MySQL generates the UUID for case_id
+$sql = "INSERT INTO Infection_case
+           (case_id, user_id, department_id, pathogen_id, severity_id,
+            patient_id, case_diagnosis_date, case_infection_date, case_comments)
+           VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+die("Error preparing case registration: " . $conn->error);
+}
+
+$stmt->bind_param(
+"siiiisss",
+$user_id,
+$department_id,
+$pathogen_id,
+$severity_id,
+$patient_id,
+$diagnosis_date,
+$infection_date,
+$comments
+);
+
+if ($stmt->execute()) {
+echo "<script>alert('Case registered successfully!');</script>";
+} else {
+echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
+}
+
+$stmt->close();
+}
 
 ?>
 
@@ -24,14 +82,14 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
 <html lang="en">
 
 <head>
-    <title>InfecTracker</title>
+<title>InfecTracker</title>
 
-    <link rel="stylesheet" href="css/cases.css">
+<link rel="stylesheet" href="css/cases.css?v=4">
 
-    <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
-    >
+<link
+rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+>
 </head>
 
 <body>
@@ -39,126 +97,153 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
     <?php include 'hamburger_menu.php'; ?>
 <div class="img">
 
-    <img src="Pictures/Logo.png" class="logo">
-    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
-    <img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="Pictures/Logo.png" class="logo">
+<img src="Pictures/virus_bl_nobg.png" class="virus_bl">
+<img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+<img src="/Pictures/rings_br_nobg.png" class="rings_br">
 </div>
 
 <h1 class="hCase">Register a Case</h1>
 
 <form action="" method="POST" class="inputs">
 
-    <div class="form-column">
+<div class="form-column">
 
-        <div class="form-row">
+<div class="form-row">
 
-            <label>
-                Pathogen
-                <img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
-            </label>
+<label>
+Pathogen
+<img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
+</label>
 
-            <div class="input">
-                <select id="pathogen" name="pathogen" required>
-                    <option value="" disabled selected>Select Pathogen</option>
-                    <?php foreach ($pathogens as $p): ?>
-                        <option value="<?= (int)$p['pathogen_id'] ?>">
-                            <?= htmlspecialchars($p['pathogen_name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
+<div class="input">
 
+<select name="pathogen" id="pathogen" required>
 
-        <div class="form-row">
+<option value="" disabled selected>
+Select Pathogen
+</option>
 
-            <label>
-                Diagnosis Date
-                <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
-            </label>
+<?php
+while ($row = $pathogen_result->fetch_assoc()) {
+echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
+}
+?>
 
-            <div>
-                <input type="date" name="diagnosis_date" id="diagnosis-date" required
-                    max="<?php echo date('Y-m-d'); ?>"
-                >
-            </div>
-        </div>
-
-        <div class="form-row">
-
-            <label>
-                Infection Date
-                <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
-            </label>
-
-            <div>
-                <select id="ward" name="ward" required>
-                    <option value="" disabled selected>Select Ward</option>
-                    <?php foreach ($departments as $d): ?>
-                        <option value="<?= (int)$d['department_id'] ?>">
-                            <?= htmlspecialchars($d['department_name']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-    </div>
+</select>
+</div>
+</div>
 
 
-    <div class="form-column">
+<div class="form-row">
 
-        <div class="form-row">
+<label>
+Diagnosis Date
+<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+</label>
 
-            <label>
-                Patient ID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
-            </label>
+<div>
+<input type="date" name="diagnosis_date" id="diagnosis-date" required
+max="<?php echo date('Y-m-d'); ?>"
+>
+</div>
+</div>
 
-            <input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
-        </div>
+<div class="form-row">
 
-        <div class="form-row">
+<label>
+Infection Date
+<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+</label>
 
-            <label>
-                Severity
-            </label>
+<div>
+<input type="date" name="infection_date" id="infection-date" required
+max="<?php echo date('Y-m-d'); ?>"
+>
+</div>
 
-            <div> 
-                
-                <select name="severity" id="severity" required>
+</div>
 
-                    <option value="" disabled selected>
-                        Select Severity
-                    </option>
+<div class="form-row">
 
-                    <?php
-                    while ($row = $severity_result->fetch_assoc()) {
-                        echo "<option value='" . $row['severity_id'] . "'>" . ucfirst($row['severity_name']) . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-        </div>
+<label>
+Ward
+<img src="/Pictures/ward.icon-bgremoved.png" class="icon">
+</label>
 
-        <div>
+<div>
 
-            <label class="label-inputs"></label>
+<select name="ward" id="ward" required>
 
-            <div class="comments">
+<option value="" disabled selected>
+Select Ward
+</option>
 
-                <textarea
-                    name="comments"
-                    placeholder="Other Comments..."
-                ></textarea>
+<?php
+while ($row = $department_result->fetch_assoc()) {
+echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] . "</option>";
+}
+?>
 
-            </div>
-        </div>
+</select>
+</div>
+</div>
+</div>
 
 
-        <button type="submit" class="submit-btn">
-            Submit
-        </button>
-    </div>
+<div class="form-column">
+
+<div class="form-row">
+
+<label>
+Patient ID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
+</label>
+
+<input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
+</div>
+
+<div class="form-row">
+
+<label>
+Severity
+</label>
+
+<div> 
+
+<select name="severity" id="severity" required>
+
+<option value="" disabled selected>
+Select Severity
+</option>
+
+<?php
+while ($row = $severity_result->fetch_assoc()) {
+echo "<option value='" . $row['severity_id'] . "'>" . ucfirst($row['severity_name']) . "</option>";
+}
+?>
+</select>
+</div>
+</div>
+
+<div>
+
+<label class="label-inputs"></label>
+
+<div class="comments">
+
+<textarea
+name="comments"
+placeholder="Other Comments..."
+></textarea>
+
+</div>
+</div>
+
+
+<button type="submit" class="submit-btn">
+Submit
+</button>
+</div>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
@@ -166,26 +251,26 @@ while ($row = $res->fetch_assoc()) $departments[] = $row;
 <script>
 
 const pathogenSelect = new Choices('#pathogen', {
-    searchEnabled: true,
-    searchPlaceholderValue: 'Select pathogen',
-    itemSelectText: '',
-    searchChoices: true,
-    fuseOptions: {threshold: 0}
+searchEnabled: true,
+searchPlaceholderValue: 'Select pathogen',
+itemSelectText: '',
+searchChoices: true,
+fuseOptions: {threshold: 0}
 });
 
 
 const departmentSelect = new Choices('#ward', {
-    searchEnabled: true,
-    searchPlaceholderValue: 'Select ward',
-    itemSelectText: '',
-    searchChoices: true,
-    fuseOptions: {threshold: 0}
+searchEnabled: true,
+searchPlaceholderValue: 'Select ward',
+itemSelectText: '',
+searchChoices: true,
+fuseOptions: {threshold: 0}
 });
 
 
 const severitySelect = new Choices('#severity', {
-    searchEnabled: false,
-    itemSelectText: ''
+searchEnabled: false,
+itemSelectText: ''
 });
 
 </script>
@@ -197,4 +282,3 @@ $conn->close();
 ?>
 
 </body>
-</html>
