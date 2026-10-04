@@ -9,6 +9,7 @@ user_phone_number VARCHAR(30) NOT NULL,
 user_role ENUM('doctor', 'epidemiologist', 'admin') NOT NULL,
 user_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 user_verification_token_hash CHAR(64) NULL,
+user_status ENUM('pending', 'active', 'deactivated') NOT NULL DEFAULT 'pending',
 PRIMARY KEY (user_id),
 UNIQUE (user_username),
 UNIQUE (user_email),
@@ -108,4 +109,17 @@ awarning_status ENUM('active', 'resolved') NOT NULL,
 PRIMARY KEY (awarning_id),
 FOREIGN KEY (threshold_id) REFERENCES Threshold(threshold_id),
 FOREIGN KEY (department_id) REFERENCES Department(department_id)
+);
+
+
+CREATE TABLE Account_deletion_request (
+request_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+user_id CHAR(36) NOT NULL,
+requested_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+request_status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+reviewed_by CHAR(36) NULL,
+reviewed_at DATETIME NULL,
+PRIMARY KEY (request_id),
+FOREIGN KEY (user_id) REFERENCES System_user(user_id),
+FOREIGN KEY (reviewed_by) REFERENCES System_user(user_id)
 );

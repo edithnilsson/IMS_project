@@ -21,7 +21,7 @@ $username = $_POST['user'];
 $password = $_POST['pwd'];
 
 // Find the user in the database
-$sql = "SELECT user_id, user_password_hash, user_role, user_verification_token_hash
+$sql = "SELECT user_id, user_password_hash, user_role, user_verification_token_hash, user_status
         FROM System_user
         WHERE user_username = ?";
 
@@ -51,6 +51,21 @@ if ($result->num_rows === 1) {
                     window.location.href = 'index.php';
                   </script>";
             exit(); //End script
+        }
+
+        // Then check account status
+        if ($user['user_status'] === 'pending') {
+
+            header("Location: pending.php");
+            exit();
+
+        } elseif ($user['user_status'] === 'deactivated') {
+
+            echo "<script>
+                    alert('This account has been deactivated.');
+                    window.location.href = 'index.php';
+                  </script>";
+            exit();
         }
 
         // Store information about the logged-in user

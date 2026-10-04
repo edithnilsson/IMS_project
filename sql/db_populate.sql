@@ -42,10 +42,11 @@ VALUES
 ('severe', 3);
 
 
-INSERT INTO System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role)
+INSERT INTO System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash, user_status)
 VALUES
-('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 'doctor'),
-('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 'epidemiologist');
+('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 'doctor', 'NULL', 'active'),
+('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 'epidemiologist', 'NULL', 'active');
+
 
 -- For testing the statistics page and graphs
 INSERT INTO Patient (patient_age, patient_sex) VALUES
