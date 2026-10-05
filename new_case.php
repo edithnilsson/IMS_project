@@ -68,17 +68,7 @@ $comments
 );
 
 if ($stmt->execute()) {
-    require_once 'check_threshold.php';
-
-    checkThreshold(
-    $conn,
-    $pathogen_id,
-    $diagnosis_date,
-    $department_id
-    );
-
-    echo "<script>alert('Case registered successfully!');</script>";
-
+echo "<script>alert('Case registered successfully!');</script>";
 } else {
 echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
 }
