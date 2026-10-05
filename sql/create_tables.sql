@@ -105,7 +105,7 @@ threshold_id INT UNSIGNED NOT NULL,
 department_id INT UNSIGNED NULL,
 awarning_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 awarning_message TEXT NOT NULL,
-awarning_status ENUM('active', 'resolved') NOT NULL,
+awarning_status ENUM('active', 'published', 'dismissed') NOT NULL,
 PRIMARY KEY (awarning_id),
 FOREIGN KEY (threshold_id) REFERENCES Threshold(threshold_id),
 FOREIGN KEY (department_id) REFERENCES Department(department_id)
