@@ -16,11 +16,25 @@ UNIQUE (user_email),
 UNIQUE (user_phone_number)
 );
 
+CREATE TABLE Hospital (
+    hospital_id         INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    hospital_name       VARCHAR(255) NOT NULL,
+    hospital_city       VARCHAR(100) NOT NULL,
+    hospital_created_at DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (hospital_id),
+    UNIQUE KEY uniq_hospital_name (hospital_name)
+);
+
 CREATE TABLE Department (
-department_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-department_name VARCHAR(255) NOT NULL,
-PRIMARY KEY (department_id),
-UNIQUE (department_name)
+    department_id   INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    hospital_id     INT UNSIGNED NOT NULL,
+    department_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (department_id),
+    UNIQUE KEY uniq_dept_per_hospital (hospital_id, department_name),
+    FOREIGN KEY fk_dept_hospital (hospital_id)
+        REFERENCES Hospital(hospital_id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE Protocol (
@@ -123,3 +137,5 @@ PRIMARY KEY (request_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
 FOREIGN KEY (reviewed_by) REFERENCES System_user(user_id)
 );
+
+
