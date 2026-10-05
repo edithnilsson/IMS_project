@@ -1,27 +1,64 @@
+CREATE TABLE Roles (
+role_id INT  UNSIGNED NOT NULL AUTO_INCREMENT,
+role_name VARCHAR(50) NOT NULL,
+PRIMARY KEY (role_id)
+);
+
+
+CREATE TABLE Permissions (
+permission_id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+permission_desc VARCHAR(50) NOT NULL,
+permission_page VARCHAR(150) NOT NULL,
+PRIMARY KEY (permission_id)
+);
+
+
+CREATE TABLE Role_permission (
+role_id INTEGER UNSIGNED NOT NULL,
+permission_id INTEGER UNSIGNED NOT NULL,
+FOREIGN KEY (role_id) REFERENCES Roles(role_id),
+FOREIGN KEY (permission_id) REFERENCES Permissions(permission_id)
+);
+
+
+CREATE TABLE Hospital (
+hospital_id VARCHAR(36) NOT NULL,
+hospital_name VARCHAR(255) NOT NULL,
+hospital_city VARCHAR(255) NOT NULL,
+hospital_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+PRIMARY KEY (hospital_id)
+);
+
+
 CREATE TABLE System_user (
 user_id CHAR(36) NOT NULL,
-user_username VARCHAR(100) NOT NULL,
+user_username VARCHAR(100),
 user_password_hash VARCHAR(255) NOT NULL,
 user_name VARCHAR(100) NOT NULL,
 user_surname VARCHAR(100) NOT NULL,
-user_email VARCHAR(255) NOT NULL,
-user_phone_number VARCHAR(30) NOT NULL,
-user_role ENUM('doctor', 'epidemiologist', 'admin') NOT NULL,
+user_email VARCHAR(255),
+user_phone_number VARCHAR(30),
+role_id INT UNSIGNED NOT NULL,
 user_created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 user_verification_token_hash CHAR(64) NULL,
 user_status ENUM('pending', 'active', 'deactivated') NOT NULL DEFAULT 'pending',
 PRIMARY KEY (user_id),
+FOREIGN KEY (role_id) REFERENCES Roles(role_id),
 UNIQUE (user_username),
 UNIQUE (user_email),
 UNIQUE (user_phone_number)
 );
 
-CREATE TABLE Department (
+CREATE TABLE Department(
 department_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 department_name VARCHAR(255) NOT NULL,
+hospital_id VARCHAR(36) NOT NULL,
 PRIMARY KEY (department_id),
-UNIQUE (department_name)
+FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
 );
+
+ALTER TABLE Department
+ADD UNIQUE KEY (department_name,hospital_id);
 
 CREATE TABLE Protocol (
 protocol_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -49,7 +86,7 @@ patient_sex ENUM('female', 'male') NOT NULL,
 PRIMARY KEY (patient_id)
 );
 
-CREATE TABLE severity_level (
+CREATE TABLE Severity_level (
 severity_id TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
 severity_name VARCHAR(50) NOT NULL,
 severity_risk_score TINYINT UNSIGNED NOT NULL,
@@ -123,3 +160,4 @@ PRIMARY KEY (request_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
 FOREIGN KEY (reviewed_by) REFERENCES System_user(user_id)
 );
+

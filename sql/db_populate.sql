@@ -1,12 +1,32 @@
-INSERT INTO Department (department_name)
+INSERT INTO Roles (role_name)
 VALUES
-('Emergency'),
-('Intensive Care Unit'),
-('Surgery'),
-('Oncology'),
-('Infectious Disease Unit'),
-('Pulmonology'),
-('Pediatrics');
+('doctor'),
+('epidemiologist'),
+('admin'),
+('chief_epidemiologist');
+
+INSERT INTO Hospital (hospital_id, hospital_name, hospital_city)
+VALUES
+('7b8e5f3a-2c41-4d91-8a76-135b9e024f62', 'Uppsala Hospital', 'Uppsala'),
+('7b8e5f3a-2c41-4d91-8a76-135b9e024f63', 'Stockholm Hospital', 'Stockholm');
+
+
+INSERT INTO Department (department_name, hospital_id)
+VALUES
+('Emergency', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Intensive Care Unit', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Surgery', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Oncology', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Infectious Disease Unit', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Pulmonology', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Pediatrics', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('Emergency', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Intensive Care Unit', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Surgery', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Oncology', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Infectious Disease Unit', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Pulmonology', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63'),
+('Pediatrics', '7b8e5f3a-2c41-4d91-8a76-135b9e024f63');
 
 
 INSERT INTO Protocol (protocol_transmission, protocol_recommendation)
@@ -35,18 +55,18 @@ VALUES
 ('Ebola', 'virus', 'contact', 4, 1);
 
 
-INSERT INTO severity_level (severity_name, severity_risk_score)
+INSERT INTO Severity_level (severity_name, severity_risk_score)
 VALUES
 ('mild', 1),
 ('moderate', 2),
 ('severe', 3);
 
 
-INSERT INTO System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash, user_status)
+INSERT INTO System_user
+(user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status)
 VALUES
-('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 'doctor', 'NULL', 'active'),
-('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 'epidemiologist', 'NULL', 'active');
-
+('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 1, NULL, 'active'),
+('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 2, NULL, 'active');
 
 -- For testing the statistics page and graphs
 INSERT INTO Patient (patient_age, patient_sex) VALUES
@@ -179,4 +199,16 @@ VALUES
 (UUID(),'550e8400-e29b-41d4-a716-446655440000',6,5,2,4, DATE_SUB(CURDATE(), INTERVAL 20 DAY), DATE_SUB(CURDATE(), INTERVAL 21 DAY), NULL),
 (UUID(),'550e8400-e29b-41d4-a716-446655440000',2,5,1,5, DATE_SUB(CURDATE(), INTERVAL 25 DAY), DATE_SUB(CURDATE(), INTERVAL 26 DAY), NULL),
 (UUID(),'550e8400-e29b-41d4-a716-446655440000',6,5,2,6, DATE_SUB(CURDATE(), INTERVAL 28 DAY), DATE_SUB(CURDATE(), INTERVAL 29 DAY), NULL);
+
+
+-- A few cases for the second hospital as well
+INSERT INTO Infection_case
+(case_id, user_id, department_id, pathogen_id, severity_id, patient_id, case_diagnosis_date, case_infection_date, case_comments)
+VALUES
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 8, 7, 2, 1, '2026-09-29', '2026-09-27', 'Influenza case'),
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 8, 7, 3, 2, '2026-09-30', '2026-09-28', 'Influenza case'),
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 9, 1, 1, 3, '2026-09-28', '2026-09-26', 'Enterococcus faecium case'),
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 10, 2, 2, 4, '2026-09-25', '2026-09-23', 'Staphylococcus aureus case'),
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 11, 6, 1, 5, '2026-09-27', '2026-09-25', 'E. coli case'),
+(UUID(), '550e8400-e29b-41d4-a716-446655440000', 12, 9, 2, 6, '2026-09-30', '2026-09-29', 'Candida auris case');
 
