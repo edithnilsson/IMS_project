@@ -1,0 +1,22 @@
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 40px;
+}
+
+.user-table th,
+.user-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.user-table th {
+    background-color: #94d9ff;
+}
+
+.table-container {
+    max-height: 450px;
+    overflow-y: auto;
+    margin-bottom: 40px;
+}

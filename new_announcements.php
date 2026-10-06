@@ -19,17 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $severity = $_POST['severity'];
     $warning_date = $_POST['warning_date'];
     // add timestamp 
-    $warning_date = $warning_date . ' ' . date('H:i:s'); 
+    $warning_date = $warning_date . ' ' . date('H:i:s');
+    // Get the hospital of the logged-in user
+    $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+    $stmt->close();
+    $hospital_id = $user['hospital_id']; 
 
     $message = $_POST['message'];
     $icon = $_POST['icon'];
 
-    $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon)
-    VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon, hospital_id)
+    VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
 
-    $stmt->bind_param("siiissi", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon);
+    $stmt->bind_param("siiissis", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon, $hospital_id);
 
     $result = $stmt->execute();
 
