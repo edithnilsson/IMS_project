@@ -78,6 +78,11 @@ VALUES
 ('moderate', 2),
 ('severe', 3);
 
+INSERT INTO Threshold (pathogen_id, threshold_value, threshold_time_window)
+VALUES
+(4, 3, 7),
+(7, 2, 3),
+(8, 2, 2);
 
 INSERT INTO System_user
 (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status, hospital_id)
