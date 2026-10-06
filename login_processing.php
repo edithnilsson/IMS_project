@@ -79,7 +79,11 @@ if ($result->num_rows === 1) {
         $_SESSION['privUser'] = PrivilegedUser::getByUsername($username);
 
         // Login successful
-        header("Location: homepage.php");
+        if ($user['role_id'] == 1) {
+            header("Location: admin.php");
+        } else {
+            header("Location: homepage.php");
+        }
         exit();
 
     } else {

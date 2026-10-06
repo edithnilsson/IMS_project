@@ -1,8 +1,5 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
 access('log_case');
