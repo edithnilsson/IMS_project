@@ -88,36 +88,39 @@ $stmt->close();
     <div class="automatic-warnings">
         <h2>Automatic Warnings</h2>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Pathogen</th>
-                    <th>Date</th>
-                    <th>Message</th>
-                    <th></th>
-                </tr>
-            </thead>
+        <?php if (empty($automatic_warnings)): ?>
 
-            <tbody>
-                <?php if (empty($automatic_warnings)): ?>
+            <p>No active automatic warnings.</p>
+
+        <?php else: ?>
+
+            <table>
+                <thead>
                     <tr>
-                        <td colspan="4">No active automatic warnings.</td>
+                        <th>Pathogen</th>
+                        <th>Date</th>
+                        <th>Message</th>
+                        <th></th>
                     </tr>
-                <?php else: ?>
+                </thead>
+
+                <tbody>
                     <?php foreach ($automatic_warnings as $warning): ?>
                         <tr>
                             <td><?= htmlspecialchars($warning['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars(date('Y-m-d', strtotime($warning['awarning_date']))) ?></td>
                             <td><?= htmlspecialchars($warning['awarning_message']) ?></td>
-                            <td> <a href="new_announcements.php" class="prepare-button">
+                            <td>
+                                <a href="new_announcement.php" class="prepare-button">
                                     Prepare for Publishing
                                 </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+
+        <?php endif; ?>
     </div>
 
     <form class="inputs" id="filterForm">
