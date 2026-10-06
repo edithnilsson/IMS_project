@@ -1,4 +1,8 @@
 <?php
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
 access('log_case');
@@ -41,13 +45,22 @@ $department_id = $_POST['ward'];
 $patient_id = $_POST['patient_id'];
 $severity_id = $_POST['severity'];
 $comments = $_POST['comments'];
+// Get the hospital of the logged-in user
+$sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+$hospital_id = $user['hospital_id'];
+
 
 // Insert the case into Infection_case
-// MySQL generates the UUID for case_id
 $sql = "INSERT INTO Infection_case
-           (case_id, user_id, department_id, pathogen_id, severity_id,
-            patient_id, case_diagnosis_date, case_infection_date, case_comments)
-           VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
+        (case_id, user_id, department_id, pathogen_id, severity_id,
+         patient_id, case_diagnosis_date, case_infection_date, case_comments, hospital_id)
+        VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
@@ -56,7 +69,7 @@ die("Error preparing case registration: " . $conn->error);
 }
 
 $stmt->bind_param(
-"siiiisss",
+"siiiissss",
 $user_id,
 $department_id,
 $pathogen_id,
@@ -64,13 +77,24 @@ $severity_id,
 $patient_id,
 $diagnosis_date,
 $infection_date,
-$comments
+$comments,
+$hospital_id
 );
 
 if ($stmt->execute()) {
-echo "<script>alert('Case registered successfully!');</script>";
+    require_once 'check_thresholds.php';
+
+    checkThreshold(
+    $conn,
+    $pathogen_id,
+    $diagnosis_date,
+    $department_id,
+    $hospital_id
+    );
+
+    echo "<script>alert('Case registered successfully!');</script>";
 } else {
-echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
+    echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
 }
 
 $stmt->close();
@@ -144,6 +168,7 @@ Diagnosis Date
 
 <div>
 <input type="date" name="diagnosis_date" id="diagnosis-date" required
+value="<?php echo date('Y-m-d'); ?>"
 max="<?php echo date('Y-m-d'); ?>"
 >
 </div>
@@ -158,6 +183,7 @@ Infection Date
 
 <div>
 <input type="date" name="infection_date" id="infection-date" required
+value="<?php echo date('Y-m-d'); ?>"
 max="<?php echo date('Y-m-d'); ?>"
 >
 </div>

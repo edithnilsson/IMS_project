@@ -17,6 +17,55 @@ if ($conn->connect_error) {
 $pathogens = [];
 $res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
 while ($row = $res->fetch_assoc()) $pathogens[] = $row;
+
+
+// Get the hospital of the logged-in user
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT hospital_id
+        FROM System_user
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+
+$hospital_id = $user['hospital_id'];
+
+
+// Get automatic warnings for this hospital
+$automatic_warnings = [];
+
+$sql = "SELECT 
+            aw.awarning_id,
+            aw.awarning_date,
+            aw.awarning_message,
+            p.pathogen_name
+        FROM Automatic_warning aw
+        JOIN Threshold t
+            ON aw.threshold_id = t.threshold_id
+        JOIN Pathogen p
+            ON t.pathogen_id = p.pathogen_id
+        WHERE aw.hospital_id = ?
+        AND aw.awarning_status = 'active'
+        ORDER BY aw.awarning_date DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $automatic_warnings[] = $row;
+}
+
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +85,41 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 <img src="/Pictures/rings_br_nobg.png" class="rings_br">
 
 <div class="content">
+    <div class="automatic-warnings">
+        <h2>Automatic Warnings</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Pathogen</th>
+                    <th>Date</th>
+                    <th>Message</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php if (empty($automatic_warnings)): ?>
+                    <tr>
+                        <td colspan="4">No active automatic warnings.</td>
+                    </tr>
+                <?php else: ?>
+                    <?php foreach ($automatic_warnings as $warning): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($warning['pathogen_name']) ?></td>
+                            <td><?= htmlspecialchars(date('Y-m-d', strtotime($warning['awarning_date']))) ?></td>
+                            <td><?= htmlspecialchars($warning['awarning_message']) ?></td>
+                            <td> <a href="new_announcements.php" class="prepare-button">
+                                    Prepare for Publishing
+                                </a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+
     <form class="inputs" id="filterForm">
         <div class="column">
             <label class="form-label" for="pathogen">
