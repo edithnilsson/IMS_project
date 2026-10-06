@@ -1,9 +1,9 @@
 INSERT INTO Roles(role_id, role_name)
 VALUES
-(1, 'admin'),
-(2, 'doctor'),
-(3, 'epidemiologist'),
-(4,'chief_epidemiologist');
+(1, 'Admin'),
+(2, 'Doctor'),
+(3, 'Epidemiologist'),
+(4,'Chief Epidemiologist');
 
 INSERT INTO Permissions(permission_id, permission_desc, permission_page)
 VALUES

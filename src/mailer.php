@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 // Load PHPMailer (and all other Composer packages) via the autoloader
-require_once __DIR__ . "/vendor/autoload.php";
+require_once __DIR__ . "/../vendor/autoload.php";
 
 // Enable exceptions to see if send() throws an exception or not when sending a mail
 $mail = new PHPMailer(true); 
@@ -30,7 +30,7 @@ $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
 $mail->isHTML(true);
 
 //Add logo in the mail
-$mail->addEmbeddedImage(__DIR__ . '/Pictures/logo_nobackground.png', 'logo');
+$mail->addEmbeddedImage(__DIR__ . '/../Pictures/logo_nobackground.png', 'logo');
 
 
 return $mail;
