@@ -2,18 +2,6 @@
 <?php
 session_start();
 
-## Captcha
-
-$characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz23456789';
-
-$captcha = '';
-
-for ($i = 0; $i < 5; $i++) {
-    $captcha .= $characters[rand(0, strlen($characters) - 1)];
-}
-
-$_SESSION['captcha_answer'] = $captcha;
-
 ?>
 
 <!DOCTYPE html>
@@ -41,25 +29,6 @@ $_SESSION['captcha_answer'] = $captcha;
         <img src="/Pictures/password.icon-bgremoved.png" class="icon">
         <input type="password" id="pwd" name="pwd" placeholder="Enter Password">
     </div>
-
-    <div class="input-row captcha-row">
-
-    <label class="captcha-label">
-        <img src="/Pictures/robot.icon-bgremoved.png" class="icon_cap" >
-              <strong><?php echo $captcha; ?></strong>
-    </label>
-
-    <input type="text"
-           id="captcha"
-           name="captcha"
-           placeholder="Enter CAPTCHA"
-           required>
-
-          </div>
-    
-
-
-
 
     <button type="submit" class="login_button">
         Log in
