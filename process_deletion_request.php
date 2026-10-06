@@ -15,7 +15,6 @@ $action = $_POST['action'];
 
 $admin_id = $_SESSION['user_id'];
 
-
 // Get the hospital of the logged-in admin
 $sql = "SELECT hospital_id
         FROM System_user
@@ -31,7 +30,6 @@ $admin = $result->fetch_assoc();
 $stmt->close();
 
 $hospital_id = $admin['hospital_id'];
-
 
 // Get the deletion request
 $sql = "SELECT user_id
@@ -55,7 +53,6 @@ if (!$request) {
 
 $requested_user_id = $request['user_id'];
 
-
 // Approve deletion
 if ($action === "approve") {
 
@@ -63,7 +60,7 @@ if ($action === "approve") {
 
     try {
 
-        // Remove the user's account information
+        // Remove the user's account info
         $sql = "UPDATE System_user
                 SET user_email = NULL,
                     user_phone_number = NULL,
@@ -102,7 +99,6 @@ if ($action === "approve") {
     }
 }
 
-
 // Reject deletion
 if ($action === "reject") {
 
@@ -120,7 +116,6 @@ if ($action === "reject") {
     header("Location: admin.php");
     exit();
 }
-
 
 exit("Invalid action.");
 ?>
