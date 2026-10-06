@@ -80,10 +80,10 @@ VALUES
 
 
 INSERT INTO System_user
-(user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status)
+(user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status, hospital_id)
 VALUES
-('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', '2', NULL, 'active'),
-('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', '3', NULL, 'active');
+('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', '2', NULL, 'active', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
+('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', '3', NULL, 'active', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62');
 
 -- For testing the statistics page and graphs
 INSERT INTO Patient (patient_age, patient_sex) VALUES
