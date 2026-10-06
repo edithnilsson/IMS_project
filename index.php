@@ -12,6 +12,8 @@ session_start();
     <title>InfTraction</title>
 
             <link rel="stylesheet" href="css/login.css">
+            <link rel="stylesheet" href="css/captcha.css">
+
 </head>
 
 <body style="background: linear-gradient(90deg, #cdffd8, #94d9ff);">
@@ -29,6 +31,26 @@ session_start();
         <img src="/Pictures/password.icon-bgremoved.png" class="icon">
         <input type="password" id="pwd" name="pwd" placeholder="Enter Password">
     </div>
+
+    <div class="captcha-row">
+
+    <div class="captcha-icon">
+        <img src="/Pictures/robot.icon-bgremoved.png" alt="CAPTCHA icon">
+    </div>
+
+    <div class="captcha-content">
+
+        <img src="captcha.php" alt="CAPTCHA" class="captcha-image">
+
+        <input type="text"
+               id="captcha"
+               name="captcha"
+               placeholder="Enter CAPTCHA"
+               required>
+
+    </div>
+
+</div>
 
     <button type="submit" class="login_button">
         Log in
