@@ -1,4 +1,6 @@
 <?php
+require_once "Role.php";
+require_once "PrivilegedUser.php";
 
 session_start();
 
@@ -32,13 +34,25 @@ else {
 } 
 
 
-// Checks if the user has permission to go into the page and if they do not then they are sent to an access denied page
-function access($permission) {
-    //if the user role that is stored in the global variable is not listed in the permission array 
-    //(specified in the page .php) then the user does not have access and is redirected to the access denied page
-    if (!in_array($_SESSION['user_role'], $permission, true )) {
-    header("Location: access_denied.php");
-    exit; 
-}}
+// Access check 
 
+function access($permission) {
+    // check if there is a PrivilegedUser object saved in the session variable
+    if (!isset($_SESSION['privUser'])) {
+        header("Location: index.php");
+        exit;
+    }
+
+    // Check if the content of the $_SESSION['privUser'] is a PrivilegedUser object
+    if (!($_SESSION['privUser'] instanceof PrivilegedUser)) {
+        header("Location: index.php");
+        exit;
+    }
+
+    // does the user stored in the PrivilegedUser object have the right access? 
+    if (!$_SESSION['privUser']->hasPrivilege($permission)) {
+        header("Location: access_denied.php");
+        exit;
+    }
+}
 ?>

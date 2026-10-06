@@ -3,6 +3,8 @@
 session_start();
 
 require "config/db.php";
+require_once "Role.php";          
+require_once "PrivilegedUser.php";  
 
 //captcha
 $captcha = $_POST['captcha'];
@@ -21,7 +23,7 @@ $username = $_POST['user'];
 $password = $_POST['pwd'];
 
 // Find the user in the database
-$sql = "SELECT user_id, user_password_hash, user_role, user_verification_token_hash, user_status
+$sql = "SELECT user_id, user_password_hash, role_id, user_verification_token_hash, user_status
         FROM System_user
         WHERE user_username = ?";
 
@@ -70,9 +72,11 @@ if ($result->num_rows === 1) {
 
         // Store information about the logged-in user
         $_SESSION['user_id'] = $user['user_id'];
-        $_SESSION['user_role'] = $user['user_role'];
+        $_SESSION['role_id'] = $user['role_id'];
         $_SESSION['last_activity'] = time();
 
+        // creates a PrivilegedUser-object and saves the session for access check in authenticate_check.php
+        $_SESSION['privUser'] = PrivilegedUser::getByUsername($username);
 
         // Login successful
         header("Location: homepage.php");

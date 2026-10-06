@@ -1,7 +1,7 @@
 <?php
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
-access(['doctor', 'admin']);
+access('log_case');
 
 date_default_timezone_set('Europe/Stockholm');
 

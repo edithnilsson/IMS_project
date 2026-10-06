@@ -59,9 +59,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $role = "admin";
         }
 
-        $sql = "INSERT into System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, user_role, user_verification_token_hash) values (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT into System_user (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash) values (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role, $token_hash);
+        $stmt->bind_param("ssssssis", $username, $hashed_password, $first_name, $last_name, $email, $phone_number, $role, $token_hash);
         $result = $stmt->execute();
 
         if ($result) {
@@ -145,8 +145,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="role"></label>
                 <select id="role" name="role">
                     <option value="">Choose a Role</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="epidemiologist">Epidemiologist</option>
+                    <option value="2">Doctor</option>
+                    <option value="3">Epidemiologist</option>
                 </select>
                 <span class="error_text" id="role_error"></span>
 

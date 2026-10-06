@@ -1,9 +1,26 @@
-INSERT INTO Roles (role_name)
+INSERT INTO Roles(role_id, role_name)
 VALUES
-('doctor'),
-('epidemiologist'),
-('admin'),
-('chief_epidemiologist');
+(1, 'admin'),
+(2, 'doctor'),
+(3, 'epidemiologist'),
+(4,'chief_epidemiologist');
+
+INSERT INTO Permissions(permission_id, permission_desc, permission_page)
+VALUES
+(1, 'log_case', 'new_case.php'),
+(2, 'write_announcement', 'new_announcements.php'),
+(3, 'manage_user', 'manage_user.php'),
+(4, 'do_everything','manage_user.php' );
+
+INSERT INTO Role_permission(role_id, permission_id)
+Values
+(1,1),
+(1,2),
+(1,3),
+(1,4),
+(2,1),
+(3,2),
+(4,2);
 
 INSERT INTO Hospital (hospital_id, hospital_name, hospital_city)
 VALUES
@@ -65,8 +82,8 @@ VALUES
 INSERT INTO System_user
 (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status)
 VALUES
-('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', 1, NULL, 'active'),
-('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', 2, NULL, 'active');
+('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', '2', NULL, 'active'),
+('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', '3', NULL, 'active');
 
 -- For testing the statistics page and graphs
 INSERT INTO Patient (patient_age, patient_sex) VALUES
