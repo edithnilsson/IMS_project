@@ -106,11 +106,13 @@ patient_id INT UNSIGNED NOT NULL,
 case_diagnosis_date DATE NOT NULL,
 case_infection_date DATE NOT NULL,
 case_comments TEXT NULL,
+hospital_id VARCHAR(36) NOT NULL,
 PRIMARY KEY (case_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
 FOREIGN KEY (department_id) REFERENCES Department(department_id),
 FOREIGN KEY (pathogen_id) REFERENCES Pathogen(pathogen_id),
 FOREIGN KEY (severity_id) REFERENCES severity_level(severity_id),
+FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
 );
 
@@ -123,9 +125,11 @@ mwarning_severity_level TINYINT UNSIGNED NOT NULL,
 mwarning_date DATETIME NOT NULL,
 mwarning_icon TINYINT UNSIGNED NOT NULL,
 mwarning_message TEXT NOT NULL,
+hospital_id VARCHAR(36) NOT NULL,
 PRIMARY KEY (mwarning_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
 FOREIGN KEY (pathogen_id) REFERENCES Pathogen(pathogen_id),
+FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (department_id) REFERENCES Department(department_id)
 );
 
@@ -145,8 +149,10 @@ department_id INT UNSIGNED NULL,
 awarning_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 awarning_message TEXT NOT NULL,
 awarning_status ENUM('active', 'published', 'dismissed') NOT NULL,
+hospital_id VARCHAR(36) NOT NULL,
 PRIMARY KEY (awarning_id),
 FOREIGN KEY (threshold_id) REFERENCES Threshold(threshold_id),
+FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (department_id) REFERENCES Department(department_id)
 );
 
@@ -158,8 +164,10 @@ requested_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 request_status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
 reviewed_by CHAR(36) NULL,
 reviewed_at DATETIME NULL,
+hospital_id VARCHAR(36) NOT NULL,
 PRIMARY KEY (request_id),
 FOREIGN KEY (user_id) REFERENCES System_user(user_id),
+FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (reviewed_by) REFERENCES System_user(user_id)
 );
 
