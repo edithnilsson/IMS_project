@@ -118,3 +118,18 @@ function checkPhoneNumber() {
 
 document.getElementById("phone_number").addEventListener("focus", checkPhoneNumber);
 document.getElementById("phone_number").addEventListener("input", checkPhoneNumber);
+
+function checkHospital() {
+    const input = document.getElementById("hospital_id");
+    const error = document.getElementById("hospital_error");
+    if (input.value.trim() === ""){
+        input.classList.add("red_border");
+        error.textContent = "Please pick a hospital";
+    } else {
+        input.classList.remove("red_border");
+        error.textContent = "";
+    }
+}
+
+document.getElementById("hospital_id").addEventListener("focus", checkHospital);
+document.getElementById("hospital_id").addEventListener("input", checkHospital);

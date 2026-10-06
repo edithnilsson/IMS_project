@@ -25,5 +25,5 @@ if ($user) {
     $update->execute();
     echo "<script>alert('Account verified. You can now log in.'); window.location.href='index.php';</script>";
 } else {
-    echo "<script>alert('Invalid or expired verification link.');</script>";
+    echo "<script>alert('Invalid or expired verification link.'); window.location.href='verify.php'</script>";
 }
