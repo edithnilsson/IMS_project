@@ -33,7 +33,7 @@ PRIMARY KEY (hospital_id)
 CREATE TABLE System_user (
 user_id CHAR(36) NOT NULL,
 user_username VARCHAR(100),
-user_password_hash VARCHAR(255) NOT NULL,
+user_password_hash VARCHAR(255) NULL,
 user_name VARCHAR(100) NOT NULL,
 user_surname VARCHAR(100) NOT NULL,
 user_email VARCHAR(255),
