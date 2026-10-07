@@ -1,9 +1,7 @@
 <?php
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
-
-
-require "config/db.php";   
+require "config/db.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
@@ -13,59 +11,75 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// --- Load dropdown data -------------------------------------------------
-$pathogens = [];
-$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
-while ($row = $res->fetch_assoc()) $pathogens[] = $row;
+if ($_SERVER["REQUEST_METHOD"] == "POST"
+    && ($_POST['action'] ?? '') == 'dismiss'
+    && $_SESSION['privUser']->hasPrivilege('write_announcement')) {
 
+    $awarning_id = $_POST['awarning_id'];
 
-// Get the hospital of the logged-in user
-$user_id = $_SESSION['user_id'];
+    $sql = "UPDATE Automatic_warning
+            SET awarning_status = 'dismissed'
+            WHERE awarning_id = ?
+            AND awarning_status = 'active'";
 
-$sql = "SELECT hospital_id
-        FROM System_user
-        WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $awarning_id);
+    $stmt->execute();
+    $stmt->close();
+}
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $user_id);
-$stmt->execute();
+// Check if the user can write announcements
+$can_write_announcement =
+    $_SESSION['privUser']->hasPrivilege('write_announcement');
 
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-
-$stmt->close();
-
-$hospital_id = $user['hospital_id'];
-
-
-// Get automatic warnings for this hospital
 $automatic_warnings = [];
 
-$sql = "SELECT 
+if ($can_write_announcement) {
+
+    // Get the hospital of the logged-in user
+    $user_id = $_SESSION['user_id'];
+
+    $sql = "SELECT hospital_id
+            FROM System_user
+            WHERE user_id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
+
+    $stmt->close();
+
+    $hospital_id = $user['hospital_id'];
+
+    // Get active automatic warnings for this hospital
+    $sql = "SELECT
             aw.awarning_id,
             aw.awarning_date,
             aw.awarning_message,
             p.pathogen_name
-        FROM Automatic_warning aw
-        JOIN Threshold t
+            FROM Automatic_warning aw
+            JOIN Threshold t
             ON aw.threshold_id = t.threshold_id
-        JOIN Pathogen p
+            JOIN Pathogen p
             ON t.pathogen_id = p.pathogen_id
-        WHERE aw.hospital_id = ?
-        AND aw.awarning_status = 'active'
-        ORDER BY aw.awarning_date DESC";
+            WHERE aw.hospital_id = ?
+            AND aw.awarning_status = 'active'
+            ORDER BY aw.awarning_date DESC";
 
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $hospital_id);
-$stmt->execute();
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $hospital_id);
+    $stmt->execute();
 
-$result = $stmt->get_result();
+    $result = $stmt->get_result();
 
-while ($row = $result->fetch_assoc()) {
-    $automatic_warnings[] = $row;
+    while ($row = $result->fetch_assoc()) {
+        $automatic_warnings[] = $row;
+    }
+    $stmt->close();
 }
-
-$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -85,15 +99,13 @@ $stmt->close();
 <img src="/Pictures/rings_br_nobg.png" class="rings_br">
 
 <div class="content">
+
+<?php if ($can_write_announcement): ?>
     <div class="automatic-warnings">
         <h2>Automatic Warnings</h2>
-
         <?php if (empty($automatic_warnings)): ?>
-
             <p>No active automatic warnings.</p>
-
         <?php else: ?>
-
             <table>
                 <thead>
                     <tr>
@@ -111,17 +123,41 @@ $stmt->close();
                             <td><?= htmlspecialchars(date('Y-m-d', strtotime($warning['awarning_date']))) ?></td>
                             <td><?= htmlspecialchars($warning['awarning_message']) ?></td>
                             <td>
-                                <a href="new_announcement.php" class="prepare-button">
-                                    Prepare for Publishing
-                                </a>
+                                <form action="new_announcements.php" method="POST">
+                                    <input type="hidden"
+                                           name="action"
+                                           value="prepare">
+
+                                    <input type="hidden"
+                                           name="awarning_id"
+                                           value="<?= htmlspecialchars($warning['awarning_id']) ?>">
+
+                                    <button type="submit" class="prepare-button">
+                                        Prepare for Publishing
+                                    </button>
+                                </form>
+
+                                <form action="statistics.php" method="POST">
+                                    <input type="hidden"
+                                           name="action"
+                                           value="dismiss">
+
+                                    <input type="hidden"
+                                           name="awarning_id"
+                                           value="<?= htmlspecialchars($warning['awarning_id']) ?>">
+
+                                    <button type="submit" class="dismiss-button">
+                                        Dismiss
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>
-
         <?php endif; ?>
     </div>
+<?php endif; ?>
 
     <form class="inputs" id="filterForm">
         <div class="column">
