@@ -7,14 +7,15 @@ ID and the hashed password will be stored in the database
 require "config/db.php";
 
 // Get all roles from database to use in dropdown menu except admin role
-$sql = "SELECT role_id, role_name FROM Roles WHERE role_name != 'admin'";
+$sql = "SELECT role_id, role_name FROM Roles WHERE role_name != 'Admin'";
 $role_result = $conn->query($sql);
 
 // Get all hospital names from database to use in dropdown menu
 $sql = "SELECT hospital_id, hospital_name FROM Hospital ORDER BY hospital_name";
 $hospital_result = $conn->query($sql);
 
-//If form was submitted (user registered), insert username and password into the database
+//If form was submitted (user registered),
+// Inserts inputs into the database
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
@@ -75,9 +76,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $status = "pending";
 
-        //Fetch admin id from database
+        // Count users in database and if 0 set role as admin and status as active
         if ($count_row["user_count"] == 0) {
-            $admin_role_result = $conn->query("SELECT role_id FROM Roles WHERE role_name = 'admin'");
+            $admin_role_result = $conn->query("SELECT role_id FROM Roles WHERE role_name = 'Admin'");
             $admin_role_row = $admin_role_result->fetch_assoc();
             $role = $admin_role_row['role_id'];
             $status = "active";
@@ -101,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
 
+        // Send validation link to registered email
         if ($result) {
             $conn->commit();
             $mail = require "src/mailer.php";
@@ -181,7 +183,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
                 <span class="error_text" id="phone_number_error"></span>                
                 
-                <input type="submit" value="Register" class="button">
             </div>
             
             <!-- Right column -->
@@ -205,6 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <span class="error_text" id="role_error"></span>
                 
+                <input type="submit" value="Register" class="button">
             </div>
         </div>
     </form>
