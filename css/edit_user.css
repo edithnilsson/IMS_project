@@ -79,7 +79,7 @@ img.virus_tr{
     width: 100%;
 }
 
-/* Username can't be edited, so make that obvious */
+/* Username can't be edited, grey out*/
 .inputs input:disabled {
     background-color: #dfdede;
     color: #767474;
@@ -101,7 +101,7 @@ img.virus_tr{
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    background-color: #4a90d9; /* change to the button colour in register.css */
+    background-color: #4a90d9; 
     color: white;
 }
 
