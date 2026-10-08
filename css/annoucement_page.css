@@ -14,15 +14,11 @@ th {
 	border: 1px solid #54585d;
 }
 td {
-	color: #636363;
-	border: 1px solid #dddfe1;
+	color: #454343;
+	border: 1px solid #000000;
 }
-tr {
-	background-color: #f9fafb;
-}
-tr:nth-child(odd) {
-	background-color: #ffffff;
-}
+
+
 .pagination {
 	list-style-type: none;
 	padding: 10px 0;
