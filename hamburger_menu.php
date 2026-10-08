@@ -22,6 +22,7 @@
         <a href="new_case.php">Log a case</a>
         <a href="statistics.php">Statistics</a>
         <a href="new_announcements.php">Write Announcement</a>
+        <a href="announcements.php">Announcements</a>
     </nav>
 
     <a href="logout.php" class="sidebar-logout">
