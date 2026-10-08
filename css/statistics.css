@@ -183,6 +183,11 @@ input, select {
     max-height: 250px;
 }
 
+.automatic-warnings {
+    width: 100%;
+    max-width: 400px;
+}
+
 .automatic-warnings table {
     border-collapse: collapse;
     width: 100%;

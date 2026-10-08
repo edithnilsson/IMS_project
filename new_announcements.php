@@ -1,4 +1,5 @@
 <?php
+
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
 access('write_announcement');
@@ -7,12 +8,101 @@ date_default_timezone_set('Europe/Stockholm');
 
 require_once 'config/db.php';
 
+$message = "";
+$pathogen_id = "";
+$department_id = "";
+$warning_date = date('Y-m-d');
+$severity = "";
 
-//only process the submission after the form has been submitted (if) and then insert it into the database
+// If an automatic warning was carried over, get its information
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'prepare') {
+    $awarning_id = $_POST['awarning_id'];
+
+    $sql = "SELECT awarning_message, threshold_id, department_id, awarning_date
+            FROM Automatic_warning
+            WHERE awarning_id = ?
+            AND awarning_status = 'active'";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $awarning_id);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $automatic_warning = $result->fetch_assoc();
+
+    $stmt->close();
+
+    if ($automatic_warning) {
+        $message = $automatic_warning['awarning_message'];
+        $department_id = $automatic_warning['department_id'];
+        // Get pathogen and time window from the threshold table
+
+        $sql = "SELECT pathogen_id, threshold_time_window
+                FROM Threshold
+                WHERE threshold_id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $automatic_warning['threshold_id']);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $threshold = $result->fetch_assoc();
+
+        $stmt->close();
+
+        if ($threshold) {
+            $pathogen_id = $threshold['pathogen_id'];
+            $threshold_time_window = $threshold['threshold_time_window'];
+            // Get the date of the automatic warning
+
+            $warning_date = date(
+                'Y-m-d',
+                strtotime($automatic_warning['awarning_date'])
+            );
+            // Calculate the start of the threshold time window
+            $start_date = date(
+                'Y-m-d',
+                strtotime($warning_date . " -" . ($threshold_time_window - 1) . " days")
+            );
+            // Calculate the mean severity risk score
+            $sql = "SELECT AVG(sl.severity_risk_score) AS mean_risk
+                    FROM Infection_case ic
+                    JOIN Severity_level sl
+                        ON ic.severity_id = sl.severity_id
+                    WHERE ic.pathogen_id = ?
+                    AND ic.department_id = ?
+                    AND ic.case_diagnosis_date BETWEEN ? AND ?";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param(
+                "iiss",
+                $pathogen_id,
+                $department_id,
+                $start_date,
+                $warning_date
+            );
+
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $severity_result = $result->fetch_assoc();
+
+            $stmt->close();
+
+            if ($severity_result['mean_risk'] !== null) {
+                $severity = round($severity_result['mean_risk']);
+            }
+        }
+    }
+}
+
+//only process the submission after the form has been submitted (if) and then insert it into the database and also not use automatic warning fill ins for that
+
+elseif ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'publish') {
 
     // Fetch data from POST request
+    $awarning_id = $_POST['awarning_id'] ?? null;
     $user_id = $_SESSION['user_id'];
     $pathogen_id = $_POST['pathogen'];
     $department_id = $_POST['department'];
@@ -22,12 +112,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $warning_date = $warning_date . ' ' . date('H:i:s');
     // Get the hospital of the logged-in user
     $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
+
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $user = $result->fetch_assoc();
     $stmt->close();
+
     $hospital_id = $user['hospital_id']; 
 
     $message = $_POST['message'];
@@ -42,15 +134,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $result = $stmt->execute();
 
-    if ($result) {
-        echo "<script>alert('Warning created successfully!');</script>";
-    } else {
-        echo "<script>alert('Error creating warning: " . $stmt->error . "');</script>";
+$conn->begin_transaction();
+
+try {
+
+    $sql = "INSERT INTO Manual_warning
+            (mwarning_id, user_id, pathogen_id, department_id,
+             mwarning_severity_level, mwarning_date,
+             mwarning_message, mwarning_icon, hospital_id)
+            VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param(
+        "siiissis",
+        $user_id,
+        $pathogen_id,
+        $department_id,
+        $severity,
+        $warning_date,
+        $message,
+        $icon,
+        $hospital_id
+    );
+
+    $stmt->execute();
+    $stmt->close();
+
+
+    if ($awarning_id) {
+
+        $sql = "UPDATE Automatic_warning
+                SET awarning_status = 'published'
+                WHERE awarning_id = ?
+                AND awarning_status = 'active'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $awarning_id);
+        $stmt->execute();
+        $stmt->close();
     }
 
-    $stmt->close();
-}
+    $conn->commit();
 
+    echo "<script>alert('Warning created successfully!');</script>";
+
+} catch (Exception $e) {
+
+    $conn->rollback();
+
+    echo "<script>alert('Error creating warning.');</script>";
+}
+}
 
 //Get departments for the dropdown
 
@@ -67,6 +201,7 @@ if (!$dept_result) {
 
 $sql = "SELECT pathogen_id, pathogen_name FROM Pathogen";
 $pathogen_result = mysqli_query($conn, $sql);
+
 
 if (!$pathogen_result) {
     die("Error getting pathogens: " . mysqli_error($conn));
@@ -99,6 +234,15 @@ if (!$pathogen_result) {
         </div>
 
         <form method="POST" action="">
+            <input type="hidden"
+                name="action"
+                value="publish">
+
+            <?php if (isset($awarning_id)): ?>
+                <input type="hidden"
+                    name="awarning_id"
+                    value="<?= htmlspecialchars($awarning_id) ?>">
+            <?php endif; ?>
 
             <!-- ANNOUNCEMENT AREA -->
 
@@ -110,7 +254,7 @@ if (!$pathogen_result) {
                     name="message"
                     placeholder="Write the announcement here..."
                     required
-                ></textarea>
+                ><?= htmlspecialchars($message) ?></textarea>
 
             </div>
 
@@ -134,7 +278,8 @@ if (!$pathogen_result) {
 
                             <?php
                             while ($row = mysqli_fetch_assoc($pathogen_result)) {
-                                echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
+                                $selected = ($row['pathogen_id'] == $pathogen_id) ? 'selected' : '';
+                               echo "<option value='" . $row['pathogen_id'] . "' $selected>" . htmlspecialchars($row['pathogen_name']) . "</option>";
                             }
                             ?>
 
@@ -154,7 +299,8 @@ if (!$pathogen_result) {
 
                             <?php
                             while ($row = mysqli_fetch_assoc($dept_result)) {
-                                echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] . "</option>";
+                                $selected = ($row['department_id'] == $department_id) ? 'selected' : '';
+                                echo "<option value='" . $row['department_id'] . "' $selected>" . htmlspecialchars($row['department_name']) . "</option>";
                             }
                             ?>
 
@@ -169,8 +315,8 @@ if (!$pathogen_result) {
                         <input
                             type="date"
                             name="warning_date"
-                            value="<?php echo date('Y-m-d'); ?>"
-                            max="<?php echo date('Y-m-d'); ?>"
+                            value="<?= htmlspecialchars($warning_date) ?>"
+                            max="<?= date('Y-m-d') ?>"
                             required
                         >
 
@@ -194,6 +340,7 @@ if (!$pathogen_result) {
                                     type="radio"
                                     name="severity"
                                     value="1"
+                                    <?= ($severity == 1) ? 'checked' : '' ?>
                                     required
                                 >
 
@@ -207,7 +354,8 @@ if (!$pathogen_result) {
                                     type="radio"
                                     name="severity"
                                     value="2"
-                                    >
+                                    <?= ($severity == 2) ? 'checked' : '' ?>
+                                >
 
                                 <span class="bubble yellow"></span>
 
@@ -219,6 +367,7 @@ if (!$pathogen_result) {
                                     type="radio"
                                     name="severity"
                                     value="3"
+                                    <?= ($severity == 3) ? 'checked' : '' ?>
                                 >
 
                                 <span class="bubble red"></span>
