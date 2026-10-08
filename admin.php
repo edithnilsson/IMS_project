@@ -1,6 +1,7 @@
 <?php
 
 require "authenticate_check.php";
+// change to 'Admin' later 
 access('manage_user');
 require "config/db.php";
 
@@ -21,6 +22,33 @@ $user = $result->fetch_assoc();
 $stmt->close();
 
 $hospital_id = $user['hospital_id'];
+
+//adding departments: 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $department_name = $_POST['department_name'];
+
+    if (empty($department_name)){
+        echo "<script>alert('Department name can not be empty');</script>";
+    }
+    else {
+        $sql = "INSERT INTO Department (department_name, hospital_id) VALUES (?,?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $department_name, $hospital_id);
+        $result = $stmt->execute();
+        
+
+        $stmt -> close(); 
+
+
+        if ($result) {
+            echo "<script>alert('Department added!'); window.location.href='admin.php';</script>";
+        } else {
+            echo "<script>alert('Something went wrong');</script>";
+        }
+
+    }
+    }
+
 
 // Get pending account removal requests
 $deletion_requests = [];
@@ -104,6 +132,27 @@ $result = $stmt->get_result();
 
 while ($row = $result->fetch_assoc()) {
     $epidemiologists[] = $row;
+}
+
+$stmt->close();
+
+
+//Get Wards
+// Get epidemiologists and chief epidemiologists
+$departments= [];
+
+$sql = "SELECT department_id, department_name
+        FROM Department
+        WHERE hospital_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $departments[] = $row;
 }
 
 $stmt->close();
@@ -341,5 +390,55 @@ $stmt->close();
 </table>
 </div>
 <?php endif; ?>
+
+<!-- Wards -->
+<h2>Wards</h2>
+
+<form action="" method="post">
+Add a department: <input type="text" name="department_name"><br>
+<input type="submit">
+</form>
+
+<?php if (empty($departments)): ?>
+
+    <p>No wards found.</p>
+
+<?php else: ?>
+
+<div class="table-container">
+
+<table class="user-table">
+
+    <thead>
+        <tr>
+            <th>Departments</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($departments as $departments): ?>
+            <?php $Hospital = $departments['department_id'];
+            ?>
+            <tr>
+                <td><?= htmlspecialchars($departments['department_name']) ?></td>
+                <td>
+                    <!-- To know which ID was selected, put it into POST -->
+                    <form action="edit_department.php" method="POST">
+                        <input type="hidden"
+                               name="department_id"
+                               value="<?= htmlspecialchars($departments['department_id']) ?>">
+
+                        <button type="submit">Edit</button>
+                    </form>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+<?php endif; ?>
+
+
 </body>
 </html>
