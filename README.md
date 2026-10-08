@@ -134,19 +134,6 @@ InfTraction uses MySQL as its relational database management system. The databas
 The database uses primary and foreign keys to establish relationships between the tables and organise the infection-related information. The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
 
 
-### API endpoints
-
-The current version of InfTraction does not use a separate REST API. The PHP backend communicates directly with the MySQL database.
-
-- `index.php` – user login
-- `register.php` – user registration
-- `homepage.php` – displays the main dashboard
-- `new_case.php` – submits new infection cases
-- `statistics.php` – displays infection statistics
-- `new_announcements.php` – creates manual warnings/announcements
-- `login_processing.php` – processes login requests
-- `register_processing.php` – processes registration requests
-
 ### Environment Variables
 
 The application requires the following database configuration settings:
