@@ -20,6 +20,7 @@ InfTraction is a web-based infection surveillance system designed to support the
 
 Doctors can report infection cases using structured forms, including information such as patient ID, pathogen, date, ward and additional comments. The reported information is stored in a relational database and used to display statistics and visualisations of infection trends.
 Epidemiologists can monitor reported infection data, identify unusual patterns and, when necessary, create announcements to inform hospital staff and communicate warnings and preventative measures.
+Administrators can manage users and roles, approve new user accounts, remove existing users, and manage and edit infection cases, wards and announcements.
 The current system focuses on infection reporting, monitoring and communication within a hospital environment.
 
 ### Technologies Used
@@ -45,6 +46,10 @@ The current system focuses on infection reporting, monitoring and communication 
 - Identification of unusual increases in infection cases
 - Epidemiologist announcements
 - Communication of warnings and preventative measures
+- Admin approval of pending users and removal of existing users
+- Admin management of registered users and roles
+- Admin management and editing of infection cases, wards and announcements
+
 
 ## Quick Start Guide
 
@@ -108,7 +113,7 @@ After epidemiologists have identified an unusual increase in infections or other
 
 ### Database
 
-InfTraction uses MySQL as its relational database management system. The database consists of ten tables connected through primary and foreign keys.
+InfTraction uses MySQL as its relational database management system. The database consists of several tables connected through primary and foreign keys.
 
 - **System_user** – stores user account information, including username, password hash, email, phone number and user role.
 - **Patient** – stores patient information, including patient ID, age and sex.
@@ -120,6 +125,11 @@ InfTraction uses MySQL as its relational database management system. The databas
 - **Manual_warning** – stores warnings and announcements created by epidemiologists.
 - **Automatic_warning** – stores automatic warning information.
 - **Threshold** – stores the threshold values and time windows used for automatic warning functionality.
+- **Hospital** – stores hospital information.
+- **Roles** – stores the different user roles in the system.
+- **Permissions** – stores the permissions available in the system
+- **Role_permission** – connects roles with their permissions.
+- **Account_deletion_request** – stores requests to remove existing user accounts
 
 The database uses primary and foreign keys to establish relationships between the tables and organise the infection-related information. The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
 
