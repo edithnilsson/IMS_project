@@ -152,6 +152,85 @@ class StatisticsService
         return ['labels' => $labels, 'data' => $data];
     }
 
+    /**
+     * Cross - hospital case counts.
+     * Return one row per (hospital, pathogen) combination,
+     * Also include 0 combination
+     */
+
+    public function crossHospitalCases(
+        string $start,
+        string $end,
+        ?string $hospitalId = null,
+        ?int $pathogenId = null
+    ): array {
+        $params = [$start, $end];
+        $types  = 'ss';
+        $where  = '';
+
+        if ($hospitalId !== null) {
+            $where   .= ' AND h.hospital_id = ?';
+            $params[] = $hospitalId;
+            $types   .= 's';       // hospital_id is VARCHAR(36)
+        }
+
+        if ($pathogenId !== null) {
+            $where   .= ' AND p.pathogen_id = ?';
+            $params[] = $pathogenId;
+            $types   .= 'i';
+        }
+
+        $sql = "
+            SELECT
+                h.hospital_id,
+                h.hospital_name,
+                p.pathogen_id,
+                p.pathogen_name,
+                COALESCE(COUNT(ic.case_id), 0) AS cases
+            FROM Hospital h
+            CROSS JOIN Pathogen p
+            LEFT JOIN Infection_case ic
+                ON ic.hospital_id = h.hospital_id
+                AND ic.pathogen_id = p.pathogen_id
+                AND ic.case_infection_date BETWEEN ? AND ?
+            WHERE 1 = 1
+            {$where}
+            GROUP BY h.hospital_id, h.hospital_name, p.pathogen_id, p.pathogen_name
+            ORDER BY h.hospital_name ASC, p.pathogen_name ASC
+        ";
+
+        return $this->db->query($sql, $types, $params);
+    }
+
+    /**
+     * Return the chief epidemiologist for each hospital.
+     * Assumes a role named 'chief_epidemiologist exist in Roles.
+     */
+    public function chiefEpidemiologists(): array {
+        $sql = "
+            SELECT
+                u.hospital_id,
+                u.user_name,
+                u.user_surname,
+                u.user_email,
+                u.user_phone_number
+            FROM System_user u
+            JOIN Roles r ON u.role_id = r.role_id
+            WHERE r.role_name = 'chief_epidemiologist'
+            AND u.user_status = 'active'
+            ORDER BY u.hospital_id ASC
+        ";
+
+        $rows = $this->db->query($sql);
+        $map = [];
+        foreach ($rows as $r) {
+            if (!isset($map[$r['hospital_id']])) {
+                $map[$r['hospital_id']] = $r;
+            }
+        }
+        return $map;
+    }
+
     // -------- private helpers --------
 
     private function shapeTimeSeries(array $rows, array $pathogenIds, string $start, string $end): array
