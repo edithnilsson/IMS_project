@@ -8,9 +8,32 @@ date_default_timezone_set('Europe/Stockholm');
 
 require_once 'config/db.php';
 
+$user_id = $_SESSION['user_id'];
+
+// Get the hospital of the logged-in doctor
+$sql = "SELECT hospital_id
+        FROM System_user
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+
+$hospital_id = $user['hospital_id'];
+
+
 // Get departments for the dropdown
-$sql = "SELECT department_id, department_name FROM Department";
-$department_result = $conn->query($sql);
+$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+$department_result = $stmt->get_result();
+$stmt->close();
 
 if (!$department_result) {
 die("Error getting departments: " . $conn->error);
@@ -42,7 +65,9 @@ $department_id = $_POST['ward'];
 $patient_id = $_POST['patient_id'];
 $severity_id = $_POST['severity'];
 $comments = $_POST['comments'];
+
 // Get the hospital of the logged-in user
+/* We can probably remove this as it already exists above - but at the moment it is not working due to another thing, so i dont want to remove yet 
 $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $user_id);
@@ -51,7 +76,7 @@ $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 $stmt->close();
 $hospital_id = $user['hospital_id'];
-
+*/
 
 // Insert the case into Infection_case
 $sql = "INSERT INTO Infection_case
@@ -78,7 +103,9 @@ $comments,
 $hospital_id
 );
 
+
 if ($stmt->execute()) {
+
     require_once 'check_thresholds.php';
 
     checkThreshold(
@@ -89,6 +116,7 @@ if ($stmt->execute()) {
     $hospital_id
     );
 
+
     echo "<script>alert('Case registered successfully!');</script>";
 } else {
     echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
@@ -96,6 +124,7 @@ if ($stmt->execute()) {
 
 $stmt->close();
 }
+
 
 ?>
 

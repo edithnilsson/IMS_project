@@ -8,6 +8,25 @@ date_default_timezone_set('Europe/Stockholm');
 
 require_once 'config/db.php';
 
+
+$user_id = $_SESSION['user_id'];
+
+// Get the hospital of the logged-in doctor
+$sql = "SELECT hospital_id
+        FROM System_user
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+
+$hospital_id = $user['hospital_id'];
+
 $message = "";
 $pathogen_id = "";
 $department_id = "";
@@ -110,29 +129,10 @@ elseif ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'pub
     $warning_date = $_POST['warning_date'];
     // add timestamp 
     $warning_date = $warning_date . ' ' . date('H:i:s');
-    // Get the hospital of the logged-in user
-    $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
-    $stmt->close();
-
-    $hospital_id = $user['hospital_id']; 
 
     $message = $_POST['message'];
     $icon = $_POST['icon'];
-
-    $sql = "INSERT INTO Manual_warning (mwarning_id, user_id, pathogen_id, department_id, mwarning_severity_level, mwarning_date, mwarning_message, mwarning_icon, hospital_id)
-    VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-
-    $stmt->bind_param("siiissis", $user_id, $pathogen_id, $department_id, $severity, $warning_date, $message, $icon, $hospital_id);
-
-    $result = $stmt->execute();
 
 $conn->begin_transaction();
 
@@ -188,8 +188,13 @@ try {
 
 //Get departments for the dropdown
 
-$sql = "SELECT department_id, department_name FROM Department";
-$dept_result = mysqli_query($conn, $sql);
+$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+$dept_result = $stmt->get_result();
+$stmt->close();
+
 
 if (!$dept_result) {
     die("Error getting departments: " . mysqli_error($conn));
