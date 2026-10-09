@@ -10,10 +10,7 @@ class Role
 
         //  $this refers to the current object's properties and methods
         $this->permissions = array();
-
-
     }
-
 
     // this function will return a role object ($role) with its associated permissions
 
@@ -25,7 +22,7 @@ class Role
     $role = new Role();
 
      // queries the database for infortmation to fill the "box" with
-    $sql = "SELECT p.permission_desc 
+    $sql = "SELECT p.permission_desc, p.permission_page
             FROM Role_permission rp
             JOIN Permissions p ON rp.permission_id = p.permission_id
             WHERE rp.role_id = ?";
@@ -39,24 +36,21 @@ class Role
     // fill the box 
     // every permission a role found in database will be set to true
         while ($row = $result->fetch_assoc()) {
-        $role->permissions[$row["permission_desc"]] = true;
+        $role->permissions[$row["permission_desc"]] = $row["permission_page"];
         }
 
     // returns the "box" filled with all permissions a role have
         return $role;
-
-
     }
-
 
     // check if a role has a specific permission
     public function hasPerm($permission) {
-
-
         return isset($this->permissions[$permission]);
-
-
     }
 
+    // returns all permissions the user has 
+    public function getPerm() {
+        return $this -> permissions;
+    }
 
 }

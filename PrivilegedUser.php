@@ -15,7 +15,7 @@ class PrivilegedUser
     protected function __construct() {
     }
 
-    // Hämtar användare från System_user baserat på användarnamn
+    // Fetch user from  System_user based on  på username
     public static function getByUsername($username) {
         global $conn; 
 
@@ -26,7 +26,7 @@ class PrivilegedUser
         $stmt->bind_param("s", $username);
         $stmt->execute();
         $result = $stmt->get_result();
-        //checks if the 
+
         if ($result->num_rows === 1) {
             $row = $result->fetch_assoc();
 
@@ -40,7 +40,6 @@ class PrivilegedUser
             $privUser->user_password_hash = $row["user_password_hash"];
             $privUser->email_addr = $row["user_email"];
 
-            // calls the initRoles function 
             $privUser->initRoles();
 
             // returns a full object 
@@ -50,9 +49,9 @@ class PrivilegedUser
         }
     }
 
-    // Laddar rollen och dess tillhörande rättigheter
+
+    // pulls the role and its privileges 
     protected function initRoles() {
-        // specific for this specific object, refers to the created PrivilegedUser object $privUser
         $this->roles = array();
 
         //checks if the user has an assigned role
@@ -63,9 +62,9 @@ class PrivilegedUser
         }
     }
 
-    // Kontrollerar om användaren har en specifik rättighet
+    // checks if the user has a specific  privilege
     public function hasPrivilege($perm) {
-        // for each role a user has (for now only one role)
+
         foreach ($this->roles as $role) {
             //checks what permissions a role has
             if ($role->hasPerm($perm)) {
@@ -74,4 +73,17 @@ class PrivilegedUser
         }
         return false;
     }
+
+    // what pages does a user have access to? 
+    public function getPages() {
+        $pages = array();
+        foreach ($this->roles as $role) {
+            $pages = array_merge($pages, $role->getPerm());
+        }
+        return $pages;
+    }
 }
+
+    
+
+?> 
