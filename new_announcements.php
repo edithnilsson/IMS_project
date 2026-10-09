@@ -11,7 +11,7 @@ require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];
 
-// Get the hospital of the logged-in doctor
+// Get the hospital of the logged-in epidemiologist 
 $sql = "SELECT hospital_id
         FROM System_user
         WHERE user_id = ?";
