@@ -14,6 +14,8 @@ class Role
     public static function getRolePerms($role_id) {
         global $conn;
 
+        $role = new Role();
+        
      // queries the database for infortmation to fill the "box" with
     $sql = "SELECT p.permission_desc, p.permission_page
             FROM Role_permission rp
