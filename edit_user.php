@@ -1,7 +1,7 @@
 <?php
 
 require "authenticate_check.php";
-access('manage_user');
+access('Admin');
 require "config/db.php";
 
 // user transfer from the edit button
