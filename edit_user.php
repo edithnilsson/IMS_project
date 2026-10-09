@@ -35,13 +35,13 @@ if (isset($_POST['save'])) {
     } elseif (!$email_format_valid) {
         echo "<script>alert('Please enter a valid email address'); window.location.href='admin.php';</script>";
     } elseif (empty($phone_number)) {
-        echo "<script>alert('Phone number can not be empty'); window.history.back()';</script>";
+        echo "<script>alert('Phone number can not be empty'); window.history.back();</script>";
     } elseif (!$phone_number_format_valid) {
-        echo "<script>alert('Phone number can only contain numbers'); window.location.href='admin.php'';</script>";
+        echo "<script>alert('Phone number can only contain numbers'); window.location.href='admin.php';</script>";
     } elseif (empty($role_id)) {
-        echo "<script>alert('Please pick a role'); window.history.back()';</script>";
+        echo "<script>alert('Please pick a role'); window.history.back();</script>";
     } elseif (empty($hospital_id)) {
-        echo "<script>alert('Please pick a hospital'); window.history.back()';</script>";
+        echo "<script>alert('Please pick a hospital'); window.history.back();</script>";
     } else {
         $sql = "UPDATE System_user
                 SET user_name = ?, user_surname = ?, user_email = ?, user_phone_number = ?, role_id = ?, hospital_id = ?
@@ -94,15 +94,13 @@ $hospital_result = $conn->query($sql);
         <link rel="stylesheet" href="css/edit_user.css">
     </head>
     <body>
-        <?php include 'hamburger_menu.php'; ?>
-
         <!-- Logo and background -->
-        <img src="/Pictures/logo_nobackground.png" class="logo">
-        <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-        <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-        <img src="/Pictures/rings_br_nobg.png" class="rings_br">
+        <?php include 'navigation_bar.php'; ?>
         <h1 class="title">Edit User</h1>
-
+        <img src="/Pictures/Logo.png" class="logo">
+        <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
+        <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
+        <img src="/Pictures/rings_br_nobg.png" class="rings_br">
         <form action="edit_user.php" method="POST" class="inputs">
             <input type="hidden" name="user_id" value="<?= htmlspecialchars($target_user['user_id']) ?>">
         
