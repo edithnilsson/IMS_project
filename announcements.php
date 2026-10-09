@@ -1,7 +1,37 @@
 <?php
 require "config/db.php";   
+require "authenticate_check.php";
+
+$user_id = $_SESSION['user_id'];
+
+// Get the hospital of the logged-in epidemiologist 
+$sql = "SELECT hospital_id
+        FROM System_user
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+
+$hospital_id = $user['hospital_id'];
+
 // Get the total number of announcements in the database
-$total_announcements = $conn->query('SELECT COUNT(*) FROM Manual_warning')->fetch_row()[0];
+$sql="SELECT COUNT(*) 
+FROM Manual_warning
+WHERE hospital_id = ?";
+
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+$result = $stmt-> get_result();
+$total_announcements  = $result->fetch_row()[0];
+$stmt->close();
+// $total_announcements = $conn->query('SELECT COUNT(*) FROM Manual_warning')->fetch_row()[0];
 
 // Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
 $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
@@ -9,22 +39,25 @@ $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'
 // Number of results to show on each page.
 $num_results_on_page = 2;
 
+// Fetch all relevant infomration 
 
-if ($stmt = $conn->prepare('
-    SELECT mw.*, su.user_name, su.user_surname, p.pathogen_name
-    FROM Manual_warning mw
-    JOIN System_user su ON mw.user_id = su.user_id 
-    JOIn Pathogen p ON mw.pathogen_id = p.pathogen_id
-    ORDER BY mwarning_date DESC 
-    LIMIT ?,?')) {
-	// Calculate the page to get the results we need from our table.
-	$calc_page = ($current_page  - 1) * $num_results_on_page;
-	$stmt->bind_param('ii', $calc_page, $num_results_on_page);
-	$stmt->execute(); 
-	// Get the results...
-	$result = $stmt->get_result();
-	$stmt->close();
-}
+$sql="SELECT mw.*, su.user_name, su.user_surname, p.pathogen_name, d.department_name
+FROM Manual_warning mw
+JOIN System_user su ON mw.user_id = su.user_id 
+JOIN Pathogen p ON mw.pathogen_id = p.pathogen_id
+JOIN Department d ON mw.department_id = d.department_id
+WHERE mw.hospital_id = ?
+ORDER BY mwarning_date DESC 
+LIMIT ?,?";
+
+$calc_page = ($current_page  - 1) * $num_results_on_page;
+$stmt= $conn->prepare($sql);
+
+if ($stmt) {
+    $stmt->bind_param('sii', $hospital_id, $calc_page, $num_results_on_page);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $stmt->close();}
 
 ?>
 
@@ -40,6 +73,9 @@ if ($stmt = $conn->prepare('
     <title>Document</title>
 </head>
 <body>
+
+<?php include 'hamburger_menu.php'; ?>
+<h1> Announcements </h1>
 <table>
 	<tr>
 		<th>Date</th>
@@ -53,7 +89,7 @@ if ($stmt = $conn->prepare('
 		<td><?php echo $row['mwarning_date']; ?></td>
 		<td><?php echo $row['mwarning_message']; ?></td>
         <td><?php echo $row['pathogen_name']; ?></td>
-        <td><?php echo $row['department_id ']; ?></td>
+        <td><?php echo $row['department_name']; ?></td>
 		<td><?php echo "{$row['user_name']} {$row['user_surname']}"; ?></td>
 	</tr>
 	<?php endwhile; ?>
@@ -95,7 +131,7 @@ if ($page_count > 0): ?>
         <?php endif; ?>
     
         <!-- show the next button if you are not already on the last page -->
-        <?php if ($current_page  < ceil($total_announcements/ $num_results_on_page)): ?>
+        <?php if ($current_page < ceil($total_announcements/ $num_results_on_page)): ?>
         <li><a href="announcements.php?page=<?php echo $current_page +1 ?>">Next</a></li>
         <?php endif; ?>
     </ul>
