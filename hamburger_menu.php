@@ -23,6 +23,7 @@
         <a href="statistics.php">Statistics</a>
         <a href="new_announcements.php">Write Announcement</a>
         <a href="announcements.php">Announcements</a>
+        <a href="cross_hospital_cases.php">Other hospitals</a>
     </nav>
 
     <a href="logout.php" class="sidebar-logout">

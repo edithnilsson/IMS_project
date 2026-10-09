@@ -1,0 +1,128 @@
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: linear-gradient(90deg, #daf8e0, #c9ebfd);
+    margin: 0;
+    padding: 2rem;
+    color: #222;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+.page-header .subtitle {
+    color: #555;
+    margin: 0.25rem 0 1.25rem 0;
+    font-size: 0.9rem;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: #fff;
+    padding: 1rem 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 1rem;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 160px;
+}
+.filter label {
+    font-size: 0.8rem;
+    color: #444;
+}
+.filter select,
+.filter input[type="date"] {
+    padding: 0.4rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.filter-actions {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.5rem;
+}
+.filter-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.filter-actions button[type="submit"] {
+    background: #2980b9;
+    color: white;
+}
+.filter-actions button#resetBtn {
+    background: #eee;
+    color: #333;
+}
+
+.status {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0.5rem 0 1rem 0;
+}
+
+.table-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+thead {
+    background: #f4f6f9;
+}
+thead th {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e5e7eb;
+}
+thead th.num {
+    text-align: right;
+}
+
+tbody td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: top;
+}
+tbody td.num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+tbody td.num.zero {
+    color: #999;
+}
+
+tbody td .contact {
+    font-size: 0.8rem;
+    color: #555;
+}
+
+tbody tr:hover {
+    background: #fafbfd;
+}
+
+td.empty {
+    text-align: center;
+    color: #888;
+    padding: 1.5rem;
+}
