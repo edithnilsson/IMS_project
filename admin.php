@@ -1,8 +1,7 @@
 <?php
 
 require "authenticate_check.php";
-// change to 'Admin' later 
-access('manage_user');
+access('Admin');
 require "config/db.php";
 
 $user_id = $_SESSION['user_id'];

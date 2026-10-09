@@ -2,15 +2,42 @@
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
 
-
 require "config/db.php";   
+
+include "navigation_bar.php";
+
+$user_id = $_SESSION['user_id'];
+
+// Get the hospital of the logged-in epidemiologist 
+$sql = "SELECT hospital_id
+        FROM System_user
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+
+$hospital_id = $user['hospital_id'];
+
 
 $sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
 FROM Manual_warning 
+WHERE hospital_id = ? 
 ORDER BY mwarning_date DESC   
 LIMIT 3";
 
-$result = $conn->query($sql);
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$stmt->close();
+
+
 
 
 $mwarning_severity_level = [

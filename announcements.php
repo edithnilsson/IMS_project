@@ -37,7 +37,7 @@ $stmt->close();
 $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
 
 // Number of results to show on each page.
-$num_results_on_page = 2;
+$num_results_on_page = 10;
 
 // Fetch all relevant infomration 
 

@@ -2,7 +2,7 @@
 
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
-access('write_announcement');
+access('Write an announcement');
 
 date_default_timezone_set('Europe/Stockholm');
 

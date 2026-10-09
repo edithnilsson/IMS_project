@@ -2,7 +2,7 @@
 
 // checks if the user has permission to enter this page
 require "authenticate_check.php";
-access('log_case');
+access('Log a case');
 
 date_default_timezone_set('Europe/Stockholm');
 
