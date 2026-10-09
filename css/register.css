@@ -131,3 +131,51 @@ input, select {
     margin-bottom: 10px;
     padding-left: 70px;
 }
+
+/* Terms of Service popup */
+#terms_dialog {
+    width: 70%;
+}
+
+/* Dimmed background behind the popup */
+#terms_dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.terms_buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Style button as a link */
+.terms_link {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: #0645ad;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#terms {
+    width: 35px !important;
+    height: 35px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.terms {
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+label[for="terms"] {
+    font-size: 20px !important;
+    font-weight: normal !important;
+    margin: 0 !important;
+}

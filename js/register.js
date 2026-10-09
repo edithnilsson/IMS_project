@@ -133,3 +133,20 @@ function checkHospital() {
 
 document.getElementById("hospital_id").addEventListener("focus", checkHospital);
 document.getElementById("hospital_id").addEventListener("input", checkHospital);
+
+
+// Handle how "I agree" and "Close" button work in the popup/modal
+const termsDialog = document.getElementById("terms_dialog");
+// Open the popup
+document.getElementById("open_terms").addEventListener("click", function () {
+    termsDialog.showModal();
+});
+// "I agree" 
+document.getElementById("agree_terms").addEventListener("click", function () {
+    document.getElementById("terms").checked = true;
+    termsDialog.close();
+});
+// "Close"
+document.getElementById("close_terms").addEventListener("click", function () {
+    termsDialog.close();
+});
