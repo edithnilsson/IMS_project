@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label for="phone_number"><img src="/Pictures/phone.icon-bgremoved.png" class="icon"></label>
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
                 <span class="error_text" id="phone_number_error"></span>                
-                
+                  
                 <input type="submit" value="Register" class="button">
             </div>
             
@@ -212,22 +212,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="checkbox" id="terms" name="terms" required>
                     <label for="terms">I agree to the <button type="button" id="open_terms" class="terms_link">Terms of Service</button></label>
                 </div>
-
             </div>
         </div>
     </form>
 
     <dialog id="terms_dialog">
-        <h2>Terms of Service</h2>
-        <br>
-        <br>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dolores nostrud obcaecati quia obcaecati enim mollitia aliqua id ullamco minim. Numquam minim veritatis tempora ipsum mollit ullamco ipsum labore laboris neque. Eiusmod enim mollit voluptate sint lorem cupiditate nostrud provident nemo voluptatum. Quaerat at obcaecati magna quisquam accusamus sit iusto sunt aliquip fugit eos. Ipsam officia dolore est dignissimos ipsam mollit animi eos ipsa labore lorem veritatis sit duis.
-        <br>
-        <br>
-        Odio ex deleniti excepteur explicabo. Quia quos culpa non vero laborum culpa modi magnam ex. Cupiditate dicta laborum duis quia cillum quos lorem voluptate explicabo enim sunt inventore sed. Aute exercitation excepteur excepturi aute animi nostrud porro blanditiis dicta et excepteur similique sint non.
-        <br>
-        <br>
-        Sint non ex aut dignissimos ut praesentium excepturi explicabo porro velit. Architecto dolore iusto magnam reprehenderit at vitae obcaecati provident in illo labore cupidatat. Lorem voluptatum deleniti vero non eos. Quaerat ipsum quis ab dolore illo corrupti. Ratione aspernatur fugiat neque animi incididunt molestias.        <div class="terms_buttons">
+        <h1>Terms of Service</h1>
+        <h2>1. Information we store</h2>
+        <p>When you register we store your username, name, email address, phone number, role and hospital. Your password is stored as a hash and cannot be read by us or anyone else. This information is used to run your account and is visible to administrators at your hospital.</p>
+        <h2>2. Data entered by users</h2>
+        <p>Doctors, epidemiologists and other users can enter cases, announcements and other data in InfTraction. Users are fully responsible for what they enter, including making sure it is correct, lawful and handled in line with their hospital's rules.</p>
+        <h2>3. No liability</h2>
+        <p>We take no liability for the content that users store or publish in the system, or for decisions made based on it. InfTraction is provided "as is", without any guarantee that it is accurate, always available or free of errors.</p>
+        <h2>4. Your account</h2>
+        <p>You are responsible for keeping your password secret and for everything that happens under your account. Administrators can edit or remove accounts. You must verify your email address before you can log in.</p>
+        <h2>5. Changes</h2>
+        <p>These terms may be updated from time to time. Continuing to use InfTraction means you accept the updated terms.</p>
+        <div class="terms_buttons">
             <button type="button" id="close_terms">Close</button>
             <button type="button" id="agree_terms">I agree</button>
         </div>
