@@ -202,3 +202,66 @@ input, select {
 .automatic-warnings th {
     background: #94d9ff;
 }
+
+.cases-section {
+    margin: 1.5rem 0;
+}
+
+.toggle-cases-button {
+    background: #2980b9;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+.toggle-cases-button:hover {
+    background: #21618c;
+}
+
+.cases-container {
+    margin-top: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    overflow-x: auto;
+}
+.cases-container h2 {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+}
+
+.cases-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+.cases-table thead {
+    background: #f4f6f9;
+}
+.cases-table th,
+.cases-table td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+    vertical-align: top;
+}
+.cases-table th {
+    font-weight: 600;
+    color: #333;
+}
+.cases-table tr:hover {
+    background: #fafbfd;
+}
+.cases-table td:nth-child(1),
+.cases-table td:nth-child(2) {
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+.cases-container .empty {
+    color: #888;
+    text-align: center;
+    padding: 1rem 0;
+}

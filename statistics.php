@@ -80,6 +80,52 @@ if ($can_write_announcement) {
     }
     $stmt->close();
 }
+
+$infection_cases = [];
+
+// Get the current user's hospital (safe even if $hospital_id was not set above)
+if (!isset($hospital_id)) {
+    $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $_SESSION['user_id']);
+    $stmt->execute();
+    $hospital_id = $stmt->get_result()->fetch_assoc()['hospital_id'] ?? null;
+    $stmt->close();
+}
+
+if (!empty($hospital_id)) {
+    $sql = "
+        SELECT
+            ic.case_id,
+            ic.case_infection_date,
+            ic.case_diagnosis_date,
+            ic.case_comments,
+            p.pathogen_name,
+            s.severity_name,
+            d.department_name,
+            u.user_name,
+            u.user_surname
+        FROM Infection_case ic
+        JOIN Pathogen p       ON ic.pathogen_id   = p.pathogen_id
+        JOIN Severity_level s ON ic.severity_id   = s.severity_id
+        JOIN Department d     ON ic.department_id = d.department_id
+        JOIN System_user u    ON ic.user_id       = u.user_id
+        WHERE ic.hospital_id = ?
+        ORDER BY ic.case_infection_date DESC
+        LIMIT 500
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $hospital_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    while ($row = $result->fetch_assoc()) {
+        $infection_cases[] = $row;
+    }
+    $stmt->close();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -158,7 +204,54 @@ if ($can_write_announcement) {
         <?php endif; ?>
     </div>
 <?php endif; ?>
+    <div class="cases-section">
+        <button type="button" id="toggleCasesBtn" class="toggle-cases-button">
+            Show all cases
+        </button>
 
+        <div id="casesContainer" class="cases-container" style="display: none;">
+            <h2>All Infection Cases</h2>
+
+            <?php if (empty($infection_cases)): ?>
+                <p class="empty">No infection cases recorded.</p>
+            <?php else: ?>
+                <table class="cases-table">
+                    <thead>
+                        <tr>
+                            <th>Infection date</th>
+                            <th>Diagnosis date</th>
+                            <th>Department</th>
+                            <th>Pathogen</th>
+                            <th>Severity</th>
+                            <th>Reported by</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($infection_cases as $c): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($c['case_infection_date']) ?></td>
+                                <td><?= htmlspecialchars($c['case_diagnosis_date']) ?></td>
+                                <td><?= htmlspecialchars($c['department_name']) ?></td>
+                                <td><?= htmlspecialchars($c['pathogen_name']) ?></td>
+                                <td><?= htmlspecialchars(ucfirst($c['severity_name'])) ?></td>
+                                <td>
+                                    <?= htmlspecialchars(
+                                        trim($c['user_name'] . ' ' . $c['user_surname'])
+                                    ) ?>
+                                </td>
+                                <td>
+                                    <?= $c['case_comments']
+                                        ? htmlspecialchars($c['case_comments'])
+                                        : '—' ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php endif; ?>
+        </div>
+    </div>
     <form class="inputs" id="filterForm">
         <div class="column">
             <label class="form-label" for="pathogen">
@@ -276,6 +369,19 @@ const barChart = new Chart(document.getElementById('barChart'), {
         },
     },
 });
+
+// ---------- Toggle the infection cases table ----------
+(function initCasesToggle() {
+    const btn       = document.getElementById('toggleCasesBtn');
+    const container = document.getElementById('casesContainer');
+    if (!btn || !container) return;
+
+    btn.addEventListener('click', () => {
+        const isHidden = container.style.display === 'none';
+        container.style.display = isHidden ? 'block' : 'none';
+        btn.textContent = isHidden ? 'Hide cases' : 'Show all cases';
+    });
+})();
 
 // ---------- Fetch helpers ----------
 
