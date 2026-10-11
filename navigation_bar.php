@@ -24,7 +24,7 @@ $pages = $_SESSION['privUser']->getPages();
   <!-- homepage  -->
   <a href="homepage.php">Home</a>
   
-  <!-- loops through the  -->
+  <!-- loops through the pages the user have access to  -->
   <?php foreach ($pages as $desc => $url): ?>
     <a href="<?php echo $url; ?>"><?php echo $desc; ?></a><br>
   <?php endforeach; ?>
@@ -32,7 +32,7 @@ $pages = $_SESSION['privUser']->getPages();
   <a href="announcements.php">Announcements</a>
   <a href="statistics.php">Statistics</a>
   
-
+  <a href="user_page.php" class="left">Profile</a>
   <a href="logout.php" class="split">Log out</a>
 </div>
 

@@ -25,7 +25,12 @@ body {
   
   /* Create a right-aligned (split) link inside the navigation bar */
   .topnav a.split {
-    margin-left: auto; 
     background-color: #04AA6D;
     color: white;
   }
+  .topnav a.left {
+    margin-left: auto; 
+    background-color: #627292;
+    color: white;
+  }
+
