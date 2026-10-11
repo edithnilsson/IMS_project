@@ -30,8 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
 
 // Check if the user can write announcements
 $can_write_announcement =
-    $_SESSION['privUser']->hasPrivilege('write_announcement');
-
+    $_SESSION['privUser']->hasPrivilege('Write an announcement');
 $automatic_warnings = [];
 
 if ($can_write_announcement) {

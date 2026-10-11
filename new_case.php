@@ -103,23 +103,59 @@ $comments,
 $hospital_id
 );
 
-
+// Handling of either the automatic warning or the dangerous case notif
 if ($stmt->execute()) {
 
-    require_once 'check_thresholds.php';
+    // Check if the pathogen is dangerous
+    $sql = "SELECT pathogen_dangerous
+            FROM Pathogen
+            WHERE pathogen_id = ?";
 
-    checkThreshold(
-    $conn,
-    $pathogen_id,
-    $diagnosis_date,
-    $department_id,
-    $hospital_id
-    );
+    $pathogen_stmt = $conn->prepare($sql);
+    $pathogen_stmt->bind_param("i", $pathogen_id);
+    $pathogen_stmt->execute();
 
+    $result = $pathogen_stmt->get_result();
+    $pathogen = $result->fetch_assoc();
 
-    echo "<script>alert('Case registered successfully!');</script>";
+    $pathogen_stmt->close();
+
+    if ($pathogen && $pathogen['pathogen_dangerous']) {
+
+        // If the pathogen is dangerous, deal with that:
+        require_once 'handle_dangerous_case.php';
+
+        $email_sent = handleDangerousCase(
+            $conn,
+            $pathogen_id,
+            $diagnosis_date,
+            $hospital_id
+        );
+
+        if ($email_sent) {
+            echo "<script>alert('Dangerous case registered and notification emails sent.');</script>";
+        } else {
+            echo "<script>alert('Case registered, but some notification emails could not be sent.');</script>";
+        }
+
+    } else {
+
+        // If the pathogen is not, check the automatic warning stuff
+        require_once 'check_thresholds.php';
+
+        checkThreshold(
+            $conn,
+            $pathogen_id,
+            $diagnosis_date,
+            $department_id,
+            $hospital_id
+        );
+
+        echo "<script>alert('Case registered successfully!');</script>";
+    }
+
 } else {
-    echo "<script>alert('Error registering case: " . $stmt->error . "');</script>";
+    echo "<script>alert('Error registering case: " . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8') . "');</script>";
 }
 
 $stmt->close();

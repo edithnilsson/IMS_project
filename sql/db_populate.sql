@@ -73,6 +73,10 @@ VALUES
 ('Mycobacterium tuberculosis', 'bacterium', 'droplet', 3 , 3),
 ('Ebola', 'virus', 'contact', 4, 1);
 
+UPDATE Pathogen
+SET pathogen_dangerous = TRUE
+WHERE pathogen_name IN ('Ebola');
+
 
 INSERT INTO Severity_level (severity_name, severity_risk_score)
 VALUES
