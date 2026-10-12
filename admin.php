@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     }
 
- // Get pending users    just checking if its working 
+ // Get pending users   checking 
 $pending_users = [];
 
 $sql = "SELECT user_id, user_name, user_surname,
@@ -70,7 +70,7 @@ while ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 
- // Get pending users    just checking if its working 
+ 
 
 
 // Get pending account removal requests
@@ -194,10 +194,6 @@ $stmt->close();
 
 <?php include 'hamburger_menu.php'; ?>
 
-<!-- Pending Accounts -->
-
-<h2>Pending Accounts</h2>
-
 
 <!-- Pending Accounts checking -->
 
@@ -248,7 +244,7 @@ $stmt->close();
 
 <?php } ?>
 
-<!-- Account Removal Requests checking -->
+
 
 
 <!-- Account Removal Requests -->
