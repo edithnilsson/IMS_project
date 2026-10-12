@@ -206,7 +206,8 @@ class StatisticsService
      * Return the chief epidemiologist for each hospital.
      * Assumes a role named 'chief_epidemiologist exist in Roles.
      */
-    public function chiefEpidemiologists(): array {
+    public function chiefEpidemiologists(): array
+    {
         $sql = "
             SELECT
                 u.hospital_id,
@@ -216,12 +217,21 @@ class StatisticsService
                 u.user_phone_number
             FROM System_user u
             JOIN Roles r ON u.role_id = r.role_id
-            WHERE r.role_name = 'chief_epidemiologist'
+            WHERE r.role_name IN ('chief_epidemiologist', 'Epidemiologist', 'epidemiologist')
             AND u.user_status = 'active'
-            ORDER BY u.hospital_id ASC
+            ORDER BY
+                CASE r.role_name
+                    WHEN 'chief_epidemiologist' THEN 0
+                    WHEN 'Epidemiologist' THEN 1
+                    WHEN 'epidemiologist' THEN 2
+                    ELSE 3
+                END,
+                u.hospital_id ASC,
+                u.user_surname ASC
         ";
 
         $rows = $this->db->query($sql);
+
         $map = [];
         foreach ($rows as $r) {
             if (!isset($map[$r['hospital_id']])) {

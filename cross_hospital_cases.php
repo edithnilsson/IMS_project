@@ -1,6 +1,6 @@
 <?php
 require "authenticate_check.php";
-access('Other hospitals');
+access('view_cross_hospital');
 
 require "config/db.php";
 
