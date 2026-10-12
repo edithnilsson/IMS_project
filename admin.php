@@ -1,7 +1,8 @@
 <?php
 
 require "authenticate_check.php";
-access('Admin');
+// change to 'Admin' later 
+access('manage_user');
 require "config/db.php";
 
 $user_id = $_SESSION['user_id'];
@@ -47,6 +48,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
     }
+
+ // Get pending users    just checking if its working 
+$pending_users = [];
+
+$sql = "SELECT user_id, user_name, user_surname,
+               user_username, user_email
+        FROM System_user
+        WHERE hospital_id = ?
+        AND user_status = 'pending'";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $pending_users[] = $row;
+}
+
+$stmt->close();
+
+ // Get pending users    just checking if its working 
 
 
 // Get pending account removal requests
@@ -138,7 +162,7 @@ $stmt->close();
 
 //Get Wards
 // Get epidemiologists and chief epidemiologists
-$department= [];
+$departments= [];
 
 $sql = "SELECT department_id, department_name
         FROM Department
@@ -173,6 +197,59 @@ $stmt->close();
 <!-- Pending Accounts -->
 
 <h2>Pending Accounts</h2>
+
+
+<!-- Pending Accounts checking -->
+
+<h2>Pending Accounts</h2>
+
+<?php if (empty($pending_users)) { ?>
+
+    <p>No pending accounts.</p>
+
+<?php } else { ?>
+
+<table class="user-table">
+    <tr>
+        <th>Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Action</th>
+    </tr>
+
+    <?php foreach ($pending_users as $pending) { ?>
+
+    <tr>
+        <td>
+            <?php echo htmlspecialchars($pending['user_name'] . " " . $pending['user_surname']); ?>
+        </td>
+
+        <td>
+            <?php echo htmlspecialchars($pending['user_username']); ?>
+        </td>
+
+        <td>
+            <?php echo htmlspecialchars($pending['user_email']); ?>
+        </td>
+
+        <td>
+            <form action="confirm_user.php" method="GET">
+                <input type="hidden" name="id"
+                       value="<?php echo $pending['user_id']; ?>">
+
+                <button type="submit">Confirm</button>
+            </form>
+        </td>
+    </tr>
+
+    <?php } ?>
+
+</table>
+
+<?php } ?>
+
+<!-- Account Removal Requests checking -->
+
 
 <!-- Account Removal Requests -->
 
@@ -416,13 +493,19 @@ Add a department: <input type="text" name="department_name"><br>
     </thead>
 
     <tbody>
-        <?php foreach ($departments as $department): ?>
+        <?php foreach ($departments as $departments): ?>
+            <?php $Hospital = $departments['department_id'];
+            ?>
             <tr>
-                <td><?= htmlspecialchars($department['department_name']) ?></td>
+                <td><?= htmlspecialchars($departments['department_name']) ?></td>
                 <td>
-                    <form action="delete_department.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this ward?');">
-                        <input type="hidden" name="department_id" value="<?= htmlspecialchars($department['department_id']) ?>">
-                        <button type="submit">Delete</button>
+                    <!-- To know which ID was selected, put it into POST -->
+                    <form action="edit_department.php" method="POST">
+                        <input type="hidden"
+                               name="department_id"
+                               value="<?= htmlspecialchars($departments['department_id']) ?>">
+
+                        <button type="submit">Edit</button>
                     </form>
                 </td>
             </tr>
