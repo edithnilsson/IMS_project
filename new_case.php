@@ -171,7 +171,7 @@ $stmt->close();
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="css/cases.css?v=4">
+<link rel="stylesheet" href="css/cases.css?v=5">
 
 <link
 rel="stylesheet"
