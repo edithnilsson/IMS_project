@@ -1,9 +1,10 @@
 <?php
 require "authenticate_check.php";
-access('Other hospitals');
+access('Other Hospitals');
 
 include "navigation_bar.php";
 require "config/db.php";
+include "navigation_bar.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
@@ -27,7 +28,6 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 </head>
 <body>
 
-<?php include 'hamburger_menu.php'; ?>
 
 <div class="page-header">
     <h1>Cases Across Hospitals</h1>
