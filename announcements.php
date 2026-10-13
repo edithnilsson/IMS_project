@@ -1,6 +1,7 @@
 <?php
 require "config/db.php";   
 require "authenticate_check.php";
+include "navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 

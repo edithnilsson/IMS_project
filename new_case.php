@@ -6,6 +6,7 @@ access('Log a case');
 
 date_default_timezone_set('Europe/Stockholm');
 
+include "navigation_bar.php";
 require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];
