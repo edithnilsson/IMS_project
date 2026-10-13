@@ -1,10 +1,14 @@
 .container{
-    padding-top: 10px;
+    padding-top: 70px;
     width: 100%;
     position: relative;
     box-sizing: border-box;
 }
 
+html,body {
+    margin: 0;
+    padding: 0;
+}
 /* background */
 img.logo {
     width: 40%;
@@ -14,24 +18,25 @@ img.logo {
 }
 
 
-img.virus_bl{
-    position:absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 22%; 
+img.virus_bl {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: auto;
+    right: auto;
+    width: 22%;
     height: auto;
     z-index: -1;
 }
 
-img.virus_tr{
-    position:absolute;
-    top: 0px;
-    right: 0px;
-    width: 22%; 
+img.virus_tr {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: auto;
+    width: 22%;
     height: auto;
-    z-index: -1;
 }
-
 /* DASHBOARD - log a case and statistics  */
 
 .logcase_button {

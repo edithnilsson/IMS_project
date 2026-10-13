@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . "/src/authenticate_check.php";
-access('Other hospitals');
+access('Other Hospitals');
 
 include __DIR__ . "/src/navigation_bar.php";
 require "config/db.php";
@@ -27,7 +27,6 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 </head>
 <body>
 
-<?php include 'hamburger_menu.php'; ?>
 
 <div class="page-header">
     <h1>Cases Across Hospitals</h1>

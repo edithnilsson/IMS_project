@@ -2,7 +2,7 @@
 
 // checks if the user has permission to enter this page
 require __DIR__ . "/src/authenticate_check.php";
-access('Write an announcement');
+access('Write Announcement');
 
 date_default_timezone_set('Europe/Stockholm');
 

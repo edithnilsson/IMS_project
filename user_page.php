@@ -142,39 +142,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/user_page.css">
+    <link rel="stylesheet" href="/css/user_page.css?v=123">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>
 
 
 </head>
+
 <body>
-    
+<?php include 'navigation_bar.php'; ?>
+<img src="Pictures/virus_bl_nobg.png" class="virus_bl">
+<img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+<img src="/Pictures/rings_br_nobg.png" class="rings_br">
+
+<h1 class="rubrik"><?= htmlspecialchars($user['user_name'] . " " . $user['user_surname']) ?></h1>
     <div class = "container">
-    <?php include __DIR__ . "/src/navigation_bar.php"; ?>
+    <?php include 'navigation_bar.php'; ?>
         <h1><?= htmlspecialchars($user['user_name'] . " " . $user['user_surname']) ?></h1>
         <div class = "profile_info">
 
             <div class = "form-row" >
-                <h3>User name:</h3>
+                <img src="/Pictures/user.icon-bgremoved.png" class="icon">
                 <?= htmlspecialchars($user['user_username']) ?>
 
-                <h3>Phone number:</h3>
+                <img src="/Pictures/phone.icon-bgremoved.png" class="icon">
                 <?= htmlspecialchars($user['user_phone_number']) ?>
 
-                <h3>Email:</h3>
-
+                <img src="/Pictures/mail.icon-bgremoved.png" class="icon">
                 <?= htmlspecialchars($user['user_email']) ?>
 
             </div>
 
             <div class = "form-row" >
 
-                <h3>Role:</h3>
+                <img src="/Pictures/role.icon.png" class="icon">
                     <?= htmlspecialchars($user['role_name']) ?>
 
-                <h3>Hospital:</h3>
+                <img src="/Pictures/ward_black.icon.png" class="icon">
                     <?= htmlspecialchars($user['hospital_name']) ?>
             </div>
         </div>
@@ -255,15 +260,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         </table>
     </div>
-    
+    <div class="buttbutt">
     <form method="POST"
         onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
 
-        <button type="submit">
+        <button type="submit" class="delbutt">
             Request Account Deletion
         </button>
 
     </form>
+    </div>
 
     <?php
     if ($message !== "") {echo "<p>" . htmlspecialchars($message) . "</p>";}
