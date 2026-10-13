@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
     $stmt->close();
 }
 
+// Populate pathogen dropdown
+$pathogens = [];
+$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
+if ($res) {
+    while ($row = $res->fetch_assoc()) {
+        $pathogens[] = $row;
+    }
+}
+
 // Check if the user can write announcements
 $can_write_announcement =
     $_SESSION['privUser']->hasPrivilege('Write an announcement');
