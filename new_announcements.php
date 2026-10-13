@@ -228,16 +228,9 @@ if (!$pathogen_result) {
 </head>
 
 <body>
-
-
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
-    <img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
+<img src="/Pictures/rings_br_nobg.png" class="rings_br">
     <div class="page">
-        <div class="logo">
-            <a href="homepage.php">
-                <img src="Pictures/logo_nobackground.png" alt="Logo">
-            </a>
-        </div>
 
         <form method="POST" action="">
             <input type="hidden"
