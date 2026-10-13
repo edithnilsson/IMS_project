@@ -1,6 +1,7 @@
 <?php
 require_once "Role.php";
 require_once "PrivilegedUser.php";
+require_once "config/db.php";
 
 session_start();
 
@@ -25,6 +26,16 @@ if(isset($_SESSION['user_id'])) {
 }
     // if less than 20 minutes have passed reset the time
         $_SESSION['last_activity'] = time(); 
+
+    if (isset($_SESSION['user_username'])) {
+        error_log('Refreshing privUser for: ' . $_SESSION['user_username']);
+        $fresh = PrivilegedUser::getByUsername($_SESSION['user_username']);
+        if ($fresh instanceof PrivilegedUser) {
+            $_SESSION['privUser'] = $fresh;
+        } else {
+            error_log('getByUsername returned: ' . var_export($fresh, true));
+        }
+    }
 }
 
 // if the user is not logged in they are redirected to the login page
