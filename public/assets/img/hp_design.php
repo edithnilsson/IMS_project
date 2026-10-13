@@ -34,9 +34,9 @@
     </style>
 </head>
 <body>
-<img src="/Pictures/Logo.png" class= "logo">
-<img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-<img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="/assets/img/Logo.png" class= "logo">
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 </body>

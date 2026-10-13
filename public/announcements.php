@@ -1,7 +1,7 @@
 <?php
-require "config/db.php";   
-require __DIR__ . "/src/authenticate_check.php";
-include __DIR__ . "/src/navigation_bar.php";
+require __DIR__ . "/../config/db.php";   
+require __DIR__ . "/../src/authenticate_check.php";
+include __DIR__ . "/../src/navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -68,7 +68,7 @@ if ($stmt) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/css/annoucement_page.css">
+    <link rel="stylesheet" href="/assets/css/annoucement_page.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>

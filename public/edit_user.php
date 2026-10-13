@@ -1,8 +1,8 @@
 <?php
 
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 access('Admin');
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 // user transfer from the edit button
 $user_id = $_POST['user_id'];
@@ -91,16 +91,16 @@ $hospital_result = $conn->query($sql);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit User</title>
-        <link rel="stylesheet" href="/css/edit_user.css">
+        <link rel="stylesheet" href="/assets/css/edit_user.css">
     </head>
     <body>
         <!-- Logo and background -->
-        <?php include __DIR__ . "/src/navigation_bar.php"; ?>
+        <?php include __DIR__ . "/../src/navigation_bar.php"; ?>
         <h1 class="title">Edit User</h1>
-        <img src="/Pictures/Logo.png" class="logo">
-        <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-        <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-        <img src="/Pictures/rings_br_nobg.png" class="rings_br">
+        <img src="/assets/img/Logo.png" class="logo">
+        <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+        <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+        <img src="/assets/img/rings_br_nobg.png" class="rings_br">
         <form action="edit_user.php" method="POST" class="inputs">
             <input type="hidden" name="user_id" value="<?= htmlspecialchars($target_user['user_id']) ?>">
         
@@ -148,6 +148,6 @@ $hospital_result = $conn->query($sql);
                 <button type="submit" name="save" value="1" class="button">Save Changes</button>
             </div>
         </form>
-        <script src="/js/edit_user.js"></script>
+        <script src="/assets/js/edit_user.js"></script>
     </body>
 </html>

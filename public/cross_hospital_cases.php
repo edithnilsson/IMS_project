@@ -1,9 +1,9 @@
 <?php
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 access('Other Hospitals');
 
-include __DIR__ . "/src/navigation_bar.php";
-require "config/db.php";
+include __DIR__ . "/../src/navigation_bar.php";
+require __DIR__ . "/../config/db.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
@@ -23,7 +23,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 <html>
 <head>
     <title>Cross-Hospital Cases</title>
-    <link rel="stylesheet" href="/css/cross_hospital.css">
+    <link rel="stylesheet" href="/assets/css/cross_hospital.css">
 </head>
 <body>
 
@@ -101,7 +101,7 @@ const tableBody = document.getElementById('tableBody');
 const statusEl  = document.getElementById('status');
 
 function buildUrl() {
-    const url = new URL('api/cross_hospital_cases.php', location.href);
+    const url = new URL('/api/cross_hospital_cases.php', location.href);
     const h  = document.getElementById('hospital').value;
     const p  = document.getElementById('pathogen').value;
     const s  = document.getElementById('startdate').value;

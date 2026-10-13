@@ -30,7 +30,7 @@ $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
 $mail->isHTML(true);
 
 //Add logo in the mail
-$mail->addEmbeddedImage(__DIR__ . '/../Pictures/logo_nobackground.png', 'logo');
+$mail->addEmbeddedImage(__DIR__ . '/../public/assets/img/logo_nobackground.png', 'logo');
 
 
 return $mail;

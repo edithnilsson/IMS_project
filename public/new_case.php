@@ -1,12 +1,12 @@
 <?php
 
 // checks if the user has permission to enter this page
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-include __DIR__ . "/src/navigation_bar.php";
+include __DIR__ . "/../src/navigation_bar.php";
 require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];
@@ -180,9 +180,9 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 </head>
 
 <body>
-<img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-<img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 <h1 class="hCase">Register Case</h1>
 
@@ -194,7 +194,7 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 
 <label>
 Pathogen
-<img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
+<img src="/assets/img/pathogen.icon_bgremoved.png" class="icon">
 </label>
 
 <div class="input">
@@ -220,7 +220,7 @@ echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "<
 
 <label>
 Diagnosis Date
-<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+<img src="/assets/img/calender.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -235,7 +235,7 @@ max="<?php echo date('Y-m-d'); ?>"
 
 <label>
 Infection Date
-<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+<img src="/assets/img/calender.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -251,7 +251,7 @@ max="<?php echo date('Y-m-d'); ?>"
 
 <label>
 Ward
-<img src="/Pictures/ward.icon-bgremoved.png" class="icon">
+<img src="/assets/img/ward.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -279,7 +279,7 @@ echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] 
 <div class="form-row">
 
 <label>
-Patient ID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
+Patient ID <img src="/assets/img/patient.icon-bgremoved.png" class="icon">
 </label>
 
 <input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>

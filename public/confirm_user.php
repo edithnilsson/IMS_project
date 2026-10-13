@@ -1,6 +1,6 @@
 <?php
 
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 if (isset($_GET['id'])) {
 

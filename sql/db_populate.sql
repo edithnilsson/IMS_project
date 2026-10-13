@@ -3,7 +3,7 @@ VALUES
 (1, 'Admin'),
 (2, 'Doctor'),
 (3, 'Epidemiologist'),
-(4, 'Chief Epidemiologist'),
+(4, 'Chief Epidemiologist');
 
 
 INSERT INTO Permissions(permission_id, permission_desc, permission_page)
@@ -11,7 +11,7 @@ VALUES
 (1, 'Admin','admin.php'),
 (2, 'Log a case', 'new_case.php'),
 (3, 'Write an announcement', 'new_announcements.php'),
-(4, 'Other hospitals','cross_hospital_cases.php'),
+(4, 'Other hospitals','cross_hospital_cases.php');
 
 
 INSERT INTO Role_permission(role_id, permission_id)

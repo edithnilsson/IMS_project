@@ -1,10 +1,10 @@
 <?php
 
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 access('Admin');
 
-include __DIR__ . "/src/navigation_bar.php";
-require "config/db.php";
+include __DIR__ . "/../src/navigation_bar.php";
+require __DIR__ . "/../config/db.php";
 
 
 $user_id = $_SESSION['user_id'];
@@ -189,7 +189,7 @@ $stmt->close();
 
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/admin.css">
 </head>
 
 <body>

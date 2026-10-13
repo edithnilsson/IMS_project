@@ -1,5 +1,5 @@
 <?php
-require 'config/db.php';
+require __DIR__ . '/../config/db.php';
 
 // Guard against visiting this page with no token in the URL at all
 // (e.g. someone just types /verify.php)

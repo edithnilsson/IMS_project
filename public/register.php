@@ -4,7 +4,7 @@ Register page will let a new user register its own account.
 password_hash() creates a new password hash with a random generated salt
 ID and the hashed password will be stored in the database
 */
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 // Get all roles from database to use in dropdown menu except admin role
 $sql = "SELECT role_id, role_name FROM Roles WHERE role_name != 'Admin'";
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Send validation link to registered email
         if ($result) {
             $conn->commit();
-            $mail = require "src/mailer.php";
+            $mail = require __DIR__ . "/../src/mailer.php";
 
             try {
                 $mail->addAddress($email); //Send to
@@ -143,12 +143,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfTraction Register</title>
-        <link rel="stylesheet" href="/css/register.css">
+        <link rel="stylesheet" href="/assets/css/register.css">
 </head>
 <body>
     <!-- Logo and background -->
-    <img src="/Pictures/logo_nobackground.png" class= "logo">
-    <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
+    <img src="/assets/img/logo_nobackground.png" class= "logo">
+    <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 
     <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 
@@ -158,15 +158,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Left column -->
             <div class="column">
-                <label for="username"><img src="/Pictures/user.icon-bgremoved.png" class="icon"></label>
+                <label for="username"><img src="/assets/img/user.icon-bgremoved.png" class="icon"></label>
                 <input type="text" id="username" name="username" placeholder="Enter username">
                 <span class="error_text" id="username_error"></span>
                 
-                <label for="password"><img src="/Pictures/password.icon-bgremoved.png" class="icon"></label>
+                <label for="password"><img src="/assets/img/password.icon-bgremoved.png" class="icon"></label>
                 <input type="password" id="password" name="password" placeholder="Enter password">
                 <span class="error_text" id="password_error"></span>
 
-                <label for="email"><img src="/Pictures/mail.icon-bgremoved.png" class="icon"></label>
+                <label for="email"><img src="/assets/img/mail.icon-bgremoved.png" class="icon"></label>
                 <input type="email" id="email" name="email" placeholder="Enter email">
                 <span class="error_text" id="email_error"></span>
             </div>
@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="last_name" name="last_name" placeholder="Enter last name">
                 <span class="error_text" id="last_name_error"></span>
                 
-                <label for="phone_number"><img src="/Pictures/phone.icon-bgremoved.png" class="icon"></label>
+                <label for="phone_number"><img src="/assets/img/phone.icon-bgremoved.png" class="icon"></label>
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
                 <span class="error_text" id="phone_number_error"></span>                
                   
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </dialog>
 
-    <script src="/js/register.js"></script>
+    <script src="/assets/js/register.js"></script>
 
 </body>
 </html>

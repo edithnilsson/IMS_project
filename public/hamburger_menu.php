@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/hamburger_menu.css?v=2">
+<link rel="stylesheet" href="/assets/css/hamburger_menu.css?v=2">
 
 <aside class="sidebar-card closed" id="sidebar">
 
@@ -11,7 +11,7 @@
         </button>
 
         <img
-            src="/Pictures/Logo.png"
+            src="/assets/img/Logo.png"
             alt="InfTraction Logo"
             class="sidebar-logo">
 

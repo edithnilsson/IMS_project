@@ -1,7 +1,7 @@
 <?php
 
 // checks if the user has permission to enter this page
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 access('Log a case');
 
 date_default_timezone_set('Europe/Stockholm');
@@ -192,7 +192,7 @@ $stmt->close();
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/css/cases.css?v=4">
+<link rel="stylesheet" href="/assets/css/cases.css?v=4">
 
 <link
 rel="stylesheet"
@@ -205,10 +205,10 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
     <?php include 'hamburger_menu.php'; ?>
 <div class="img">
 
-<img src="/Pictures/Logo.png" class="logo">
-<img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-<img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="/assets/img/Logo.png" class="logo">
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 </div>
 
 <h1 class="hCase">Edit a Case</h1>
@@ -224,7 +224,7 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 
 <label>
 Pathogen
-<img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
+<img src="/assets/img/pathogen.icon_bgremoved.png" class="icon">
 </label>
 
 <div class="input">
@@ -251,7 +251,7 @@ while ($row = $pathogen_result->fetch_assoc()) {
 
 <label>
 Diagnosis Date
-<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+<img src="/assets/img/calender.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -267,7 +267,7 @@ max="<?php echo date('Y-m-d'); ?>"
 
 <label>
 Infection Date
-<img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+<img src="/assets/img/calender.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -283,7 +283,7 @@ max="<?php echo date('Y-m-d'); ?>"
 
 <label>
 Ward
-<img src="/Pictures/ward.icon-bgremoved.png" class="icon">
+<img src="/assets/img/ward.icon-bgremoved.png" class="icon">
 </label>
 
 <div>
@@ -312,7 +312,7 @@ while ($row = $department_result->fetch_assoc()) {
 <div class="form-row">
 
 <label>
-Patient ID <img src="/Pictures/patient.icon-bgremoved.png" class="icon">
+Patient ID <img src="/assets/img/patient.icon-bgremoved.png" class="icon">
 </label>
 
 <input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required

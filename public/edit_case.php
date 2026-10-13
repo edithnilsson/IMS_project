@@ -1,6 +1,6 @@
 <?php
 
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 if (!isset($_GET['id'])) die("Case ID is missing.");
 
@@ -44,7 +44,7 @@ if (isset($_POST['save'])) {
 
 <h1>Edit Case</h1>
 
-<link rel="stylesheet" href="/css/edit_case.css">
+<link rel="stylesheet" href="/assets/css/edit_case.css">
 
 <form method="POST">
 

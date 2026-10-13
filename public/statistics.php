@@ -1,9 +1,9 @@
 <?php
 // checks if the user has permission to enter this page
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 
-include __DIR__ . "/src/navigation_bar.php";
-require "config/db.php";
+include __DIR__ . "/../src/navigation_bar.php";
+require __DIR__ . "/../config/db.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
@@ -217,15 +217,15 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 <html>
 <head>
     <title>Statistics</title>
-    <link rel="stylesheet" href="/css/statistics.css">
+    <link rel="stylesheet" href="/assets/css/statistics.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
     
-<img src="/Pictures/logo_nobackground.png" class="logo">
-<img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
-<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
-<img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="/assets/img/logo_nobackground.png" class="logo">
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 <div class="content">
 
@@ -291,7 +291,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
         <div class="column">
             <label class="form-label" for="pathogen">
                 <span class="icon">
-                    <img src="/Pictures/pathogen.icon_bgremoved.png" class="icon">
+                    <img src="/assets/img/pathogen.icon_bgremoved.png" class="icon">
                 </span>
             </label>
             <select id="pathogen" class="pathogen">
@@ -307,7 +307,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
         <div class="column">
             <label class="form-label">
                 <span class="icon">
-                    <img src="/Pictures/calender.icon-bgremoved.png" class="icon">
+                    <img src="/assets/img/calender.icon-bgremoved.png" class="icon">
                 </span>
             </label>
             <div>
@@ -577,7 +577,7 @@ async function fetchJSON(url) {
 
 async function loadLine(start, end, pid) {
     const data = await fetchJSON(
-        buildUrl('api/top_pathogen.php', start, end, pid)
+        buildUrl('/api/top_pathogen.php', start, end, pid)
     );
     if (data.error) throw new Error(data.detail || data.error);
     lineChart.data.labels   = data.labels;
@@ -587,7 +587,7 @@ async function loadLine(start, end, pid) {
 }
 
 async function loadPie(start, end, pid) {
-    const data = await fetchJSON(buildUrl('api/severity_distribution.php', start, end, pid));
+    const data = await fetchJSON(buildUrl('/api/severity_distribution.php', start, end, pid));
     if (data.error) throw new Error(data.detail || data.error);
     pieChart.data.labels           = data.labels;
     pieChart.data.datasets[0].data = data.data;
@@ -596,7 +596,7 @@ async function loadPie(start, end, pid) {
 }
 
 async function loadBar(start, end, pid) {
-    const data = await fetchJSON(buildUrl('api/weekly_cases.php', start, end, pid));
+    const data = await fetchJSON(buildUrl('/api/weekly_cases.php', start, end, pid));
     if (data.error) throw new Error(data.detail || data.error);
     barChart.data.labels           = data.labels;
     barChart.data.datasets[0].data = data.data;

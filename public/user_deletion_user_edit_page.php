@@ -2,7 +2,7 @@
 
 session_start();
 
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 $user_id = $_SESSION['user_id'];
 

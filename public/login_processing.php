@@ -2,9 +2,9 @@
 
 session_start();
 
-require "config/db.php";
-require_once __DIR__ . "/src/Role.php";          
-require_once __DIR__ . "/src/PrivilegedUser.php";  
+require __DIR__ . "/../config/db.php";
+require_once __DIR__ . "/../src/Role.php";          
+require_once __DIR__ . "/../src/PrivilegedUser.php";  
 
 //captcha
 $captcha = $_POST['captcha'];

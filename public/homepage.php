@@ -1,10 +1,10 @@
 <?php
 // checks if the user has permission to enter this page
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 
-require "config/db.php";   
+require __DIR__ . "/../config/db.php";   
 
-include __DIR__ . "/src/navigation_bar.php";
+include __DIR__ . "/../src/navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -72,8 +72,8 @@ $mwarning_icon = [
 </head>
 <body>
 
-    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+    <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+    <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
     
 
     <!--sets boarders for webpages-->
@@ -183,7 +183,7 @@ async function fetchJSON(url) {
 
 async function loadLine(start, end, pid) {
     const data = await fetchJSON(
-        buildUrl('api/top_pathogen.php', start, end, pid)
+        buildUrl('/api/top_pathogen.php', start, end, pid)
     );
     if (data.error) throw new Error(data.detail || data.error);
     lineChart.data.labels   = data.labels;

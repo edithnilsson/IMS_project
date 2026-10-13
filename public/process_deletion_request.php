@@ -1,10 +1,10 @@
 <?php
 
-require __DIR__ . "/src/authenticate_check.php";
+require __DIR__ . "/../src/authenticate_check.php";
 
 access('manage_user');
 
-require "config/db.php";
+require __DIR__ . "/../config/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit("Invalid request.");
