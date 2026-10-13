@@ -161,7 +161,7 @@ $stmt->close();
 
 //Get Wards
 // Get epidemiologists and chief epidemiologists
-$departments= [];
+$department= [];
 
 $sql = "SELECT department_id, department_name
         FROM Department
@@ -488,19 +488,17 @@ Add a department: <input type="text" name="department_name"><br>
     </thead>
 
     <tbody>
-        <?php foreach ($departments as $departments): ?>
-            <?php $Hospital = $departments['department_id'];
+        <?php foreach ($departments as $department): ?>
+            <?php $Hospital = $department['department_id'];
             ?>
             <tr>
-                <td><?= htmlspecialchars($departments['department_name']) ?></td>
+                <td><?= htmlspecialchars($department['department_name']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="edit_department.php" method="POST">
-                        <input type="hidden"
-                               name="department_id"
-                               value="<?= htmlspecialchars($departments['department_id']) ?>">
-
-                        <button type="submit">Edit</button>
+                    <form action="delete_department.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this ward?');">
+                        <input type="hidden" name="department_id" value="<?= htmlspecialchars($department['department_id']) ?>">
+                        
+                        <button type="submit">Delete</button>
                     </form>
                 </td>
             </tr>

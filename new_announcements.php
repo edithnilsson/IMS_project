@@ -6,6 +6,7 @@ access('Write an announcement');
 
 date_default_timezone_set('Europe/Stockholm');
 
+include "navigation_bar.php";
 require_once 'config/db.php';
 
 
@@ -228,7 +229,7 @@ if (!$pathogen_result) {
 
 <body>
 
-    <?php include 'hamburger_menu.php'; ?>
+
     <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
     <img src="/Pictures/rings_br_nobg.png" class="rings_br">
     <div class="page">
