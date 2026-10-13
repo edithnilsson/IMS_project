@@ -312,8 +312,7 @@ if (!empty($hospital_id)) {
         </div>
     </div>
 
-<p id="status" style="font-family:sans-serif;color:#555;"></p>
-    <p id="status" style="font-family:sans-serif;color:#555;"></p>
+    <p id="status"></p>
 </div>
 
 <script>
