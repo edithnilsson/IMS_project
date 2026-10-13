@@ -2,6 +2,7 @@
 require "authenticate_check.php";
 access('Other hospitals');
 
+include "navigation_bar.php";
 require "config/db.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);

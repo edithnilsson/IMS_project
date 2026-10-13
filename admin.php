@@ -2,6 +2,8 @@
 
 require "authenticate_check.php";
 access('Admin');
+
+include "navigation_bar.php";
 require "config/db.php";
 
 $user_id = $_SESSION['user_id'];
