@@ -5,8 +5,7 @@ require "authenticate_check.php";
 access('Write Announcement');
 
 date_default_timezone_set('Europe/Stockholm');
-
-include "navigation_bar.php";
+include 'navigation_bar.php';
 require_once 'config/db.php';
 
 
@@ -223,21 +222,14 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="css/announcements.css">
+    <link rel="stylesheet" href="css/announcements.css?v=3">
 
 </head>
 
 <body>
-
-
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
-    <img src="/Pictures/rings_br_nobg.png" class="rings_br">
+<img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+<img src="/Pictures/rings_br_nobg.png" class="rings_br">
     <div class="page">
-        <div class="logo">
-            <a href="homepage.php">
-                <img src="Pictures/logo_nobackground.png" alt="Logo">
-            </a>
-        </div>
 
         <form method="POST" action="">
             <input type="hidden"

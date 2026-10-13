@@ -8,40 +8,35 @@
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
-    padding: 0px;
+    padding: 0;
 }
 
 img.rings_br{
-    position:absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
-    width: 30%; 
+    width: 25%; 
     height: auto;
     z-index: -1;
 }
 
-img.virus_tr{
-    position:absolute;
-    top: 0px;
-    right: 0px;
-    width: 22%; 
+img.virus_tr {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: auto;
+    width: 22%;
     height: auto;
-    z-index: -1;
-}
-
-
-/* logo */
-
-.logo a img {
-    display: block;
-    width: 45%;
-    height: auto;
-    margin-bottom: 20px;
-    margin-top: 0px;
-    z-index: -1;
 }
 
 /* announcement header and the text area */
+.page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 20px;
+}
 
 .message {
     width: 100%;

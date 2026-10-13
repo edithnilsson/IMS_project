@@ -4,7 +4,6 @@ access('Other Hospitals');
 
 include "navigation_bar.php";
 require "config/db.php";
-include "navigation_bar.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
