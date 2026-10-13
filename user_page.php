@@ -158,8 +158,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <h1 class="rubrik"><?= htmlspecialchars($user['user_name'] . " " . $user['user_surname']) ?></h1>
     <div class = "container">
-    <?php include 'navigation_bar.php'; ?>
-        <h1><?= htmlspecialchars($user['user_name'] . " " . $user['user_surname']) ?></h1>
         <div class = "profile_info">
 
             <div class = "form-row" >

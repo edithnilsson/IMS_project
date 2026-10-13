@@ -6,7 +6,7 @@ access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-include "navigation_bar.php";
+include __DIR__ . "/src/navigation_bar.php";
 require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];
@@ -180,13 +180,8 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 </head>
 
 <body>
-
-    <?php include 'hamburger_menu.php'; ?>
-<div class="img">
-
-<img src="Pictures/Logo.png" class="logo">
-<img src="Pictures/virus_bl_nobg.png" class="virus_bl">
-<img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+<img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
+<img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
 <img src="/Pictures/rings_br_nobg.png" class="rings_br">
 
 <h1 class="hCase">Register a Case</h1>
