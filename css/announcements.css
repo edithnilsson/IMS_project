@@ -26,6 +26,7 @@ img.virus_tr{
     right: 0px;
     width: 22%; 
     height: auto;
+    z-index: -1;
 }
 
 
@@ -37,6 +38,7 @@ img.virus_tr{
     height: auto;
     margin-bottom: 20px;
     margin-top: 0px;
+    z-index: -1;
 }
 
 /* announcement header and the text area */

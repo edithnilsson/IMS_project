@@ -94,10 +94,13 @@ $mwarning_icon = [
             Click here</button>
         </a>
 
-        <div class="graph-section">
-            <canvas id="myChart" style="width:100%;max-width:400px;height:auto;"></canvas>
-            <p id="status" style="font-family:sans-serif;color:#555;"></p>
+        <div class="charts">
+            <div class="chart-card">
+                <h3>Top 3 Pathogens — Daily Cases</h3>
+                <canvas id="lineChart"></canvas>
+            </div>
         </div>
+
      </div>
 
 
@@ -143,49 +146,90 @@ $mwarning_icon = [
 const ctx = document.getElementById('myChart');
 const statusEl = document.getElementById('status');
 
-const chart = new Chart(ctx, {
+const lineChart = new Chart(document.getElementById('lineChart'), {
     type: 'line',
     data: { labels: [], datasets: [] },
     options: {
         responsive: true,
-        plugins: { legend: { display: true, position: 'bottom' } },
+        plugins: { legend: { position: 'bottom' } },
         scales: {
             y: { beginAtZero: true, title: { display: true, text: 'Cases' } },
-            x: { title: { display: true, text: 'Date' } }
-        }
-    }
+            x: { title: { display: true, text: 'Date' } },
+        },
+    },
 });
 
-async function loadStats(start, end) {
+(function initCasesToggle() {
+    const btn       = document.getElementById('toggleCasesBtn');
+    const container = document.getElementById('casesContainer');
+    if (!btn || !container) return;
+
+    btn.addEventListener('click', () => {
+        const isHidden = container.style.display === 'none';
+        container.style.display = isHidden ? 'block' : 'none';
+        btn.textContent = isHidden ? 'Hide cases' : 'Show all cases';
+    });
+})();
+
+function buildUrl(endpoint, start, end, pathogenId) {
+    const url = new URL(endpoint, location.href);
+    if (start)      url.searchParams.set('start_date', start);
+    if (end)        url.searchParams.set('end_date', end);
+    if (pathogenId) url.searchParams.set('pathogen_id', pathogenId);
+    return url;
+}
+
+async function fetchJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+}
+
+async function loadLine(start, end, pid) {
+    const data = await fetchJSON(
+        buildUrl('api/top_pathogen.php', start, end, pid)
+    );
+    if (data.error) throw new Error(data.detail || data.error);
+    lineChart.data.labels   = data.labels;
+    lineChart.data.datasets = data.datasets;
+    lineChart.update();
+    return data;
+}
+
+async function loadAllStats(start, end, pid) {
     statusEl.textContent = 'Loading…';
-    const url = new URL('api/statistics_top_pathogen.php', location.href);
-    if (start) url.searchParams.set('start_date', start);
-    if (end)   url.searchParams.set('end_date', end);
-
     try {
-        const res  = await fetch(url);
-        const data = await res.json();
-
-        if (data.error) {
-            statusEl.textContent = 'API error: ' + (data.detail || data.error);
-            return;
-        }
-        if (!data.labels.length) {
-            statusEl.textContent = 'No cases found in this date range.';
-        } else {
-            statusEl.textContent = `Showing ${data.datasets.length} pathogen(s) from ${data.labels[0]} to ${data.labels[data.labels.length - 1]}.`;
-        }
-
-        chart.data.labels   = data.labels;
-        chart.data.datasets = data.datasets;
-        chart.update();
+        const [line, pie, bar] = await Promise.all([
+            loadLine(start, end, pid),
+            loadPie(start, end, pid),
+            loadBar(start, end, pid),
+        ]);
+        statusEl.textContent = 'Charts updated.';
     } catch (err) {
-        statusEl.textContent = 'Network error: ' + err.message;
+        statusEl.textContent = 'Error: ' + err.message;
     }
 }
 
+// ---------- Initialise dates ----------
+
+(function initDates() {
+    const today = new Date();
+    const past  = new Date();
+    past.setDate(today.getDate() - 29);
+
+    const fmt = d => d.toISOString().slice(0, 10);
+    document.getElementById('enddate').value   = fmt(today);
+    document.getElementById('startdate').value = fmt(past);
+})();
+
 // No filter form on the homepage, so just show the last 30 days
-loadStats();
+
+// First load
+loadAllStats(
+    document.getElementById('startdate').value,
+    document.getElementById('enddate').value,
+    null
+);
 </script>
 </body>
 </html>
