@@ -143,7 +143,7 @@ $mwarning_icon = [
 </div>
 
 <script>
-const ctx = document.getElementById('myChart');
+const ctx = document.getElementById('lineChart');
 const statusEl = document.getElementById('status');
 
 const lineChart = new Chart(document.getElementById('lineChart'), {
@@ -197,29 +197,25 @@ async function loadLine(start, end, pid) {
 }
 
 async function loadAllStats(start, end, pid) {
-    statusEl.textContent = 'Loading…';
     try {
-        const [line, pie, bar] = await Promise.all([
-            loadLine(start, end, pid),
-            loadPie(start, end, pid),
-            loadBar(start, end, pid),
-        ]);
-        statusEl.textContent = 'Charts updated.';
+        await loadLine(start, end, pid);
     } catch (err) {
-        statusEl.textContent = 'Error: ' + err.message;
+        console.error('Failed to load chart:', err);
     }
 }
 
 // ---------- Initialise dates ----------
 
-(function initDates() {
+(function loadHomepageChart() {
     const today = new Date();
     const past  = new Date();
     past.setDate(today.getDate() - 29);
 
     const fmt = d => d.toISOString().slice(0, 10);
-    document.getElementById('enddate').value   = fmt(today);
-    document.getElementById('startdate').value = fmt(past);
+    const start = fmt(past);
+    const end   = fmt(today);
+
+    loadAllStats(start, end, null);
 })();
 
 // No filter form on the homepage, so just show the last 30 days

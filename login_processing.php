@@ -73,6 +73,7 @@ if ($result->num_rows === 1) {
         // Store information about the logged-in user
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role_id'] = $user['role_id'];
+        $_SESSION['user_username'] = $username;
         $_SESSION['last_activity'] = time();
 
         // creates a PrivilegedUser-object and saves the session for access check in authenticate_check.php

@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"
     $stmt->close();
 }
 
+// Populate pathogen dropdown
+$pathogens = [];
+$res = $conn->query("SELECT pathogen_id, pathogen_name FROM Pathogen ORDER BY pathogen_name");
+if ($res) {
+    while ($row = $res->fetch_assoc()) {
+        $pathogens[] = $row;
+    }
+}
+
 // Check if the user can write announcements
 $can_write_announcement =
     $_SESSION['privUser']->hasPrivilege('Write an announcement');
@@ -82,20 +91,82 @@ if ($can_write_announcement) {
     $stmt->close();
 }
 
+// -----------------------------------------------------------------
+// Infection cases: filtering + pagination
+// -----------------------------------------------------------------
 $infection_cases = [];
+$total_cases     = 0;
+$total_pages     = 1;
+$current_page    = 1;
+$per_page        = 10;
 
-// Get the current user's hospital (safe even if $hospital_id was not set above)
-if (!isset($hospital_id)) {
-    $sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $_SESSION['user_id']);
-    $stmt->execute();
-    $hospital_id = $stmt->get_result()->fetch_assoc()['hospital_id'] ?? null;
-    $stmt->close();
-}
+// Read filters from the query string
+$filter_department = isset($_GET['case_department']) && $_GET['case_department'] !== ''
+                     ? (int)$_GET['case_department'] : null;
+$filter_pathogen   = isset($_GET['case_pathogen']) && $_GET['case_pathogen'] !== ''
+                     ? (int)$_GET['case_pathogen'] : null;
+$filter_severity   = isset($_GET['case_severity']) && $_GET['case_severity'] !== ''
+                     ? (int)$_GET['case_severity'] : null;
+$filter_start      = $_GET['case_start'] ?? '';
+$filter_end        = $_GET['case_end']   ?? '';
 
+$current_page = isset($_GET['case_page']) && (int)$_GET['case_page'] > 0
+              ? (int)$_GET['case_page'] : 1;
+
+// Ensure the user has a hospital (already fetched above)
 if (!empty($hospital_id)) {
-    $sql = "
+
+    // -------- Build WHERE clause --------
+    $where  = ['ic.hospital_id = ?'];
+    $params = [$hospital_id];
+    $types  = 's';
+
+    if ($filter_department !== null) {
+        $where[]  = 'ic.department_id = ?';
+        $params[] = $filter_department;
+        $types   .= 'i';
+    }
+    if ($filter_pathogen !== null) {
+        $where[]  = 'ic.pathogen_id = ?';
+        $params[] = $filter_pathogen;
+        $types   .= 'i';
+    }
+    if ($filter_severity !== null) {
+        $where[]  = 'ic.severity_id = ?';
+        $params[] = $filter_severity;
+        $types   .= 'i';
+    }
+    if ($filter_start !== '') {
+        $where[]  = 'ic.case_infection_date >= ?';
+        $params[] = $filter_start;
+        $types   .= 's';
+    }
+    if ($filter_end !== '') {
+        $where[]  = 'ic.case_infection_date <= ?';
+        $params[] = $filter_end;
+        $types   .= 's';
+    }
+
+    $whereSql = implode(' AND ', $where);
+
+    // -------- Count total rows --------
+    $countSql = "SELECT COUNT(*) AS total
+                 FROM Infection_case ic
+                 WHERE $whereSql";
+    $stmt = $conn->prepare($countSql);
+    $stmt->bind_param($types, ...$params);
+    $stmt->execute();
+    $total_cases = (int)$stmt->get_result()->fetch_assoc()['total'];
+    $stmt->close();
+
+    $total_pages = max(1, (int)ceil($total_cases / $per_page));
+    if ($current_page > $total_pages) {
+        $current_page = $total_pages;
+    }
+    $offset = ($current_page - 1) * $per_page;
+
+    // -------- Fetch the page --------
+    $dataSql = "
         SELECT
             ic.case_id,
             ic.case_infection_date,
@@ -111,22 +182,35 @@ if (!empty($hospital_id)) {
         JOIN Severity_level s ON ic.severity_id   = s.severity_id
         JOIN Department d     ON ic.department_id = d.department_id
         JOIN System_user u    ON ic.user_id       = u.user_id
-        WHERE ic.hospital_id = ?
+        WHERE $whereSql
         ORDER BY ic.case_infection_date DESC
-        LIMIT 500
+        LIMIT ? OFFSET ?
     ";
 
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $hospital_id);
+    $dataTypes  = $types . 'ii';
+    $dataParams = array_merge($params, [$per_page, $offset]);
+
+    $stmt = $conn->prepare($dataSql);
+    $stmt->bind_param($dataTypes, ...$dataParams);
     $stmt->execute();
     $result = $stmt->get_result();
-
     while ($row = $result->fetch_assoc()) {
         $infection_cases[] = $row;
     }
     $stmt->close();
 }
 
+// Dropdown data for the case filters
+$case_departments = [];
+$res = $conn->query("SELECT department_id, department_name
+                     FROM Department
+                     WHERE hospital_id = '$hospital_id'
+                     ORDER BY department_name");
+while ($row = $res->fetch_assoc()) $case_departments[] = $row;
+
+$case_severities = [];
+$res = $conn->query("SELECT severity_id, severity_name FROM Severity_level ORDER BY severity_risk_score");
+while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 ?>
 
 <!DOCTYPE html>
@@ -205,54 +289,6 @@ if (!empty($hospital_id)) {
         <?php endif; ?>
     </div>
 <?php endif; ?>
-    <div class="cases-section">
-        <button type="button" id="toggleCasesBtn" class="toggle-cases-button">
-            Show all cases
-        </button>
-
-        <div id="casesContainer" class="cases-container" style="display: none;">
-            <h2>All Infection Cases</h2>
-
-            <?php if (empty($infection_cases)): ?>
-                <p class="empty">No infection cases recorded.</p>
-            <?php else: ?>
-                <table class="cases-table">
-                    <thead>
-                        <tr>
-                            <th>Infection date</th>
-                            <th>Diagnosis date</th>
-                            <th>Department</th>
-                            <th>Pathogen</th>
-                            <th>Severity</th>
-                            <th>Reported by</th>
-                            <th>Comments</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($infection_cases as $c): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($c['case_infection_date']) ?></td>
-                                <td><?= htmlspecialchars($c['case_diagnosis_date']) ?></td>
-                                <td><?= htmlspecialchars($c['department_name']) ?></td>
-                                <td><?= htmlspecialchars($c['pathogen_name']) ?></td>
-                                <td><?= htmlspecialchars(ucfirst($c['severity_name'])) ?></td>
-                                <td>
-                                    <?= htmlspecialchars(
-                                        trim($c['user_name'] . ' ' . $c['user_surname'])
-                                    ) ?>
-                                </td>
-                                <td>
-                                    <?= $c['case_comments']
-                                        ? htmlspecialchars($c['case_comments'])
-                                        : '—' ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php endif; ?>
-        </div>
-    </div>
     <form class="inputs" id="filterForm">
         <div class="column">
             <label class="form-label" for="pathogen">
@@ -302,9 +338,148 @@ if (!empty($hospital_id)) {
             <canvas id="barChart"></canvas>
         </div>
     </div>
+    <div class="cases-section">
+    <h2>All Infection Cases</h2>
 
-<p id="status" style="font-family:sans-serif;color:#555;"></p>
-    <p id="status" style="font-family:sans-serif;color:#555;"></p>
+    <!-- ---------------- Filters ---------------- -->
+    <form method="GET" class="cases-filters" id="casesFilterForm">
+        <div class="cases-filter">
+            <label for="case_department">Department</label>
+            <select name="case_department" id="case_department">
+                <option value="">All departments</option>
+                <?php foreach ($case_departments as $d): ?>
+                    <option value="<?= (int)$d['department_id'] ?>"
+                        <?= $filter_department === (int)$d['department_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($d['department_name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="cases-filter">
+            <label for="case_pathogen">Pathogen</label>
+            <select name="case_pathogen" id="case_pathogen">
+                <option value="">All pathogens</option>
+                <?php foreach ($pathogens as $p): ?>
+                    <option value="<?= (int)$p['pathogen_id'] ?>"
+                        <?= $filter_pathogen === (int)$p['pathogen_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($p['pathogen_name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="cases-filter">
+            <label for="case_severity">Severity</label>
+            <select name="case_severity" id="case_severity">
+                <option value="">All severities</option>
+                <?php foreach ($case_severities as $s): ?>
+                    <option value="<?= (int)$s['severity_id'] ?>"
+                        <?= $filter_severity === (int)$s['severity_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars(ucfirst($s['severity_name'])) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="cases-filter">
+            <label for="case_start">From</label>
+            <input type="date" name="case_start" id="case_start"
+                   value="<?= htmlspecialchars($filter_start) ?>">
+        </div>
+
+        <div class="cases-filter">
+            <label for="case_end">To</label>
+            <input type="date" name="case_end" id="case_end"
+                   value="<?= htmlspecialchars($filter_end) ?>">
+        </div>
+
+        <div class="cases-filter cases-filter-actions">
+            <button type="submit">Apply</button>
+            <a class="cases-reset" href="statistics.php#cases-section">Reset</a>
+        </div>
+    </form>
+
+    <!-- ---------------- Table ---------------- -->
+    <div class="cases-container" id="cases-section">
+        <?php if (empty($infection_cases)): ?>
+            <p class="empty">No infection cases match the selected filters.</p>
+        <?php else: ?>
+            <table class="cases-table">
+                <thead>
+                    <tr>
+                        <th>Infection date</th>
+                        <th>Diagnosis date</th>
+                        <th>Department</th>
+                        <th>Pathogen</th>
+                        <th>Severity</th>
+                        <th>Reported by</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($infection_cases as $c): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($c['case_infection_date']) ?></td>
+                            <td><?= htmlspecialchars($c['case_diagnosis_date']) ?></td>
+                            <td><?= htmlspecialchars($c['department_name']) ?></td>
+                            <td><?= htmlspecialchars($c['pathogen_name']) ?></td>
+                            <td><?= htmlspecialchars(ucfirst($c['severity_name'])) ?></td>
+                            <td><?= htmlspecialchars(trim($c['user_name'] . ' ' . $c['user_surname'])) ?></td>
+                            <td><?= $c['case_comments'] ? htmlspecialchars($c['case_comments']) : '—' ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </div>
+
+    <!-- ---------------- Pagination ---------------- -->
+    <?php if ($total_pages > 1): ?>
+        <?php
+        // Preserve existing filters in pagination links
+        $baseParams = $_GET;
+        unset($baseParams['case_page']);
+        $baseQuery = http_build_query($baseParams);
+        ?>
+        <nav class="cases-pagination" aria-label="Case pages">
+            <?php if ($current_page > 1): ?>
+                <a class="page-link"
+                   href="?<?= htmlspecialchars($baseQuery) ?>&case_page=<?= $current_page - 1 ?>#cases-section">
+                    &larr; Previous
+                </a>
+            <?php endif; ?>
+
+            <?php
+            // Show up to 5 page numbers around the current page
+            $start = max(1, $current_page - 2);
+            $end   = min($total_pages, $current_page + 2);
+            for ($i = $start; $i <= $end; $i++):
+            ?>
+                <a class="page-link <?= $i === $current_page ? 'active' : '' ?>"
+                   href="?<?= htmlspecialchars($baseQuery) ?>&case_page=<?= $i ?>#cases-section">
+                    <?= $i ?>
+                </a>
+            <?php endfor; ?>
+
+            <?php if ($current_page < $total_pages): ?>
+                <a class="page-link"
+                   href="?<?= htmlspecialchars($baseQuery) ?>&case_page=<?= $current_page + 1 ?>#cases-section">
+                    Next &rarr;
+                </a>
+            <?php endif; ?>
+
+            <span class="page-summary">
+                Showing <?= count($infection_cases) ?> of <?= $total_cases ?> cases
+            </span>
+        </nav>
+    <?php elseif ($total_cases > 0): ?>
+        <p class="page-summary">
+            Showing <?= $total_cases ?> case<?= $total_cases === 1 ? '' : 's' ?>
+        </p>
+    <?php endif; ?>
+    </div>
+    <p id="status"></p>
 </div>
 
 <script>
