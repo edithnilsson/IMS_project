@@ -8,10 +8,10 @@ VALUES
 
 INSERT INTO Permissions(permission_id, permission_desc, permission_page)
 VALUES
-(1, 'Admin','admin.php'),
-(2, 'Log a case', 'new_case.php'),
-(3, 'Write an announcement', 'new_announcements.php'),
-(4, 'Other hospitals','cross_hospital_cases.php');
+(1, 'Admin','/admin.php'),
+(2, 'Register Case', '/new_case.php'),
+(3, 'Write Announcement', '/new_announcements.php'),
+(4, 'Other Hospitals','/cross_hospital_cases.php');
 
 
 INSERT INTO Role_permission(role_id, permission_id)
@@ -92,17 +92,18 @@ VALUES
 (7, 2, 3),
 (8, 2, 2);
 
+-- For testing the statistics page and graphs Uppsala hospital
+INSERT INTO Patient (patient_age, patient_sex) VALUES
+(45, 'male'), (67, 'female'), (32, 'male'), (78, 'female'), (54, 'male'),
+(61, 'female'), (29, 'male'), (85, 'female'), (47, 'male'), (73, 'female'),
+(38, 'male'), (56, 'female'), (69, 'male'), (24, 'female'), (81, 'male');
+
 INSERT INTO System_user
 (user_id, user_username, user_password_hash, user_name, user_surname, user_email, user_phone_number, role_id, user_verification_token_hash, user_status, hospital_id)
 VALUES
 ('550e8400-e29b-41d4-a716-446655440000', 'testdoctor', 'test', 'name1', 'surname1', 'doctor@test.com', '1', '2', NULL, 'active', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62'),
 ('550e8400-e29b-41d4-a716-446655440001', 'testepidemiologist', 'test', 'name2', 'surname3', 'epidemiologist@test.com', '2', '3', NULL, 'active', '7b8e5f3a-2c41-4d91-8a76-135b9e024f62');
 
--- For testing the statistics page and graphs Uppsala hospital
-INSERT INTO Patient (patient_age, patient_sex) VALUES
-(45, 'male'), (67, 'female'), (32, 'male'), (78, 'female'), (54, 'male'),
-(61, 'female'), (29, 'male'), (85, 'female'), (47, 'male'), (73, 'female'),
-(38, 'male'), (56, 'female'), (69, 'male'), (24, 'female'), (81, 'male');
 
 
 INSERT INTO Infection_case

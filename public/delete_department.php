@@ -39,7 +39,7 @@ $stmt->close();
 
 // check if the ward was deleted or not
 if ($result) {
-    echo "<script>alert('Ward deleted!'); window.location.href='admin.php';</script>";
+    echo "<script>alert('Ward deleted!'); window.location.href='/admin.php';</script>";
 } else {
     echo "<script>alert('Error deleting ward.');</script>";
 }

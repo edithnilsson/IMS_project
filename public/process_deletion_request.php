@@ -2,7 +2,7 @@
 
 require __DIR__ . "/../src/authenticate_check.php";
 
-access('manage_user');
+access('Admin');
 
 require __DIR__ . "/../config/db.php";
 
@@ -89,7 +89,7 @@ if ($action === "approve") {
 
         $conn->commit();
 
-        header("Location: admin.php");
+        header("Location: /admin.php");
         exit();
 
     } catch (Exception $e) {
@@ -113,7 +113,7 @@ if ($action === "reject") {
     $stmt->execute();
     $stmt->close();
 
-    header("Location: admin.php");
+    header("Location: /admin.php");
     exit();
 }
 

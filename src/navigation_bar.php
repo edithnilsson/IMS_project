@@ -10,7 +10,7 @@ $pages = $_SESSION['privUser']->getPages();
 <div class="topnav">
     <img src="/assets/img/logo_navbar.png" class="navlogo" alt="Logo">
 
-    <a href="homepage.php">Home</a>
+    <a href="/homepage.php">Home</a>
 
     <?php foreach ($pages as $desc => $url): ?>
         <a href="<?php echo htmlspecialchars($url); ?>">
@@ -18,16 +18,16 @@ $pages = $_SESSION['privUser']->getPages();
         </a>
     <?php endforeach; ?>
 
-    <a href="announcements.php">Announcements</a>
-    <a href="statistics.php">Statistics</a>
+    <a href="/announcements.php">Announcements</a>
+    <a href="/statistics.php">Statistics</a>
 
     <div class="rightside">
         <div class="row">
             <img src="/assets/img/patient.icon-bgremoved.png"
                  class="navicon" alt="">
-            <a href="user_page.php">Profile</a>
+            <a href="/account/profile.php">Profile</a>
         </div>
 
-        <a href="logout.php">Log out</a>
+        <a href="/account/logout.php">Log out</a>
     </div>
 </div>

@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // Create verification link
                 $host = $_SERVER['HTTP_HOST'];  //Returns the Host header from the current request 
-                $verify_link = "http://$host/verify.php?token=" . $verification_token;
+                $verify_link = "http://$host/account/verify.php?token=" . $verification_token;
 
                 // Raw unhashed token goes into the link
                 //verify.php will hash and compare the token ithat is stored n the database

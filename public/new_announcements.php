@@ -7,7 +7,7 @@ access('Write Announcement');
 date_default_timezone_set('Europe/Stockholm');
 
 include __DIR__ . "/../src/navigation_bar.php";
-require_once 'config/db.php';
+require_once __DIR__ . "/../config/db.php";
 
 
 $user_id = $_SESSION['user_id'];
@@ -223,7 +223,7 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="css/announcements.css?v=3">
+    <link rel="stylesheet" href="/assets/css/announcements.css?v=3">
 
 </head>
 

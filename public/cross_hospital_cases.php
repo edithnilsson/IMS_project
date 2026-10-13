@@ -23,7 +23,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 <html>
 <head>
     <title>Cross-Hospital Cases</title>
-    <link rel="stylesheet" href="/assets/css/cross_hospital.css">
+    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css">
 </head>
 <body>
 

@@ -19,7 +19,7 @@ session_start();
 <body style="background: linear-gradient(90deg, #cdffd8, #94d9ff);">
 <img src="/assets/img/logo_nobackground.png" class= "logo">
 
-<form action="login_processing.php" method="post" class="login_form">
+<form action="/account/login_processing.php" method="post" class="login_form">
 
     <div class="input-row">
         <img src="/assets/img/user.icon-bgremoved.png" class="icon">
@@ -40,7 +40,7 @@ session_start();
 
     <div class="captcha-content">
 
-        <img src="captcha.php" alt="CAPTCHA" class="captcha-image">
+        <img src="/account/captcha.php" alt="CAPTCHA" class="captcha-image">
 
         <input type="text"
                id="captcha"

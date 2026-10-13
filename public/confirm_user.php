@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 $conn->close();
 
 
-header("Location: admin.php");
+header("Location: /admin.php");
 exit();
 
 ?>

@@ -62,7 +62,7 @@ function access($permission) {
 
     // does the user stored in the PrivilegedUser object have the right access? 
     if (!$_SESSION['privUser']->hasPrivilege($permission)) {
-        header("Location: access_denied.php");
+        header("Location: /account/access_denied.php");
         exit;
     }
 }

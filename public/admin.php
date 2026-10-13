@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
         if ($result) {
-            echo "<script>alert('Department added!'); window.location.href='admin.php';</script>";
+            echo "<script>alert('Department added!'); window.location.href='/admin.php';</script>";
         } else {
             echo "<script>alert('Something went wrong');</script>";
         }
@@ -229,7 +229,7 @@ $stmt->close();
         </td>
 
         <td>
-            <form action="confirm_user.php" method="GET">
+            <form action="/confirm_user.php" method="GET">
                 <input type="hidden" name="id"
                        value="<?php echo $pending['user_id']; ?>">
 
@@ -281,7 +281,7 @@ $stmt->close();
                 <td><?= htmlspecialchars($request['requested_at']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="process_deletion_request.php" method="POST">
+                    <form action="/process_deletion_request.php" method="POST">
 
                         <input type="hidden"
                                name="request_id"
@@ -342,7 +342,7 @@ $stmt->close();
                 <td><?= htmlspecialchars($admin['user_email']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="edit_user.php" method="POST">
+                    <form action="/edit_user.php" method="POST">
 
                         <input type="hidden"
                                name="user_id"
@@ -392,7 +392,7 @@ $stmt->close();
                 <td><?= htmlspecialchars($doctor['user_email']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="edit_user.php" method="POST">
+                    <form action="/edit_user.php" method="POST">
 
                         <input type="hidden"
                                name="user_id"
@@ -447,7 +447,7 @@ $stmt->close();
                 <td><?= htmlspecialchars($epidemiologist['user_email']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="edit_user.php" method="POST">
+                    <form action="/edit_user.php" method="POST">
 
                         <input type="hidden"
                                name="user_id"
@@ -496,7 +496,7 @@ Add a department: <input type="text" name="department_name"><br>
                 <td><?= htmlspecialchars($department['department_name']) ?></td>
                 <td>
                     <!-- To know which ID was selected, put it into POST -->
-                    <form action="delete_department.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this ward?');">
+                    <form action="/delete_department.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this ward?');">
                         <input type="hidden" name="department_id" value="<?= htmlspecialchars($department['department_id']) ?>">
                         
                         <button type="submit">Delete</button>

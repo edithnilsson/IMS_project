@@ -3,7 +3,7 @@ img.logo{
     width: 30%; 
     height:auto;
     left: 35px;
-    top: 20px;
+    top: 90px;
     z-index: -1;
 }
 
@@ -55,9 +55,6 @@ html, body{
 body {
     min-height: 100vh;
     margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
 }
 
 .content {

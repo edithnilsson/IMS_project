@@ -26,7 +26,7 @@
         <a href="cross_hospital_cases.php">Other hospitals</a>
     </nav>
 
-    <a href="logout.php" class="sidebar-logout">
+    <a href="/account/logout.php" class="sidebar-logout">
         Log Out
     </a>
 

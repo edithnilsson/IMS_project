@@ -2,7 +2,7 @@
 
 // checks if the user has permission to enter this page
 require __DIR__ . "/../src/authenticate_check.php";
-access('Write an announcement');
+access('Write Announcement');
 
 date_default_timezone_set('Europe/Stockholm');
 
@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'update'
     $stmt->close();
 
     if ($result) {
-        echo "<script>alert('Announcement updated successfully!'); window.location.href='user_page.php';</script>";
+        echo "<script>alert('Announcement updated successfully!'); window.location.href='/account/profile.php';</script>";
     } else {
         echo "<script>alert('Error updating announcement.');</script>";
     }

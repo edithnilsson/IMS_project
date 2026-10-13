@@ -1,6 +1,6 @@
 <?php 
 //check if the user is logged in if not then they are kicked out 
-require __DIR__ . "/../src/authenticate_check.php"; 
+require __DIR__ . "/../../src/authenticate_check.php"; 
 
 ?>
 
@@ -19,7 +19,7 @@ require __DIR__ . "/../src/authenticate_check.php";
     <h1>Access Denied</h1>
     <p>You do not have access to this page</p>
 
-    <a href="homepage.php" class="button">Back to the home page</a>
+    <a href="/homepage.php" class="button">Back to the home page</a>
 
 </body>
 </html>

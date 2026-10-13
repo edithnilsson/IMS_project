@@ -2,7 +2,7 @@
 
 // checks if the user has permission to enter this page
 require __DIR__ . "/../src/authenticate_check.php";
-access('Log a case');
+access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
@@ -172,7 +172,7 @@ if ($stmt->execute()) {
             $hospital_id
         );
 
-        echo "<script>alert('Case updated successfully!'); window.location.href='user_page.php';</script>";
+        echo "<script>alert('Case updated successfully!'); window.location.href='/account/profile.php';</script>";
     }
 
 } else {

@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../src/Database.php';
-require_once __DIR__ . '/../src/StatisticsService.php';
-require_once __DIR__ . '/../src/JsonResponse.php';
+require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../../src/Database.php';
+require_once __DIR__ . '/../../src/StatisticsService.php';
+require_once __DIR__ . '/../../src/JsonResponse.php';
 
 $startDate  = $_GET['start_date']  ?? date('Y-m-d', strtotime('-83 days'));
 $endDate    = $_GET['end_date']    ?? date('Y-m-d');

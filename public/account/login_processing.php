@@ -2,9 +2,9 @@
 
 session_start();
 
-require __DIR__ . "/../config/db.php";
-require_once __DIR__ . "/../src/Role.php";          
-require_once __DIR__ . "/../src/PrivilegedUser.php";  
+require __DIR__ . "/../../config/db.php";
+require_once __DIR__ . "/../../src/Role.php";          
+require_once __DIR__ . "/../../src/PrivilegedUser.php";  
 
 //captcha
 $captcha = $_POST['captcha'];
@@ -58,7 +58,7 @@ if ($result->num_rows === 1) {
         // Then check account status
         if ($user['user_status'] === 'pending') {
 
-            header("Location: pending.php");
+            header("Location: /account/pending.php");
             exit();
 
         } elseif ($user['user_status'] === 'deactivated') {
@@ -81,9 +81,9 @@ if ($result->num_rows === 1) {
 
         // Login successful
         if ($user['role_id'] == 1) {
-            header("Location: admin.php");
+            header("Location: /admin.php");
         } else {
-            header("Location: homepage.php");
+            header("Location: /homepage.php");
         }
         exit();
 

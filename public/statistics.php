@@ -1,8 +1,6 @@
 <?php
 // checks if the user has permission to enter this page
 require __DIR__ . "/../src/authenticate_check.php";
-
-include __DIR__ . "/../src/navigation_bar.php";
 require __DIR__ . "/../config/db.php";
 
 // Create connection
@@ -15,7 +13,7 @@ if ($conn->connect_error) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"
     && ($_POST['action'] ?? '') == 'dismiss'
-    && $_SESSION['privUser']->hasPrivilege('write_announcement')) {
+    && $_SESSION['privUser']->hasPrivilege('Write Announcement')) {
 
     $awarning_id = $_POST['awarning_id'];
 
@@ -41,7 +39,7 @@ if ($res) {
 
 // Check if the user can write announcements
 $can_write_announcement =
-    $_SESSION['privUser']->hasPrivilege('Write an announcement');
+    $_SESSION['privUser']->hasPrivilege('Write Announcement');
 $automatic_warnings = [];
 
 if ($can_write_announcement) {
@@ -221,7 +219,9 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
-    
+ 
+<?php include __DIR__ . "/../src/navigation_bar.php"; ?>
+
 <img src="/assets/img/logo_nobackground.png" class="logo">
 <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
@@ -252,7 +252,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
                             <td><?= htmlspecialchars(date('Y-m-d', strtotime($warning['awarning_date']))) ?></td>
                             <td><?= htmlspecialchars($warning['awarning_message']) ?></td>
                             <td>
-                                <form action="new_announcements.php" method="POST">
+                                <form action="/new_announcements.php" method="POST">
                                     <input type="hidden"
                                            name="action"
                                            value="prepare">
@@ -266,7 +266,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
                                     </button>
                                 </form>
 
-                                <form action="statistics.php" method="POST">
+                                <form action="/statistics.php" method="POST">
                                     <input type="hidden"
                                            name="action"
                                            value="dismiss">
@@ -394,7 +394,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 
         <div class="cases-filter cases-filter-actions">
             <button type="submit">Apply</button>
-            <a class="cases-reset" href="statistics.php#cases-section">Reset</a>
+            <a class="cases-reset" href="/statistics.php#cases-section">Reset</a>
         </div>
     </form>
 

@@ -1,8 +1,7 @@
 <?php
+require __DIR__ . "/../../src/authenticate_check.php";
 
-require __DIR__ . "/../src/authenticate_check.php";
-
-require_once 'config/db.php';
+require_once __DIR__ . "/../../config/db.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -151,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 
 <body>
-<?php include '/src/navigation_bar.php'; ?>
+<?php require __DIR__ . "/../../src/navigation_bar.php"; ?>
 <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
@@ -226,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($case['severity_name']) ?></td>
                             <td><?= htmlspecialchars($case['case_comments']) ?></td>
                             <td>
-                                <form action="user_edit_case.php" method="POST">
+                                <form action="/user_edit_case.php" method="POST">
                                     <input type="hidden"
                                         name="case_id"
                                         value="<?= htmlspecialchars($case['case_id']) ?>">
@@ -244,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($announcement['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars($announcement['department_name']) ?></td>
                             <td>
-                                <form action="edit_announcement.php" method="POST">
+                                <form action="/edit_announcement.php" method="POST">
                                     <input type="hidden"
                                         name="mwarning_id"
                                         value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
