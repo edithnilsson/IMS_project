@@ -6,7 +6,6 @@ access('Admin');
 include __DIR__ . "/src/navigation_bar.php";
 require "config/db.php";
 
-include "navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 

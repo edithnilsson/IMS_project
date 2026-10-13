@@ -184,7 +184,7 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
 <img src="/Pictures/rings_br_nobg.png" class="rings_br">
 
-<h1 class="hCase">Register a Case</h1>
+<h1 class="hCase">Register Case</h1>
 
 <form action="" method="POST" class="inputs">
 

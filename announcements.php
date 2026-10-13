@@ -74,8 +74,6 @@ if ($stmt) {
     <title>Document</title>
 </head>
 <body>
-
-<?php include 'hamburger_menu.php'; ?>
 <h1> Announcements </h1>
 <table>
 	<tr>

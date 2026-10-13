@@ -221,8 +221,6 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
-
-    <?php include 'hamburger_menu.php'; ?>
     
 <img src="/Pictures/logo_nobackground.png" class="logo">
 <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
