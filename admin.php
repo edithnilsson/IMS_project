@@ -188,7 +188,7 @@ $stmt->close();
 
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>

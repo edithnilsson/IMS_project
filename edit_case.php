@@ -44,7 +44,7 @@ if (isset($_POST['save'])) {
 
 <h1>Edit Case</h1>
 
-<link rel="stylesheet" href="css/edit_case.css">
+<link rel="stylesheet" href="/css/edit_case.css">
 
 <form method="POST">
 

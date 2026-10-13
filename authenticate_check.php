@@ -20,7 +20,7 @@ if(isset($_SESSION['user_id'])) {
                 $params["secure"], $params["httponly"]
             );
         }
-        header('Location: index.php'); 
+        header('Location: /index.php'); 
         exit;
 }
     // if less than 20 minutes have passed reset the time
@@ -29,7 +29,7 @@ if(isset($_SESSION['user_id'])) {
 
 // if the user is not logged in they are redirected to the login page
 else {
-    header("Location: index.php");
+    header("Location: /index.php");
     exit;
 } 
 
@@ -39,13 +39,13 @@ else {
 function access($permission) {
     // check if there is a PrivilegedUser object saved in the session variable
     if (!isset($_SESSION['privUser'])) {
-        header("Location: index.php");
+        header("Location: /index.php");
         exit;
     }
 
     // Check if the content of the $_SESSION['privUser'] is a PrivilegedUser object
     if (!($_SESSION['privUser'] instanceof PrivilegedUser)) {
-        header("Location: index.php");
+        header("Location: /index.php");
         exit;
     }
 

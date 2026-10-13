@@ -67,7 +67,7 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="/css/homepage.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
@@ -78,11 +78,11 @@ $mwarning_icon = [
 <!--sets boarders for webpages-->
 <div class="container">
     <!-- Inserts the logo picture  -->
-    <img src="Pictures/logo_nobackground.png" class="logo">
+    <img src="/Pictures/logo_nobackground.png" class="logo">
     
     <!-- Inserts the logo picture  -->
-    <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+    <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
+    <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
 
 
 

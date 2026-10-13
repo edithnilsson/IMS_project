@@ -14,7 +14,7 @@ $pages = $_SESSION['privUser']->getPages();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <link rel="stylesheet" href="css/navigation_bar.css">
+    <link rel="stylesheet" href="/css/navigation_bar.css">
 
 </head>
 <body>

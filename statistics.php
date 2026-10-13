@@ -133,7 +133,7 @@ if (!empty($hospital_id)) {
 <html>
 <head>
     <title>Statistics</title>
-    <link rel="stylesheet" href="css/statistics.css">
+    <link rel="stylesheet" href="/css/statistics.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>

@@ -91,7 +91,7 @@ $hospital_result = $conn->query($sql);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit User</title>
-        <link rel="stylesheet" href="css/edit_user.css">
+        <link rel="stylesheet" href="/css/edit_user.css">
     </head>
     <body>
         <!-- Logo and background -->
@@ -148,6 +148,6 @@ $hospital_result = $conn->query($sql);
                 <button type="submit" name="save" value="1" class="button">Save Changes</button>
             </div>
         </form>
-        <script src="js/edit_user.js"></script>
+        <script src="/js/edit_user.js"></script>
     </body>
 </html>

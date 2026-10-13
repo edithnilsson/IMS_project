@@ -13,7 +13,7 @@ session_start();
 
     <title>Account Pending</title>
 
-    <link rel="stylesheet" href="css/pending.css?v=2">
+    <link rel="stylesheet" href="/css/pending.css?v=2">
 </head>
 
 <body>
@@ -21,11 +21,11 @@ session_start();
     <div class="container">
 
         <!-- Logo -->
-        <img src="Pictures/logo_nobackground.png" class="logo">
+        <img src="/Pictures/logo_nobackground.png" class="logo">
 
         <!-- Decorative viruses -->
-        <img src="Pictures/virus_bl_nobg.png" class="virus_bl">
-        <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+        <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
+        <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
 
         <!-- Pending message -->
         <div class="pending-box">
@@ -40,7 +40,7 @@ session_start();
                 Please wait until an administrator approves your account.
             </p>
 
-            <a href="index.php" class="back-button">
+            <a href="/index.php" class="back-button">
                 Back to Login
             </a>
 

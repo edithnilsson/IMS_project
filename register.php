@@ -127,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Send email
                 $mail->send();
                 echo "<script>alert('Registered! Check your email to verify your account before logging in.');
-                window.location.href='index.php';</script>";
+                window.location.href='/index.php';</script>";
             } catch (Exception $e) {
                 echo "Mailer error: {$mail->ErrorInfo}";
             }
@@ -143,17 +143,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfTraction Register</title>
-        <link rel="stylesheet" href="css/register.css">
+        <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
     <!-- Logo and background -->
     <img src="/Pictures/logo_nobackground.png" class= "logo">
     <img src="/Pictures/virus_bl_nobg.png" class="virus_bl">
 
-    <a href="index.php" class="login-link">Already Registered? Click here to login</a>
+    <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 
     <!-- Register form --> 
-    <form action="register.php" method="POST" class="inputs">
+    <form action="/register.php" method="POST" class="inputs">
         <div class="align_columns">
             
             <!-- Left column -->
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </dialog>
 
-    <script src="js/register.js"></script>
+    <script src="/js/register.js"></script>
 
 </body>
 </html>

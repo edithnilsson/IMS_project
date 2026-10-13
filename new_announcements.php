@@ -223,19 +223,19 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="css/announcements.css">
+    <link rel="stylesheet" href="/css/announcements.css">
 
 </head>
 
 <body>
 
 
-    <img src="Pictures/virus_tr_nobg.png" class="virus_tr">
+    <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">
     <img src="/Pictures/rings_br_nobg.png" class="rings_br">
     <div class="page">
         <div class="logo">
             <a href="homepage.php">
-                <img src="Pictures/logo_nobackground.png" alt="Logo">
+                <img src="/Pictures/logo_nobackground.png" alt="Logo">
             </a>
         </div>
 
@@ -414,7 +414,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/mask_icon_bgremoved.png">
+                                    <img src="/Pictures/mask_icon_bgremoved.png">
                                 </span>
 
                             </label>
@@ -429,7 +429,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/hands_icon_removebg.png">
+                                    <img src="/Pictures/hands_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -444,7 +444,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/warning_icon_removebg.png">
+                                    <img src="/Pictures/warning_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -459,7 +459,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/needle_icon_removebg.png">
+                                    <img src="/Pictures/needle_icon_removebg.png">
                                 </span>
 
                             </label>
@@ -474,7 +474,7 @@ if (!$pathogen_result) {
                                 >
 
                                 <span class="icon">
-                                    <img src="Pictures/house_icon_removebg.png">
+                                    <img src="/Pictures/house_icon_removebg.png">
                                 </span>
                             </label>
                         </div>

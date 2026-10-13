@@ -12,7 +12,7 @@ $captcha = $_POST['captcha'];
 if ($captcha !== $_SESSION['captcha_answer']) {
     echo "<script>
             alert('Incorrect CAPTCHA.');
-            window.location.href = 'index.php';
+            window.location.href = '/index.php';
           </script>";
     exit();
 }
@@ -50,7 +50,7 @@ if ($result->num_rows === 1) {
         if ($user['user_verification_token_hash'] !== NULL){
             echo "<script>
                     alert('Please verify your email.');
-                    window.location.href = 'index.php';
+                    window.location.href = '/index.php';
                   </script>";
             exit(); //End script
         }
@@ -65,7 +65,7 @@ if ($result->num_rows === 1) {
 
             echo "<script>
                     alert('This account has been deactivated.');
-                    window.location.href = 'index.php';
+                    window.location.href = '/index.php';
                   </script>";
             exit();
         }
@@ -91,7 +91,7 @@ if ($result->num_rows === 1) {
         // Login information is incorrect
         echo "<script>
                 alert('Login information is incorrect.');
-                window.location.href = 'index.php';
+                window.location.href = '/index.php';
               </script>";
     }
 
@@ -100,7 +100,7 @@ if ($result->num_rows === 1) {
     // Login information is incorrect
     echo "<script>
             alert('Login information is incorrect.');
-            window.location.href = 'index.php';
+            window.location.href = '/index.php';
           </script>";
 }
 

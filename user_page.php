@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/user_page.css">
+    <link rel="stylesheet" href="/css/user_page.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>

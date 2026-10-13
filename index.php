@@ -11,8 +11,8 @@ session_start();
 <head>
     <title>InfTraction</title>
 
-            <link rel="stylesheet" href="css/login.css">
-            <link rel="stylesheet" href="css/captcha.css">
+            <link rel="stylesheet" href="/css/login.css">
+            <link rel="stylesheet" href="/css/captcha.css">
 
 </head>
 
@@ -58,7 +58,7 @@ session_start();
 
 </form>
 
-<button type="button" onclick="location.href='register.php'" class="register_button">
+<button type="button" onclick="location.href='/register.php'" class="register_button">
         Or sign up here
     </button>
 

@@ -23,7 +23,7 @@ if ($user) {
     $update = $conn->prepare("UPDATE System_user SET user_verification_token_hash = NULL WHERE user_id = ?");
     $update->bind_param("s", $user["user_id"]);
     $update->execute();
-    echo "<script>alert('Account verified. You can now log in.'); window.location.href='index.php';</script>";
+    echo "<script>alert('Account verified. You can now log in.'); window.location.href='/index.php';</script>";
 } else {
     echo "<script>alert('Invalid or expired verification link.'); window.location.href='verify.php'</script>";
 }
