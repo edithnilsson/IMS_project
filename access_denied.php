@@ -1,6 +1,6 @@
 <?php 
 //check if the user is logged in if not then they are kicked out 
-require "authenticate_check.php"; 
+require __DIR__ . "/src/authenticate_check.php"; 
 
 ?>
 

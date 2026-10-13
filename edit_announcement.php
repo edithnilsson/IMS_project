@@ -1,7 +1,7 @@
 <?php
 
 // checks if the user has permission to enter this page
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 access('Write an announcement');
 
 date_default_timezone_set('Europe/Stockholm');
@@ -144,7 +144,7 @@ if (!$pathogen_result) {
     <img src="/Pictures/rings_br_nobg.png" class="rings_br">
     
     <div class="page">
-    <?php include 'navigation_bar.php'; ?>
+    <?php include __DIR__ . "/src/navigation_bar.php"; ?>
         <div class="logo">
             <a href="homepage.php">
                 <img src="/Pictures/logo_nobackground.png" alt="Logo">

@@ -1,6 +1,6 @@
 <?php 
 
-require_once "PrivilegedUser.php"; 
+require_once __DIR__ . "/PrivilegedUser.php"; 
 
 $pages = $_SESSION['privUser']->getPages();
 

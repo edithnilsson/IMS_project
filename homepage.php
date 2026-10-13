@@ -1,10 +1,10 @@
 <?php
 // checks if the user has permission to enter this page
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 
 require "config/db.php";   
 
-include "navigation_bar.php";
+include __DIR__ . "/src/navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 

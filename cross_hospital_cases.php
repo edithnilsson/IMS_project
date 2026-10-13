@@ -1,8 +1,8 @@
 <?php
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 access('Other hospitals');
 
-include "navigation_bar.php";
+include __DIR__ . "/src/navigation_bar.php";
 require "config/db.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);

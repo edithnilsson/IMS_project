@@ -1,6 +1,6 @@
 <?php
 
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 access('Admin');
 require "config/db.php";
 
@@ -95,7 +95,7 @@ $hospital_result = $conn->query($sql);
     </head>
     <body>
         <!-- Logo and background -->
-        <?php include 'navigation_bar.php'; ?>
+        <?php include __DIR__ . "/src/navigation_bar.php"; ?>
         <h1 class="title">Edit User</h1>
         <img src="/Pictures/Logo.png" class="logo">
         <img src="/Pictures/virus_tr_nobg.png" class="virus_tr">

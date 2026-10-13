@@ -1,12 +1,12 @@
 <?php
 
 // checks if the user has permission to enter this page
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 access('Log a case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-include "navigation_bar.php";
+include __DIR__ . "/src/navigation_bar.php";
 require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];

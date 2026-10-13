@@ -3,8 +3,8 @@
 session_start();
 
 require "config/db.php";
-require_once "Role.php";          
-require_once "PrivilegedUser.php";  
+require_once __DIR__ . "/src/Role.php";          
+require_once __DIR__ . "/src/PrivilegedUser.php";  
 
 //captcha
 $captcha = $_POST['captcha'];

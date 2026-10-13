@@ -1,8 +1,8 @@
 <?php
 // checks if the user has permission to enter this page
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 
-include "navigation_bar.php";
+include __DIR__ . "/src/navigation_bar.php";
 require "config/db.php";
 
 // Create connection

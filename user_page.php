@@ -1,6 +1,6 @@
 <?php
 
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 
 require_once 'config/db.php';
 
@@ -152,7 +152,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     
     <div class = "container">
-    <?php include 'navigation_bar.php'; ?>
+    <?php include __DIR__ . "/src/navigation_bar.php"; ?>
         <h1><?= htmlspecialchars($user['user_name'] . " " . $user['user_surname']) ?></h1>
         <div class = "profile_info">
 

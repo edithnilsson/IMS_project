@@ -1,6 +1,6 @@
 <?php
-require_once "Role.php";
-require_once "PrivilegedUser.php";
+require_once __DIR__ . "/Role.php";
+require_once __DIR__ . "/PrivilegedUser.php";
 
 session_start();
 

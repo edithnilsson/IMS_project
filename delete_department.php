@@ -1,6 +1,6 @@
 <?php 
 
-require "authenticate_check.php";
+require __DIR__ . "/src/authenticate_check.php";
 access('Admin');
 require "config/db.php";
 

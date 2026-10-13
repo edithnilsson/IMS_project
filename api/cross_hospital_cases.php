@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../src/Database.php';
 require_once __DIR__ . '/../src/StatisticsService.php';
 require_once __DIR__ . '/../src/JsonResponse.php';
-require_once __DIR__ . '/../authenticate_check.php';
+require_once __DIR__ . "/src/authenticate_check.php";
 
 
 
