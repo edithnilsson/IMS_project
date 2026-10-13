@@ -10,6 +10,7 @@ img.logo {
     width: 40%;
     height: auto;  
     margin-left: 10px;
+    z-index: -1;
 }
 
 
@@ -28,6 +29,7 @@ img.virus_tr{
     right: 0px;
     width: 22%; 
     height: auto;
+    z-index: -1;
 }
 
 /* DASHBOARD - log a case and statistics  */
