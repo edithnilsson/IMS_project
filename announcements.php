@@ -42,7 +42,7 @@ $num_results_on_page = 10;
 
 // Fetch all relevant infomration 
 
-$sql="SELECT mw.*, su.user_name, su.user_surname, p.pathogen_name, d.department_name
+$sql="SELECT mw.*, su.user_name, su.user_surname, su.user_username, p.pathogen_name, d.department_name
 FROM Manual_warning mw
 JOIN System_user su ON mw.user_id = su.user_id 
 JOIN Pathogen p ON mw.pathogen_id = p.pathogen_id
@@ -82,16 +82,20 @@ if ($stmt) {
 		<th>Date</th>
 		<th>Announcement</th>
         <th>Pathogen</th>
+        <th>Severity</th>
         <th>Ward</th>
 		<th>Staff Member</th>
+        <th>User name</th>
 	</tr>
 	<?php while ($row = $result->fetch_assoc()): ?>
 	<tr>
 		<td><?php echo $row['mwarning_date']; ?></td>
 		<td><?php echo $row['mwarning_message']; ?></td>
         <td><?php echo $row['pathogen_name']; ?></td>
+        <td><?php echo $row['mwarning_severity_level']; ?></td>
         <td><?php echo $row['department_name']; ?></td>
 		<td><?php echo "{$row['user_name']} {$row['user_surname']}"; ?></td>
+        <td><?php echo "{$row['user_username']}"; ?></td>
 	</tr>
 	<?php endwhile; ?>
 </table>
