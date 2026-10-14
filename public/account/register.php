@@ -73,8 +73,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // If 2 users register at the same time the second user will rollback
         $conn->begin_transaction();
         //FOR UPDATE locks rows until transaction ends
-        $count_result = $conn->query("SELECT COUNT(*) AS user_count FROM System_user FOR UPDATE");
-        $count_row = $count_result->fetch_assoc();
+        // Count amount of users in a specific hospital
+        $count_stmt = $conn->prepare("SELECT COUNT(*) AS user_count FROM System_user WHERE hospital_id = ? FOR UPDATE");
+        $count_stmt->bind_param("s", $hospital_id);
+        $count_stmt->execute();
+        $count_row = $count_stmt->get_result()->fetch_assoc();
 
         $status = "pending";
 
