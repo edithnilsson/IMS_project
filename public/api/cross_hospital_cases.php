@@ -1,4 +1,10 @@
 <?php
+session_set_cookie_params([
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
+session_start();
+
 header('Content-Type: application/json');
 
 require_once __DIR__ . '/../../config/db.php';

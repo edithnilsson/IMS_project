@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . "/../../authenticate_check.php";
+access('Admin');
 
 require __DIR__ . "/../../config/db.php";
 

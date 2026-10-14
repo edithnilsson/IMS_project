@@ -3,6 +3,11 @@ require_once __DIR__ . "/Role.php";
 require_once __DIR__ . "/PrivilegedUser.php";
 require_once __DIR__ . "/../config/db.php";
 
+
+session_set_cookie_params([
+    'httponly' => true,
+    'samesite' => 'Lax'
+]);
 session_start();
 
 // Checks if the user exists and is not null --> the user has logged in
