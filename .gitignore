@@ -2,3 +2,4 @@
 /vendor
 .DS_Store
 src/mailer.php
+src/mailer.php

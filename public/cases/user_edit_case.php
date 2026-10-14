@@ -6,7 +6,7 @@ access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-require_once 'config/db.php';
+require_once __DIR__ . "/../../config/db.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -144,7 +144,7 @@ if ($stmt->execute()) {
     if ($pathogen && $pathogen['pathogen_dangerous']) {
 
         // If the pathogen is dangerous, deal with that:
-        require_once 'handle_dangerous_case.php';
+        require_once __DIR__ . "/../../src/handle_dangerous_case.php";
 
         $email_sent = handleDangerousCase(
             $conn,
@@ -162,7 +162,7 @@ if ($stmt->execute()) {
     } else {
 
         // If the pathogen is not, check the automatic warning stuff
-        require_once 'check_thresholds.php';
+        require_once __DIR__ . "/../../src/check_thresholds.php";
 
         checkThreshold(
             $conn,
@@ -202,7 +202,7 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 
 <body>
 
-    <?php include 'hamburger_menu.php'; ?>
+    <?php include __DIR__ . "/../../src/navigation_bar.php"; ?>
 <div class="img">
 
 <img src="/assets/img/Logo.png" class="logo">
