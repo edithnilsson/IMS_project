@@ -1,6 +1,6 @@
 <?php 
 
-session_start();
+require __DIR__ . "/../../src/authenticate_check.php";
 
 /*empty the array*/
 session_unset(); 
