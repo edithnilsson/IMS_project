@@ -29,6 +29,7 @@ $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
 // Send the email body as HTML (so the <a> link renders as a clickable link)
 $mail->isHTML(true);
 
+
 //Add logo in the mail
 $mail->addEmbeddedImage(__DIR__ . '/../public/assets/img/logo_nobackground.png', 'logo');
 

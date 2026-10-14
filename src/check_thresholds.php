@@ -1,7 +1,12 @@
 <?php
 
-function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $hospital_id)
-{
+function checkThreshold(
+    $conn,
+    $pathogen_id,
+    $diagnosis_date,
+    $department_id,
+    $hospital_id
+) {
     // Get the threshold for this pathogen
     $sql = "SELECT threshold_id, threshold_value, threshold_time_window
             FROM Threshold
@@ -13,10 +18,9 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
 
     $result = $stmt->get_result();
     $threshold = $result->fetch_assoc();
-
     $stmt->close();
 
-    // No threshold exists for this pathogen
+    // No threshold exists, then stop running the function (not  all our pathogens have thresholds for them)
     if (!$threshold) {
         return;
     }
@@ -33,22 +37,20 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
 
     $today = date('Y-m-d');
 
-    // The submitted case must itself be within the current window
+    // The submitted case must be within the current window
     if ($diagnosis_date < $start_date || $diagnosis_date > $today) {
         return;
     }
 
-    // Count recent cases of this pathogen
-    // within this department and hospital
+    // Count cases for this pathogen, department and hospital
     $sql = "SELECT COUNT(*) AS case_count
             FROM Infection_case
             WHERE pathogen_id = ?
-            AND department_id = ?
-            AND hospital_id = ?
-            AND case_diagnosis_date BETWEEN ? AND ?";
+              AND department_id = ?
+              AND hospital_id = ?
+              AND case_diagnosis_date BETWEEN ? AND ?";
 
     $stmt = $conn->prepare($sql);
-
     $stmt->bind_param(
         "iisss",
         $pathogen_id,
@@ -57,22 +59,24 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
         $start_date,
         $today
     );
-
     $stmt->execute();
 
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
-
     $stmt->close();
+
+    if (!$row) {
+        throw new RuntimeException("Could not count infection cases.");
+    }
 
     $case_count = $row['case_count'];
 
-    // Threshold has not been reached
+    // Threshold has not been reached, we do not create a new warning and stop running the function
     if ($case_count < $threshold_value) {
         return;
     }
 
-    // Get pathogen name
+    // Get the pathogen name
     $sql = "SELECT pathogen_name
             FROM Pathogen
             WHERE pathogen_id = ?";
@@ -83,12 +87,15 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
 
     $result = $stmt->get_result();
     $pathogen = $result->fetch_assoc();
-
     $stmt->close();
+
+    if (!$pathogen) {
+        throw new RuntimeException("Pathogen not found for threshold warning.");
+    }
 
     $pathogen_name = $pathogen['pathogen_name'];
 
-    // Get department name
+    // Get the department name
     $sql = "SELECT department_name
             FROM Department
             WHERE department_id = ?";
@@ -99,12 +106,15 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
 
     $result = $stmt->get_result();
     $department = $result->fetch_assoc();
-
     $stmt->close();
+
+    if (!$department) {
+        throw new RuntimeException("Department not found for threshold warning.");
+    }
 
     $department_name = $department['department_name'];
 
-    // Create announcement message
+    // Create the warning message
     $awarning_message =
         $case_count . " cases of " . $pathogen_name .
         " have been diagnosed in the " .
@@ -112,20 +122,18 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
         " ward within the last " .
         $threshold_time_window . " days.";
 
-    // Check if an announcement already exists for this
-    // threshold, department and hospital during the current window
+    // Check whether a warning already exists in this window
     $sql = "SELECT awarning_id, awarning_status
             FROM Automatic_warning
             WHERE threshold_id = ?
-            AND department_id = ?
-            AND hospital_id = ?
-            AND awarning_date >= ?
+              AND department_id = ?
+              AND hospital_id = ?
+              AND awarning_date >= ?
             LIMIT 1";
-
-    $stmt = $conn->prepare($sql);
 
     $start_datetime = $start_date . " 00:00:00";
 
+    $stmt = $conn->prepare($sql);
     $stmt->bind_param(
         "iiss",
         $threshold_id,
@@ -133,20 +141,15 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
         $hospital_id,
         $start_datetime
     );
-
     $stmt->execute();
 
     $result = $stmt->get_result();
     $existing_warning = $result->fetch_assoc();
-
     $stmt->close();
 
-    // An announcement already exists in this window
+    // Update an existing warning if it is still active
     if ($existing_warning) {
-
-        // Update it while it is still active
         if ($existing_warning['awarning_status'] === 'active') {
-
             $awarning_id = $existing_warning['awarning_id'];
 
             $sql = "UPDATE Automatic_warning
@@ -154,13 +157,11 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
                     WHERE awarning_id = ?";
 
             $stmt = $conn->prepare($sql);
-
             $stmt->bind_param(
                 "ss",
                 $awarning_message,
                 $awarning_id
             );
-
             $stmt->execute();
             $stmt->close();
         }
@@ -170,14 +171,13 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
 
     $awarning_status = "active";
 
-    // Create the automatic announcement
+    // Create a new automatic warning
     $sql = "INSERT INTO Automatic_warning
             (awarning_id, threshold_id, department_id,
              awarning_message, awarning_status, hospital_id)
             VALUES (UUID(), ?, ?, ?, ?, ?)";
 
     $stmt = $conn->prepare($sql);
-
     $stmt->bind_param(
         "iisss",
         $threshold_id,
@@ -186,9 +186,7 @@ function checkThreshold($conn, $pathogen_id, $diagnosis_date, $department_id, $h
         $awarning_status,
         $hospital_id
     );
-
     $stmt->execute();
-
     $stmt->close();
 }
 ?>

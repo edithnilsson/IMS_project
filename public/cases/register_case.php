@@ -1,4 +1,5 @@
 <?php
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 // checks if the user has permission to enter this page
 require __DIR__ . "/../../src/authenticate_check.php";
@@ -8,6 +9,7 @@ date_default_timezone_set('Europe/Stockholm');
 
 include __DIR__ . "/../../src/navigation_bar.php";
 require_once __DIR__ . "/../../config/db.php";
+require_once __DIR__ . "/../../src/patient_id_encryption.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -58,108 +60,165 @@ die("Error getting severity levels: " . $conn->error);
 
 // Register the case when the form is submitted
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-$user_id = $_SESSION['user_id'];
-$pathogen_id = $_POST['pathogen'];
-$diagnosis_date = $_POST['diagnosis_date'];
-$infection_date = $_POST['infection_date'];
-$department_id = $_POST['ward'];
-$patient_id = $_POST['patient_id'];
-$severity_id = $_POST['severity'];
-$comments = $_POST['comments'];
+    $user_id = $_SESSION['user_id'];
+    $pathogen_id = (int) $_POST['pathogen'];
+    $diagnosis_date = $_POST['diagnosis_date'];
+    $infection_date = $_POST['infection_date'];
+    $department_id = (int) $_POST['ward'];
+    $severity_id = (int) $_POST['severity'];
+    $comments = $_POST['comments'] ?? '';
 
-// Get the hospital of the logged-in user
-/* We can probably remove this as it already exists above - but at the moment it is not working due to another thing, so i dont want to remove yet 
-$sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
-$hospital_id = $user['hospital_id'];
-*/
+    // Get and validate the hospital patient ID
+    $hospital_patient_id = trim($_POST['patient_id'] ?? '');
 
-// Insert the case into Infection_case
-$sql = "INSERT INTO Infection_case
-        (case_id, user_id, department_id, pathogen_id, severity_id,
-         patient_id, case_diagnosis_date, case_infection_date, case_comments, hospital_id)
-        VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-$stmt = $conn->prepare($sql);
-
-if (!$stmt) {
-die("Error preparing case registration: " . $conn->error);
-}
-
-$stmt->bind_param(
-"siiiissss",
-$user_id,
-$department_id,
-$pathogen_id,
-$severity_id,
-$patient_id,
-$diagnosis_date,
-$infection_date,
-$comments,
-$hospital_id
-);
-
-// Handling of either the automatic warning or the dangerous case notif
-if ($stmt->execute()) {
-
-    // Check if the pathogen is dangerous
-    $sql = "SELECT pathogen_dangerous
-            FROM Pathogen
-            WHERE pathogen_id = ?";
-
-    $pathogen_stmt = $conn->prepare($sql);
-    $pathogen_stmt->bind_param("i", $pathogen_id);
-    $pathogen_stmt->execute();
-
-    $result = $pathogen_stmt->get_result();
-    $pathogen = $result->fetch_assoc();
-
-    $pathogen_stmt->close();
-
-    if ($pathogen && $pathogen['pathogen_dangerous']) {
-
-        // If the pathogen is dangerous, deal with that:
-        require_once __DIR__ . "/../../src/handle_dangerous_case.php";
-
-        $email_sent = handleDangerousCase(
-            $conn,
-            $pathogen_id,
-            $diagnosis_date,
-            $hospital_id
-        );
-
-        if ($email_sent) {
-            echo "<script>alert('Dangerous case registered and notification emails sent.');</script>";
-        } else {
-            echo "<script>alert('Case registered, but some notification emails could not be sent.');</script>";
-        }
-
-    } else {
-
-        // If the pathogen is not, check the automatic warning stuff
-        require_once __DIR__ . "/../../src/check_thresholds.php";
-
-        checkThreshold(
-            $conn,
-            $pathogen_id,
-            $diagnosis_date,
-            $department_id,
-            $hospital_id
-        );
-
-        echo "<script>alert('Case registered successfully!');</script>";
+    if ($hospital_patient_id === '' || !ctype_digit($hospital_patient_id)) {
+        die("Invalid patient ID.");
     }
 
-} else {
-    echo "<script>alert('Error registering case: " . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8') . "');</script>";
-}
+    $conn->begin_transaction();
 
-$stmt->close();
+    try {
+        // Generate an HMAC for this patient across hospitals
+        $patient_id_hmac = patientIdHmac($hospital_patient_id);
+
+        // Check whether this patient already has an internal ID
+        $sql = "SELECT patient_id
+                FROM Patient_ID_Mapping
+                WHERE patient_id_hmac = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $patient_id_hmac);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $mapping = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($mapping) {
+            // If they do, reuse the existing internal patient ID
+            $patient_id = $mapping['patient_id'];
+        } else {
+            // If not, create a new internal patient record and encrypt the original patient ID
+            //internal record:
+            $sql = "SELECT UUID() AS patient_id";
+            $result = $conn->query($sql);
+            $row = $result->fetch_assoc();
+            $patient_id = $row['patient_id'];
+
+            $sql = "INSERT INTO Patient (patient_id) VALUES (?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $patient_id);
+            $stmt->execute();
+            $stmt->close();
+
+            // encryption of the original hospital patient ID
+            $encrypted = encryptPatientId($hospital_patient_id);
+
+            // Store the patient mapping (HMAC and encrypted identifier)
+            $sql = "INSERT INTO Patient_ID_Mapping (patient_id, patient_id_hmac, encrypted_patient_id, nonce, auth_tag)
+                    VALUES (?, ?, ?, ?, ?)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param(
+                "sssss",
+                $patient_id,
+                $patient_id_hmac,
+                $encrypted['ciphertext'],
+                $encrypted['nonce'],
+                $encrypted['auth_tag']
+            );
+            $stmt->execute();
+            $stmt->close();
+        }
+
+        // Register the infection case
+        $sql = "INSERT INTO Infection_case
+                (case_id, user_id, department_id, pathogen_id, severity_id,
+                 patient_id, case_diagnosis_date, case_infection_date,
+                 case_comments, hospital_id)
+                VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "siiisssss",
+            $user_id,
+            $department_id,
+            $pathogen_id,
+            $severity_id,
+            $patient_id,
+            $diagnosis_date,
+            $infection_date,
+            $comments,
+            $hospital_id
+        );
+        $stmt->execute();
+        $stmt->close();
+
+        // Check if the pathogen is dangerous
+        $sql = "SELECT pathogen_dangerous
+                FROM Pathogen
+                WHERE pathogen_id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $pathogen_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $pathogen = $result->fetch_assoc();
+        $stmt->close();
+
+        if (!$pathogen) {
+            throw new RuntimeException("Pathogen not found.");
+        }
+
+        // Run the appropriate checks before committing
+        if ($pathogen['pathogen_dangerous']) {
+            require_once __DIR__ . "/../../src/handle_dangerous_case.php";
+
+            $notification_result = handleDangerousCase(
+                $conn,
+                $pathogen_id,
+                $diagnosis_date,
+                $hospital_id
+            );
+
+            if ($notification_result === false) {
+                throw new RuntimeException("Dangerous-case notification failed.");
+            }
+        } else {
+            require_once __DIR__ . "/../../src/check_thresholds.php";
+
+            checkThreshold(
+                $conn,
+                $pathogen_id,
+                $diagnosis_date,
+                $department_id,
+                $hospital_id
+            );
+        }
+
+        // Save everything only if all steps succeed
+        $conn->commit();
+
+        //Success messages
+        if ($pathogen['pathogen_dangerous']) {
+            echo "<script>alert('Case registered successfully. Notification emails were sent.');</script>";
+        } else {
+            echo "<script>alert('Case registered successfully.');</script>";
+        }
+
+    } catch (Throwable $e) {
+        // Undo all transactional database changes if something fails
+        $conn->rollback();
+
+        if (isset($stmt) && $stmt instanceof mysqli_stmt) {
+            $stmt->close();
+        }
+
+        error_log($e->getMessage());
+        echo "<script>alert('Could not register the case. Please try again.');</script>";
+        exit;
+    }
 }
 
 
@@ -282,7 +341,7 @@ echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] 
 Patient ID <img src="/assets/img/patient.icon-bgremoved.png" class="icon">
 </label>
 
-<input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
+<input type="text" inputmode="numeric" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
 </div>
 
 <div class="form-row">

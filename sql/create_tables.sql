@@ -62,12 +62,6 @@ FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
 ALTER TABLE Department
 ADD UNIQUE KEY (department_name,hospital_id);
 
-CREATE TABLE Protocol (
-protocol_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-protocol_transmission ENUM('contact', 'aerosol', 'droplet', 'vectorborne', 'bloodborne', 'fecal-oral') NOT NULL,
-protocol_recommendation TEXT NOT NULL,
-PRIMARY KEY (protocol_id)
-);
 
 CREATE TABLE Pathogen (
 pathogen_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -76,16 +70,12 @@ pathogen_type ENUM('bacterium', 'virus', 'fungus', 'parasite') NOT NULL,
 pathogen_transmission ENUM('contact', 'aerosol', 'droplet', 'vectorborne', 'bloodborne', 'fecal-oral') NOT NULL,
 pathogen_risk_category TINYINT UNSIGNED NOT NULL,
 pathogen_dangerous BOOLEAN NOT NULL DEFAULT FALSE,
-protocol_id INT UNSIGNED NOT NULL,
 PRIMARY KEY (pathogen_id),
-UNIQUE (pathogen_name),
-FOREIGN KEY (protocol_id) REFERENCES Protocol(protocol_id)
+UNIQUE (pathogen_name)
 );
 
 CREATE TABLE Patient (
-patient_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-patient_age INT NOT NULL,
-patient_sex ENUM('female', 'male') NOT NULL,
+patient_id CHAR(36) NOT NULL,
 PRIMARY KEY (patient_id)
 );
 
@@ -103,7 +93,7 @@ user_id CHAR(36) NOT NULL,
 department_id INT UNSIGNED NOT NULL,
 pathogen_id INT UNSIGNED NOT NULL,
 severity_id TINYINT UNSIGNED NOT NULL,
-patient_id INT UNSIGNED NOT NULL,
+patient_id CHAR(36) NOT NULL,
 case_diagnosis_date DATE NOT NULL,
 case_infection_date DATE NOT NULL,
 case_comments TEXT NULL,
@@ -116,6 +106,7 @@ FOREIGN KEY (severity_id) REFERENCES severity_level(severity_id),
 FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
 );
+
 
 CREATE TABLE Manual_warning (
 mwarning_id CHAR(36) NOT NULL,
@@ -172,3 +163,15 @@ FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id),
 FOREIGN KEY (reviewed_by) REFERENCES System_user(user_id)
 );
 
+
+CREATE TABLE Patient_ID_Mapping (
+mapping_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+patient_id CHAR(36) NOT NULL,
+patient_id_hmac CHAR(64) NOT NULL,
+encrypted_patient_id VARBINARY(512) NOT NULL,
+nonce BINARY(12) NOT NULL,
+auth_tag BINARY(16) NOT NULL,
+PRIMARY KEY (mapping_id),
+UNIQUE KEY unique_patient_mapping (patient_id_hmac),
+FOREIGN KEY (patient_id) REFERENCES Patient(patient_id)
+);
