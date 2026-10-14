@@ -252,7 +252,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
                             <td><?= htmlspecialchars(date('Y-m-d', strtotime($warning['awarning_date']))) ?></td>
                             <td><?= htmlspecialchars($warning['awarning_message']) ?></td>
                             <td>
-                                <form action="/new_announcements.php" method="POST">
+                                <form action="/announcements/write_announcement.php" method="POST">
                                     <input type="hidden"
                                            name="action"
                                            value="prepare">

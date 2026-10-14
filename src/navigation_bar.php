@@ -18,7 +18,7 @@ $pages = $_SESSION['privUser']->getPages();
         </a>
     <?php endforeach; ?>
 
-    <a href="/announcements.php">Announcements</a>
+    <a href="/announcements/announcement_history.php">Announcements</a>
     <a href="/statistics.php">Statistics</a>
 
     <div class="rightside">

@@ -21,8 +21,8 @@
         <a href="/homepage.php">Home</a>
         <a href="/cases/register_case.php">Log a case</a>
         <a href="/statistics.php">Statistics</a>
-        <a href="/new_announcements.php">Write Announcement</a>
-        <a href="/announcements.php">Announcements</a>
+        <a href="/announcements/write_announcement.php">Write Announcement</a>
+        <a href="/announcements/announcement_history.php">Announcements</a>
         <a href="/cases/cross_hospital_cases.php">Other hospitals</a>
     </nav>
 

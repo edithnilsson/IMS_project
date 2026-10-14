@@ -1,7 +1,7 @@
 <?php
-require __DIR__ . "/../config/db.php";   
-require __DIR__ . "/../src/authenticate_check.php";
-include __DIR__ . "/../src/navigation_bar.php";
+require __DIR__ . "/../../config/db.php";   
+require __DIR__ . "/../../src/authenticate_check.php";
+include __DIR__ . "/../../src/navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -107,35 +107,35 @@ if ($page_count > 0): ?>
     <ul class="pagination">
         <!-- if you are on another page than 1 then show the prev button -->
         <?php if ($current_page  > 1): ?>
-        <li><a href="announcements.php?page=<?php echo $current_page -1 ?>">Prev</a></li>
+        <li><a href="/announcements/announcement_history.php?page=<?php echo $current_page -1 ?>">Prev</a></li>
         <?php endif; ?>
 
         <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
         <?php if ($current_page  > 3): ?>
-        <li ><a href="announcements.php?page=1">1</a></li>
+        <li ><a href="/announcements/announcement_history.php?page=1">1</a></li>
         <li >...</li>
         <?php endif; ?>
 
         <!-- show previous pages if the pagenumber does not become negative -->
-        <?php if ($current_page -2 > 0): ?><li class="page"><a href="announcements.php?page=<?php echo $current_page -2 ?>"><?php echo $current_page -2 ?></a></li><?php endif; ?>
-        <?php if ($current_page -1 > 0): ?><li class="page"><a href="announcements.php?page=<?php echo $current_page -1 ?>"><?php echo $current_page -1 ?></a></li><?php endif; ?>
+        <?php if ($current_page -2 > 0): ?><li class="page"><a href="/announcements/announcement_history.php?page=<?php echo $current_page -2 ?>"><?php echo $current_page -2 ?></a></li><?php endif; ?>
+        <?php if ($current_page -1 > 0): ?><li class="page"><a href="/announcements/announcement_history.php?page=<?php echo $current_page -1 ?>"><?php echo $current_page -1 ?></a></li><?php endif; ?>
             
         <!-- mark the curren page you are on-->
-        <li class="currentpage"><a href="announcements.php?page=<?php echo $current_page  ?>"><?php echo $current_page ?></a></li>
+        <li class="currentpage"><a href="/announcements/announcement_history.php?page=<?php echo $current_page  ?>"><?php echo $current_page ?></a></li>
         
         <!-- show the up comming pages if they do not exceed the number of pages needed  -->
-        <?php if ($current_page +1 < ceil($total_announcements/ $num_results_on_page)+1): ?><li class="page"><a href="announcements.php?page=<?php echo $current_page +1 ?>"><?php echo $current_page +1 ?></a></li><?php endif; ?>
-        <?php if ($current_page +2 < ceil($total_announcements / $num_results_on_page)+1): ?><li class="page"><a href="announcements.php?page=<?php echo $current_page +2 ?>"><?php echo $current_page +2 ?></a></li><?php endif; ?>
+        <?php if ($current_page +1 < ceil($total_announcements/ $num_results_on_page)+1): ?><li class="page"><a href="/announcements/announcement_history.php?page=<?php echo $current_page +1 ?>"><?php echo $current_page +1 ?></a></li><?php endif; ?>
+        <?php if ($current_page +2 < ceil($total_announcements / $num_results_on_page)+1): ?><li class="page"><a href="/announcements/announcement_history.php?page=<?php echo $current_page +2 ?>"><?php echo $current_page +2 ?></a></li><?php endif; ?>
         
         <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
         <?php if ($current_page  < ceil($total_announcements/ $num_results_on_page)-2): ?>
         <li>...</li>
-        <li><a href="announcements.php?page=<?php echo ceil($total_announcements / $num_results_on_page) ?>"><?php echo ceil($total_announcements / $num_results_on_page) ?></a></li>
+        <li><a href="/announcements/announcement_history.php?page=<?php echo ceil($total_announcements / $num_results_on_page) ?>"><?php echo ceil($total_announcements / $num_results_on_page) ?></a></li>
         <?php endif; ?>
     
         <!-- show the next button if you are not already on the last page -->
         <?php if ($current_page < ceil($total_announcements/ $num_results_on_page)): ?>
-        <li><a href="announcements.php?page=<?php echo $current_page +1 ?>">Next</a></li>
+        <li><a href="/announcements/announcement_history.php?page=<?php echo $current_page +1 ?>">Next</a></li>
         <?php endif; ?>
     </ul>
     <?php endif; ?>

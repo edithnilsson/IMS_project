@@ -243,7 +243,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($announcement['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars($announcement['department_name']) ?></td>
                             <td>
-                                <form action="/edit_announcement.php" method="POST">
+                                <form action="/announcements/edit_announcement.php" method="POST">
                                     <input type="hidden"
                                         name="mwarning_id"
                                         value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
