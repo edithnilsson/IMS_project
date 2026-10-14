@@ -8,7 +8,7 @@ VALUES
 
 INSERT INTO Permissions(permission_id, permission_desc, permission_page)
 VALUES
-(1, 'Admin','/admin.php'),
+(1, 'Admin','/admin/admin.php'),
 (2, 'Register Case', '/new_case.php'),
 (3, 'Write Announcement', '/new_announcements.php'),
 (4, 'Other Hospitals','/cross_hospital_cases.php');

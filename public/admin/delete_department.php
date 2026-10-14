@@ -1,8 +1,8 @@
 <?php 
 
-require __DIR__ . "/../src/authenticate_check.php";
+require __DIR__ . "/../../src/authenticate_check.php";
 access('Admin');
-require __DIR__ . "/../config/db.php";
+require __DIR__ . "/../../config/db.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -39,7 +39,7 @@ $stmt->close();
 
 // check if the ward was deleted or not
 if ($result) {
-    echo "<script>alert('Ward deleted!'); window.location.href='/admin.php';</script>";
+    echo "<script>alert('Ward deleted!'); window.location.href='/admin/admin.php';</script>";
 } else {
     echo "<script>alert('Error deleting ward.');</script>";
 }

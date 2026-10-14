@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . "/../config/db.php";
+require __DIR__ . "/../../config/db.php";
 
 if (isset($_GET['id'])) {
 
@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 $conn->close();
 
 
-header("Location: /admin.php");
+header("Location: /admin/admin.php");
 exit();
 
 ?>

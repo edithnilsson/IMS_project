@@ -1,10 +1,10 @@
 <?php
 
-require __DIR__ . "/../src/authenticate_check.php";
+require __DIR__ . "/../../src/authenticate_check.php";
 
 access('Admin');
 
-require __DIR__ . "/../config/db.php";
+require __DIR__ . "/../../config/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit("Invalid request.");
@@ -89,7 +89,7 @@ if ($action === "approve") {
 
         $conn->commit();
 
-        header("Location: /admin.php");
+        header("Location: /admin/admin.php");
         exit();
 
     } catch (Exception $e) {
@@ -113,7 +113,7 @@ if ($action === "reject") {
     $stmt->execute();
     $stmt->close();
 
-    header("Location: /admin.php");
+    header("Location: /admin/admin.php");
     exit();
 }
 
