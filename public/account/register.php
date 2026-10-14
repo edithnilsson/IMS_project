@@ -4,7 +4,7 @@ Register page will let a new user register its own account.
 password_hash() creates a new password hash with a random generated salt
 ID and the hashed password will be stored in the database
 */
-require __DIR__ . "/../config/db.php";
+require __DIR__ . "/../../config/db.php";
 
 // Get all roles from database to use in dropdown menu except admin role
 $sql = "SELECT role_id, role_name FROM Roles WHERE role_name != 'Admin'";
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Send validation link to registered email
         if ($result) {
             $conn->commit();
-            $mail = require __DIR__ . "/../src/mailer.php";
+            $mail = require __DIR__ . "/../../src/mailer.php";
 
             try {
                 $mail->addAddress($email); //Send to
@@ -153,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 
     <!-- Register form --> 
-    <form action="/register.php" method="POST" class="inputs">
+    <form action="/account/register.php" method="POST" class="inputs">
         <div class="align_columns">
             
             <!-- Left column -->

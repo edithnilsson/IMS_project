@@ -58,7 +58,7 @@ session_start();
 
 </form>
 
-<button type="button" onclick="location.href='/register.php'" class="register_button">
+<button type="button" onclick="location.href='/account/register.php'" class="register_button">
         Or sign up here
     </button>
 
