@@ -119,8 +119,19 @@ $mwarning_icon = [
                 class= "icon icon-<?php echo $mwarning_icon[$row['mwarning_icon']]; ?>">
             </span> 
             
-        <!-- Writes the message-->
-            <?php echo ($row['mwarning_message']); ?>
+        <!-- Announcement message and author -->
+<div class="announcement-content">
+
+    <div class="announcement-message">
+        <?php echo htmlspecialchars($row['mwarning_message']); ?>
+    </div>
+
+    <div class="announcement-author">
+        Posted by:
+        <?php echo htmlspecialchars($row['user_name'] . ' ' . $row['user_surname']); ?>
+    </div>
+
+</div>
 
         <!-- Writes out the date and time-->
             <span class="date">
