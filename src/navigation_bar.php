@@ -10,7 +10,7 @@ $pages = $_SESSION['privUser']->getPages();
 <div class="topnav">
     <img src="/assets/img/logo_navbar.png" class="navlogo" alt="Logo">
 
-    <a href="/homepage.php">Home</a>
+    <a href="/home.php">Home</a>
 
     <?php foreach ($pages as $desc => $url): ?>
         <a href="<?php echo htmlspecialchars($url); ?>">

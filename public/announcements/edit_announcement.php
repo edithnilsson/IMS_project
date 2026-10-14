@@ -146,7 +146,7 @@ if (!$pathogen_result) {
     
     <div class="page">
         <div class="logo">
-            <a href="/homepage.php">
+            <a href="/home.php">
                 <img src="/assets/img/logo_nobackground.png" alt="Logo">
             </a>
         </div>

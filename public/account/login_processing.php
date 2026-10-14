@@ -83,7 +83,7 @@ if ($result->num_rows === 1) {
         if ($user['role_id'] == 1) {
             header("Location: /admin/admin.php");
         } else {
-            header("Location: /homepage.php");
+            header("Location: /home.php");
         }
         exit();
 

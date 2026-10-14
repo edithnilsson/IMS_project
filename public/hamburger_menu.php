@@ -18,7 +18,7 @@
     </div>
 
     <nav class="sidebar-nav">
-        <a href="/homepage.php">Home</a>
+        <a href="/home.php">Home</a>
         <a href="/cases/register_case.php">Log a case</a>
         <a href="/statistics.php">Statistics</a>
         <a href="/announcements/write_announcement.php">Write Announcement</a>
