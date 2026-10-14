@@ -181,3 +181,12 @@ input, select {
     white-space: nowrap !important;
     font-family: 'Open Sans', sans-serif !important;
 }
+
+img.logo {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    width: 22%;
+    height: auto;
+    z-index: -1;
+}

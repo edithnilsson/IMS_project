@@ -10,7 +10,7 @@ require __DIR__ . "/../../src/authenticate_check.php";
 <head>
     <meta charset="UTF-8">
     <title>Access Denied</title>
-    <link rel="stylesheet" href="/assets/css/homepage.css">
+    <link rel="stylesheet" href="/assets/css/home.css">
 </head>
 <body>
 
