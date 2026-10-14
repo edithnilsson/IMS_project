@@ -25,13 +25,14 @@ $stmt->close();
 $hospital_id = $user['hospital_id'];
 
 
-$sql="SELECT mwarning_message, mwarning_severity_level, mwarning_icon, mwarning_date 
-FROM Manual_warning 
-WHERE hospital_id = ? 
-ORDER BY mwarning_date DESC   
-LIMIT 3";
+$sql = "SELECT Manual_warning.*, System_user.user_name, System_user.user_surname
+        FROM Manual_warning
+        JOIN System_user ON Manual_warning.user_id = System_user.user_id
+        WHERE Manual_warning.hospital_id = ?
+        ORDER BY Manual_warning.mwarning_date DESC
+        LIMIT 3";
 
-$stmt= $conn->prepare($sql);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();
 $result = $stmt->get_result();
