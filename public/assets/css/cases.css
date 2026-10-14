@@ -1,0 +1,192 @@
+/* Fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+img.virus_bl {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 22%; 
+    height: auto;
+    z-index: -1;
+    margin: 0;
+}
+
+img.rings_br{
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 25%; 
+    height: auto;
+    z-index: -1;
+}
+
+img.virus_tr {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: auto;
+    width: 22%;
+    height: auto;
+    z-index: -1;
+}
+
+img.icon {
+    width: 40px; 
+    height: 40px;
+    z-index: -1;
+}
+
+/* Case heading */
+
+.hCase {
+    font-family: 'Shrikhand';
+    font-style: italic;
+    font-weight: 750;
+    color: #35a0e1;
+    font-size: 50px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    justify-self: center !important;
+}
+
+
+/* Form */
+
+.inputs {
+    width: 60%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.form-column label {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 130px 300px;
+    column-gap: 15px;
+    align-items: center;
+}
+
+input, select {
+    width: 300px; 
+    height: 50px; 
+    font-size: 15px;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+}
+
+.comments textarea {
+    width: 450px;
+    height: 100px;
+    resize: vertical;
+    padding: 10px;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    border-radius: 5px;
+    border: 1px solid #004aad;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    color: black;
+}
+
+.submit-btn {
+    width: 30% !important;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    color: #545454;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    display: flex;
+    text-align: center;
+    border: 2px solid #545454;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: auto;
+    padding: 10px;
+    padding-bottom: 10px;
+    align-self: end;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+    background: linear-gradient(270deg, #94d9ff, #cdffd8);
+}
+
+
+/* Choices.js dropdown styling */
+
+.choices {
+    width: 300px !important;
+    margin: 0 0 15px 0 !important;
+}
+
+.choices__placeholder {
+    color: black !important;
+    opacity: 1 !important;
+}
+
+.choices__inner {
+    width: 300px !important;
+    height: 50px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 8px !important;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8) !important;
+    border-radius: 5px !important;
+    border: 1px solid #004aad !important;
+    min-height: auto !important;
+    font-family: 'Open Sans', sans-serif !important;
+    font-size: 15px !important;
+}
+
+.choices.is-open .choices__placeholder {
+    display: none;
+}
+
+.choices__list--dropdown .choices__list {
+    max-height: 150px !important;
+    overflow-y: auto !important;
+}
+
+.choices__list--dropdown .choices__item {
+    white-space: nowrap !important;
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+img.logo {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    width: 22%;
+    height: auto;
+    z-index: -1;
+}

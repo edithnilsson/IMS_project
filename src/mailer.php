@@ -21,7 +21,7 @@ $mail->Port = 587; //Gmail port
 
 // The sending account
 $mail->Username = "inftraction.noreply@gmail.com";
-$mail->Password = "uraa bgty vhtk ugac"; // Generated app password from gmail
+$mail->Password = "changepwd"; // Generated app password from gmail
 
 // What recipients see as the sender
 $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
@@ -30,7 +30,7 @@ $mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
 $mail->isHTML(true);
 
 //Add logo in the mail
-$mail->addEmbeddedImage(__DIR__ . '/../Pictures/logo_nobackground.png', 'logo');
+$mail->addEmbeddedImage(__DIR__ . '/../public/assets/img/logo_nobackground.png', 'logo');
 
 
 return $mail;

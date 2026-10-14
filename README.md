@@ -1,7 +1,7 @@
 # IMS_Project
 
 <p align="center">
-  <img src="Pictures/Logo.png" alt="InfTraction Logo" width="600">
+  <img src="/assets/img/Logo.png" alt="InfTraction Logo" width="600">
 </p>
 
 
