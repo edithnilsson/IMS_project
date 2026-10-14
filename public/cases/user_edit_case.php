@@ -1,13 +1,12 @@
 <?php
 
 // checks if the user has permission to enter this page
-require __DIR__ . "/../src/authenticate_check.php";
+require __DIR__ . "/../../src/authenticate_check.php";
 access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-include __DIR__ . "/../src/navigation_bar.php";
-require_once __DIR__ . "/../config/db.php";
+require_once 'config/db.php';
 
 $user_id = $_SESSION['user_id'];
 
@@ -27,17 +26,48 @@ $stmt->close();
 
 $hospital_id = $user['hospital_id'];
 
+// get the case_id from the edit button
+if (isset($_POST['case_id'])) {
+    $case_id = $_POST['case_id'];
+} else {
+    die("Case ID is missing.");
+}
+
+
+// Fetch the existing case, and verify that it belongs to this doctor
+$sql = "SELECT * FROM Infection_case WHERE case_id = ? AND user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $case_id, $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$case = $result->fetch_assoc();
+
+$stmt->close();
+
+if (!$case) {
+    die("Case not found, or you don't have permission to edit it.");
+}
+
+// Pre-fill form with the existing case
+$pathogen_id = $case['pathogen_id'];
+$department_id = $case['department_id'];
+$severity_id = $case['severity_id'];
+$patient_id = $case['patient_id'];
+$diagnosis_date = $case['case_diagnosis_date'];
+$infection_date = $case['case_infection_date'];
+$comments = $case['case_comments'];
 
 // Get departments for the dropdown
 $sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
-$stmt= $conn->prepare($sql);
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();
 $department_result = $stmt->get_result();
 $stmt->close();
 
 if (!$department_result) {
-die("Error getting departments: " . $conn->error);
+    die("Error getting departments: " . $conn->error);
 }
 
 // Get pathogens for the dropdown
@@ -56,53 +86,43 @@ if (!$severity_result) {
 die("Error getting severity levels: " . $conn->error);
 }
 
-// Register the case when the form is submitted
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-$user_id = $_SESSION['user_id'];
-$pathogen_id = $_POST['pathogen'];
-$diagnosis_date = $_POST['diagnosis_date'];
-$infection_date = $_POST['infection_date'];
-$department_id = $_POST['ward'];
-$patient_id = $_POST['patient_id'];
-$severity_id = $_POST['severity'];
-$comments = $_POST['comments'];
 
-// Get the hospital of the logged-in user
-/* We can probably remove this as it already exists above - but at the moment it is not working due to another thing, so i dont want to remove yet 
-$sql = "SELECT hospital_id FROM System_user WHERE user_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
-$stmt->close();
-$hospital_id = $user['hospital_id'];
-*/
+// update case when the form is resubmitted 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'update') {
 
-// Insert the case into Infection_case
-$sql = "INSERT INTO Infection_case
-        (case_id, user_id, department_id, pathogen_id, severity_id,
-         patient_id, case_diagnosis_date, case_infection_date, case_comments, hospital_id)
-        VALUES (UUID(), ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $user_id = $_SESSION['user_id'];
+    $pathogen_id = $_POST['pathogen'];
+    $diagnosis_date = $_POST['diagnosis_date'];
+    $infection_date = $_POST['infection_date'];
+    $department_id = $_POST['ward'];
+    $patient_id = $_POST['patient_id'];
+    $severity_id = $_POST['severity'];
+    $comments = $_POST['comments'];
 
-$stmt = $conn->prepare($sql);
 
-if (!$stmt) {
-die("Error preparing case registration: " . $conn->error);
-}
+    $sql = "UPDATE Infection_case
+    SET department_id = ?, pathogen_id = ?, severity_id = ?,
+        patient_id = ?, case_diagnosis_date = ?, case_infection_date = ?, case_comments = ?
+    WHERE case_id = ? AND user_id = ?";
 
-$stmt->bind_param(
-"siiiissss",
-$user_id,
-$department_id,
-$pathogen_id,
-$severity_id,
-$patient_id,
-$diagnosis_date,
-$infection_date,
-$comments,
-$hospital_id
-);
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+    die("Error preparing case registration: " . $conn->error);
+    }
+
+    $stmt->bind_param(
+        "iiiisssss",
+        $department_id,
+        $pathogen_id,
+        $severity_id,
+        $patient_id,
+        $diagnosis_date,
+        $infection_date,
+        $comments,
+        $case_id,
+        $user_id
+    );
 
 // Handling of either the automatic warning or the dangerous case notif
 if ($stmt->execute()) {
@@ -152,7 +172,7 @@ if ($stmt->execute()) {
             $hospital_id
         );
 
-        echo "<script>alert('Case registered successfully!');</script>";
+        echo "<script>alert('Case updated successfully!'); window.location.href='/account/profile.php';</script>";
     }
 
 } else {
@@ -165,13 +185,14 @@ $stmt->close();
 
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=5">
+<link rel="stylesheet" href="/assets/css/cases.css?v=4">
 
 <link
 rel="stylesheet"
@@ -180,13 +201,22 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 </head>
 
 <body>
+
+    <?php include 'hamburger_menu.php'; ?>
+<div class="img">
+
+<img src="/assets/img/Logo.png" class="logo">
 <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
+</div>
 
-<h1 class="hCase">Register Case</h1>
+<h1 class="hCase">Edit a Case</h1>
 
 <form action="" method="POST" class="inputs">
+            <input type="hidden" name="action" value="update">
+            <input type="hidden" name="case_id" value="<?= htmlspecialchars($case_id) ?>">
+
 
 <div class="form-column">
 
@@ -207,7 +237,8 @@ Select Pathogen
 
 <?php
 while ($row = $pathogen_result->fetch_assoc()) {
-echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
+    $selected = ($row['pathogen_id'] == $pathogen_id) ? 'selected' : '';
+    echo "<option value='" . $row['pathogen_id'] . "' $selected>" . htmlspecialchars($row['pathogen_name']) . "</option>";
 }
 ?>
 
@@ -225,9 +256,10 @@ Diagnosis Date
 
 <div>
 <input type="date" name="diagnosis_date" id="diagnosis-date" required
-value="<?php echo date('Y-m-d'); ?>"
+value="<?= htmlspecialchars($diagnosis_date) ?>"
 max="<?php echo date('Y-m-d'); ?>"
 >
+
 </div>
 </div>
 
@@ -240,7 +272,7 @@ Infection Date
 
 <div>
 <input type="date" name="infection_date" id="infection-date" required
-value="<?php echo date('Y-m-d'); ?>"
+value="<?= htmlspecialchars($infection_date) ?>"
 max="<?php echo date('Y-m-d'); ?>"
 >
 </div>
@@ -264,7 +296,8 @@ Select Ward
 
 <?php
 while ($row = $department_result->fetch_assoc()) {
-echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] . "</option>";
+    $selected = ($row['department_id'] == $department_id) ? 'selected' : '';
+    echo "<option value='" . $row['department_id'] . "' $selected>" . htmlspecialchars($row['department_name']) . "</option>";
 }
 ?>
 
@@ -282,7 +315,8 @@ echo "<option value='" . $row['department_id'] . "'>" . $row['department_name'] 
 Patient ID <img src="/assets/img/patient.icon-bgremoved.png" class="icon">
 </label>
 
-<input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required>
+<input type="number" name="patient_id" id="patient-id" placeholder="Enter Patient ID" required
+value="<?= htmlspecialchars($patient_id) ?>">
 </div>
 
 <div class="form-row">
@@ -301,7 +335,8 @@ Select Severity
 
 <?php
 while ($row = $severity_result->fetch_assoc()) {
-echo "<option value='" . $row['severity_id'] . "'>" . ucfirst($row['severity_name']) . "</option>";
+    $selected = ($row['severity_id'] == $severity_id) ? 'selected' : '';
+    echo "<option value='" . $row['severity_id'] . "' $selected>" . ucfirst($row['severity_name']) . "</option>";
 }
 ?>
 </select>
@@ -317,14 +352,14 @@ echo "<option value='" . $row['severity_id'] . "'>" . ucfirst($row['severity_nam
 <textarea
 name="comments"
 placeholder="Other Comments..."
-></textarea>
+><?= htmlspecialchars($comments) ?></textarea>
 
 </div>
 </div>
 
 
 <button type="submit" class="submit-btn">
-Submit
+Save
 </button>
 </div>
 </form>

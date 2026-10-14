@@ -225,7 +225,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($case['severity_name']) ?></td>
                             <td><?= htmlspecialchars($case['case_comments']) ?></td>
                             <td>
-                                <form action="/user_edit_case.php" method="POST">
+                                <form action="/cases/user_edit_case.php" method="POST">
                                     <input type="hidden"
                                         name="case_id"
                                         value="<?= htmlspecialchars($case['case_id']) ?>">

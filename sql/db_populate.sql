@@ -9,9 +9,9 @@ VALUES
 INSERT INTO Permissions(permission_id, permission_desc, permission_page)
 VALUES
 (1, 'Admin','/admin/admin.php'),
-(2, 'Register Case', '/new_case.php'),
+(2, 'Register Case', '/cases/register_case.php'),
 (3, 'Write Announcement', '/new_announcements.php'),
-(4, 'Other Hospitals','/cross_hospital_cases.php');
+(4, 'Other Hospitals','/cases/cross_hospital_cases.php');
 
 
 INSERT INTO Role_permission(role_id, permission_id)

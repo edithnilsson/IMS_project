@@ -18,12 +18,12 @@
     </div>
 
     <nav class="sidebar-nav">
-        <a href="homepage.php">Home</a>
-        <a href="new_case.php">Log a case</a>
-        <a href="statistics.php">Statistics</a>
-        <a href="new_announcements.php">Write Announcement</a>
-        <a href="announcements.php">Announcements</a>
-        <a href="cross_hospital_cases.php">Other hospitals</a>
+        <a href="/homepage.php">Home</a>
+        <a href="/cases/register_case.php">Log a case</a>
+        <a href="/statistics.php">Statistics</a>
+        <a href="/new_announcements.php">Write Announcement</a>
+        <a href="/announcements.php">Announcements</a>
+        <a href="/cases/cross_hospital_cases.php">Other hospitals</a>
     </nav>
 
     <a href="/account/logout.php" class="sidebar-logout">

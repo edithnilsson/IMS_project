@@ -1,9 +1,9 @@
 <?php
-require __DIR__ . "/../src/authenticate_check.php";
+require __DIR__ . "/../../src/authenticate_check.php";
 access('Other Hospitals');
 
-include __DIR__ . "/../src/navigation_bar.php";
-require __DIR__ . "/../config/db.php";
+include __DIR__ . "/../../src/navigation_bar.php";
+require __DIR__ . "/../../config/db.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {

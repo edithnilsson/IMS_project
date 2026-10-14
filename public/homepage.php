@@ -84,7 +84,7 @@ $mwarning_icon = [
 
     <div class="dashboard">
         <!-- Log a case button -->  
-        <a href="new_case.php" style="text-decoration: none;">
+        <a href="/cases/register_case.php" style="text-decoration: none;">
             <button class="logcase_button">
             <b>Log a Case</b><br> 
             Click here</button>

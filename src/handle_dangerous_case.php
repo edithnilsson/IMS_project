@@ -80,7 +80,7 @@ function handleDangerousCase(
 
     // Load the mail stuff
     try {
-        $mail = require __DIR__ . "/../src/mailer.php";
+        $mail = require __DIR__ . "/mailer.php";
     } catch (\Throwable $e) {
         error_log("Could not configure dangerous-case email: "
             . $e->getMessage());
