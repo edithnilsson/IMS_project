@@ -1,29 +1,44 @@
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    background: linear-gradient(90deg, #daf8e0, #c9ebfd);
-    margin: 0;
-    padding: 2rem;
-    color: #222;
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+html {
+    min-height: 100%;
+    overflow-y: auto;
 }
 
-.page-header h1 {
+body {
+    min-height: 100vh;
     margin: 0;
-    font-size: 1.5rem;
+    height: auto;
+    overflow-y: auto;
+    background: linear-gradient(90deg, #cdffd8, #94d9ff);
 }
-.page-header .subtitle {
+
+h1.title {
+    display: block;
+    margin: 80px 0 10px 0 !important;
+    position: relative;
+    top: 0;
+    font-family: 'Shrikhand';
+    color: #35a0e1;
+    padding-left: 15px;
+}
+
+p.subs {
     color: #555;
     margin: 0.25rem 0 1.25rem 0;
     font-size: 0.9rem;
+    font-family: 'Open Sans';
+    padding-left: 25px;
 }
 
 .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    background: #fff;
+    background: transparent;
     padding: 1rem 1.25rem;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin-bottom: 1rem;
 }
 
@@ -40,7 +55,7 @@ body {
 .filter select,
 .filter input[type="date"] {
     padding: 0.4rem 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid #9eded9;
     border-radius: 6px;
     font-size: 0.9rem;
 }
@@ -58,22 +73,23 @@ body {
     cursor: pointer;
 }
 .filter-actions button[type="submit"] {
-    background: #2980b9;
+    background: #35a0e1;
     color: white;
 }
 .filter-actions button#resetBtn {
-    background: #eee;
-    color: #333;
+    background: white;
+    color: #35a0e1;
 }
 
 .status {
     font-size: 0.9rem;
     color: #555;
-    margin: 0.5rem 0 1rem 0;
+    margin: 0.5rem 0 1rem 1rem;
+    font-family: 'Open Sans';
 }
 
 .table-wrapper {
-    background: #fff;
+    background: transparent;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow: hidden;
@@ -86,13 +102,13 @@ table {
 }
 
 thead {
-    background: #f4f6f9;
+    background: #519bd2;
 }
 thead th {
     text-align: left;
     padding: 0.75rem 1rem;
     font-weight: 600;
-    color: #333;
+    color: white;
     border-bottom: 1px solid #e5e7eb;
 }
 thead th.num {
@@ -103,6 +119,7 @@ tbody td {
     padding: 0.65rem 1rem;
     border-bottom: 1px solid #f0f0f0;
     vertical-align: top;
+    color:#40494e
 }
 tbody td.num {
     text-align: right;
@@ -114,11 +131,11 @@ tbody td.num.zero {
 
 tbody td .contact {
     font-size: 0.8rem;
-    color: #555;
+    color: #7a7a7a;
 }
 
 tbody tr:hover {
-    background: #fafbfd;
+    background: #c6fffa;
 }
 
 td.empty {

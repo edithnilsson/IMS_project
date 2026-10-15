@@ -189,7 +189,7 @@ $stmt->close();
 
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" href="/assets/css/admin.css">
+    <link rel="stylesheet" href="/assets/css/admin.css?v=2">
 </head>
 
 <body>
@@ -197,7 +197,7 @@ $stmt->close();
 
 <!-- Pending Accounts checking -->
 
-<h2>Pending Accounts</h2>
+<h1 class='title'>Pending Accounts</h1>
 
 <?php if (empty($pending_users)) { ?>
 
@@ -233,7 +233,7 @@ $stmt->close();
                 <input type="hidden" name="id"
                        value="<?php echo $pending['user_id']; ?>">
 
-                <button type="submit">Confirm</button>
+                <button type="submit" class='butt'>Confirm</button>
             </form>
         </td>
     </tr>
@@ -249,7 +249,7 @@ $stmt->close();
 
 <!-- Account Removal Requests -->
 
-<h2>Account Removal Requests</h2>
+<h1 class='title'>Account Removal Requests</h1>
 
 <?php if (empty($deletion_requests)): ?>
 
@@ -289,13 +289,15 @@ $stmt->close();
 
                         <button type="submit"
                                 name="action"
-                                value="approve">
+                                value="approve"
+                                class='butt'>
                             Approve
                         </button>
 
                         <button type="submit"
                                 name="action"
-                                value="reject">
+                                value="reject"
+                                class='butt'>
                             Decline
                         </button>
                     </form>
@@ -309,7 +311,7 @@ $stmt->close();
 
 <!-- Administrators -->
 
-<h2>Administrators</h2>
+<h1 class='title'>Administrators</h1>
 
 <?php if (empty($admins)): ?>
 
@@ -346,7 +348,7 @@ $stmt->close();
                                name="user_id"
                                value="<?= htmlspecialchars($admin['user_id']) ?>">
 
-                        <button type="submit">Edit</button>
+                        <button type="submit" class='butt'>Edit</button>
                     </form>
                 </td>
             </tr>
@@ -357,7 +359,7 @@ $stmt->close();
 <?php endif; ?>
 
 <!-- Doctors -->
-<h2>Doctors</h2>
+<h1 class='title'>Doctors</h1>
 
 <?php if (empty($doctors)): ?>
 
@@ -394,7 +396,7 @@ $stmt->close();
                                name="user_id"
                                value="<?= htmlspecialchars($doctor['user_id']) ?>">
 
-                        <button type="submit">Edit</button>
+                        <button type="submit" class='butt'>Edit</button>
                     </form>
                 </td>
             </tr>
@@ -405,7 +407,7 @@ $stmt->close();
 <?php endif; ?>
 
 <!-- Epidemiologists -->
-<h2>Epidemiologists</h2>
+<h1 class='title'>Epidemiologists</h1>
 
 <?php if (empty($epidemiologists)): ?>
 
@@ -447,7 +449,7 @@ $stmt->close();
                                name="user_id"
                                value="<?= htmlspecialchars($epidemiologist['user_id']) ?>">
 
-                        <button type="submit">Edit</button>
+                        <button type="submit" class='butt'>Edit</button>
                     </form>
                 </td>
             </tr>
@@ -458,11 +460,11 @@ $stmt->close();
 <?php endif; ?>
 
 <!-- Wards -->
-<h2>Wards</h2>
+<h1 class='title'>Wards</h1>
 
 <form action="" method="post">
 Add a department: <input type="text" name="department_name"><br>
-<input type="submit">
+<input type="submit" class='butt2'>
 </form>
 
 <?php if (empty($departments)): ?>
@@ -493,7 +495,7 @@ Add a department: <input type="text" name="department_name"><br>
                     <form action="/admin/delete_department.php" method="POST" onsubmit="return confirm('Are you sure you want to delete this ward?');">
                         <input type="hidden" name="department_id" value="<?= htmlspecialchars($department['department_id']) ?>">
                         
-                        <button type="submit">Delete</button>
+                        <button type="submit" class='butt'>Delete</button>
                     </form>
                 </td>
             </tr>

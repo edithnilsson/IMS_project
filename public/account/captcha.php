@@ -20,10 +20,12 @@ header('Content-Type: image/png');
 
 $image = imagecreatetruecolor(150, 50);
 
-$background = imagecolorallocate($image, 255, 255, 255);
+imagealphablending($image, false);
+imagesavealpha($image, true);
+$background = imagecolorallocatealpha($image, 255, 255, 255, 127);
+imagefill($image, 0, 0, $background);
 $text_color = imagecolorallocate($image, 0, 74, 173);
 
-imagefilledrectangle($image, 0, 0, 150, 50, $background);
 
 imagestring($image, 5, 35, 15, $captcha, $text_color);
 

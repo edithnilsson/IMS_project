@@ -2,8 +2,8 @@
 require __DIR__ . "/../../src/authenticate_check.php";
 access('Other Hospitals');
 
-include __DIR__ . "/../../src/navigation_bar.php";
 require __DIR__ . "/../../config/db.php";
+include __DIR__ . "/../../src/navigation_bar.php";
 
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 if ($conn->connect_error) {
@@ -22,19 +22,20 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-Hospital Cases</title>
-    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css">
+    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=898">
 </head>
 <body>
 
 
-<div class="page-header">
-    <h1>Cases Across Hospitals</h1>
-    <p class="subtitle">
+
+<h1 class='title'>Cases Across Hospitals</h1>
+<p class='subs'>
         Aggregate case counts per hospital and pathogen.
         This page is restricted to epidemiologists and administrators.
-    </p>
-</div>
+</p>
 
 <form class="filters" id="filterForm">
     <div class="filter">

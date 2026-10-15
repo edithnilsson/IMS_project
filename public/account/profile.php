@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/profile.css?v=133">
+    <link rel="stylesheet" href="/assets/css/profile.css?v=173">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>
@@ -184,7 +184,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
-            <h2>Cases</h2>
+            <h1 class='titel'>Cases</h1>
         <table class="user-table">
             <thead>
             <tr>
@@ -211,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     <input type="hidden"
                                         name="case_id"
                                         value="<?= htmlspecialchars($case['case_id']) ?>">
-                                    <button type="submit">Edit</button>
+                                    <button type="submit" class="buttbutt">Edit</button>
                                 </form>
                             </td>
                         </tr>
@@ -222,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
         <?php if ($user['role_name'] === 'Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
-            <h2>Announcements</h2>
+            <h1 class='titel'>Announcements</h1>
 
             <table class="user-table">
             <thead>
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     <input type="hidden"
                                         name="mwarning_id"
                                         value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
-                                    <button type="submit">Edit</button>
+                                    <button type="submit" class="buttbutt">Edit</button>
                                 </form>
                             </td>
                         </tr>
@@ -257,7 +257,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
 
     </div>
-    <div class="buttbutt">
     <form method="POST"
         onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
 
@@ -266,7 +265,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </button>
 
     </form>
-    </div>
 
     <?php
     if ($message !== "") {echo "<p>" . htmlspecialchars($message) . "</p>";}

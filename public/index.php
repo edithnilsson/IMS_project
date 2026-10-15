@@ -16,7 +16,7 @@ session_start();
 <head>
     <title>InfTraction</title>
 
-            <link rel="stylesheet" href="/assets/css/index.css">
+            <link rel="stylesheet" href="/assets/css/index.css?v=5">
             <link rel="stylesheet" href="/assets/css/captcha.css">
 
 </head>

@@ -146,12 +146,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfTraction Register</title>
-        <link rel="stylesheet" href="/assets/css/register.css">
+        <link rel="stylesheet" href="/assets/css/register.css?v=5">
 </head>
 <body>
     <!-- Logo and background -->
     <img src="/assets/img/logo_nobackground.png" class= "logo">
-    <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+    <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 
     <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 

@@ -19,59 +19,58 @@ img.logo {
     height: auto;
 }
 
-img.virus_bl{
-        position:absolute;
-        bottom: 0px;
-        left: 0px;
+img.virus_tr{
+        position:fixed;
+        top: 0px;
+        right: 0px;
         width: 25%; 
         height: auto;
         z-index: -1;
 }
 
+
 .inputs {
-    width: 80%;
-    margin: auto;
+    width: 90%;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
     align-items: center;
+    justify-items: center;
 }
-.input-row { 
-    display: flex; 
-    align-items: center; 
-    margin-bottom: 15px;}
 
-input {
-    width: 300px; 
-    height: 35px; 
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #004aad
+.input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    gap: 12px;
 }
 
 .column {
-    display:grid;
-    grid-template-columns: 50px 300px;
-    flex-direction: column;
-    gap: 15px;
+    display: grid;
+    grid-template-columns: 50px 250px;
+    gap: 12px;
+    align-items: center;
 }
 
 .column label {
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 0;
+    font-size: 15px;
 }
 
 .column input {
-    width: 100%;
+    width: 250px;
+    height: 42px;
     box-sizing: border-box;
-    padding: 10px;
 }
 
 .align_columns {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 60px;
+    gap: 40px;
+    margin: 0 auto;
 }
 
 .inputs label {
@@ -81,29 +80,30 @@ input {
 
 
 input, select {
-    width: 300px; 
-    height: 50px; 
-    font-size: 20px;
+    width: 250px;
+    height: 38px;
+    box-sizing: border-box;
+    font-size: 15px;
     border-radius: 5px;
     border: 1px solid #004aad;
-    margin-bottom: 15px;
+    margin-bottom: 8px;
+    padding: 5px 8px;
 }
 
 .button {
-    width: 40% !important;
+    width: 30% !important;
     background: linear-gradient(90deg, #94d9ff, #cdffd8);
     color: #545454;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     display: flex;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
     border: 2px solid #545454;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
-    margin-top: auto;
-    padding: 10px;
-    padding-bottom: 10px;
-    grid-column: 1 / -1; 
+    padding: 6px;
+    grid-column: 1 / -1;
     justify-self: center;
 }
 

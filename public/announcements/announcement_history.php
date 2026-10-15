@@ -68,13 +68,14 @@ if ($stmt) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/announcement_history.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
+    <link rel="stylesheet" href="/assets/css/announcement_history.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 
     <title>Document</title>
 </head>
 <body>
-<h1> Announcements </h1>
+<h1 class='title'> Announcements </h1>
+
 <table>
 	<tr>
 		<th>Date</th>

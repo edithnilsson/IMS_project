@@ -10,7 +10,7 @@ body {
 
   .topnav {
     display: flex;
-    align-items: center;
+    align-items: center !important;
     background-color: #519bd2;
     z-index: 1;
     position: fixed;
