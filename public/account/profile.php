@@ -31,7 +31,7 @@ $hospital_id = $user['hospital_id'];
 
 $cases = []; 
 $announcements = [];
-if ($user['role_name'] === 'Doctor') {
+if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin') {
     $sql = "SELECT inf.*, patho.pathogen_name, s.severity_name, d.department_name
     FROM Infection_case inf
     JOIN Pathogen patho ON inf.pathogen_id = patho.pathogen_id
@@ -53,7 +53,7 @@ if ($user['role_name'] === 'Doctor') {
 
 }
 
-elseif ($user['role_name']=== 'Epidemiologist') {
+if ($user['role_name']=== 'Epidemiologist'|| $user['role_name'] === 'Admin') {
     $sql="SELECT mw.*, p.pathogen_name, d.department_name
     FROM Manual_warning mw
     JOIN Pathogen p ON mw.pathogen_id = p.pathogen_id
@@ -180,42 +180,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <?= htmlspecialchars($user['hospital_name']) ?>
             </div>
         </div>
-    
 
-
-        <?php if ($user['role_name'] === 'Doctor'): ?>
+        <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
             <h2>Cases</h2>
-        
-        <?php elseif ($user['role_name'] === 'Epidemiologist'): ?>
-            <h2>Announcements</h2>
-        <?php endif; ?>
-
-
         <table class="user-table">
             <thead>
             <tr>
-                <?php if ($user['role_name'] === 'Doctor'): ?>
-                    <th>Date of diagnosis</th>
-                    <th>Date of infection</th>
-                    <th>Pathogen</th>
-                    <th>Ward</th>
-                    <th>Severity</th>
-                    <th>Comments</th>
-                    <th>Edit</th>
-
-                <?php elseif ($user['role_name'] === 'Epidemiologist'): ?>
-                    <th>Date</th>
-                    <th>Message</th>
-                    <th>Pathogen</th>
-                    <th>Ward</th>
-                    <th>Edit</th>
-
-                <?php endif; ?>
+                <th>Date of diagnosis</th>
+                <th>Date of infection</th>
+                <th>Pathogen</th>
+                <th>Ward</th>
+                <th>Severity</th>
+                <th>Comments</th>
+                <th>Edit</th>
             </tr>
             </thead>
-
             <tbody>
-                <?php if ($user['role_name'] === 'Doctor'): ?>
                     <?php foreach ($cases as $case): ?>
                         <tr>
                             <td><?= htmlspecialchars($case['case_diagnosis_date']) ?></td>
@@ -234,8 +214,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </td>
                         </tr>
                     <?php endforeach; ?>
+            </tbody>
+        <?php endif; ?>
+        </table>
 
-                <?php elseif ($user['role_name'] === 'Epidemiologist'): ?>
+
+        <?php if ($user['role_name'] === 'Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
+            <h2>Announcements</h2>
+
+            <table class="user-table">
+            <thead>
+            <tr>
+                    <th>Date</th>
+                    <th>Message</th>
+                    <th>Pathogen</th>
+                    <th>Ward</th>
+                    <th>Edit</th>
+            </tr>
+            </thead>
+            <tbody>
                     <?php foreach ($announcements as $announcement): ?>
                         <tr>
                             <td><?= htmlspecialchars($announcement['mwarning_date']) ?></td>
@@ -252,10 +249,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </td>
                         </tr>
                     <?php endforeach; ?>
-                <?php endif; ?>
-            </tbody>
 
+            </tbody>
         </table>
+        <?php endif; ?>
+
     </div>
     <div class="buttbutt">
     <form method="POST"

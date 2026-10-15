@@ -323,7 +323,6 @@ $stmt->close();
 
     <thead>
         <tr>
-            <th>ID</th>
             <th>Full Name</th>
             <th>Username</th>
             <th>Phone</th>
@@ -335,7 +334,6 @@ $stmt->close();
     <tbody>
         <?php foreach ($admins as $admin): ?>
             <tr>
-                <td><?= htmlspecialchars($admin['user_id']) ?></td>
                 <td><?= htmlspecialchars($admin['user_name'] . " " . $admin['user_surname']) ?></td>
                 <td><?= htmlspecialchars($admin['user_username']) ?></td>
                 <td><?= htmlspecialchars($admin['user_phone_number']) ?></td>
@@ -373,7 +371,6 @@ $stmt->close();
 
     <thead>
         <tr>
-            <th>ID</th>
             <th>Full Name</th>
             <th>Username</th>
             <th>Phone</th>
@@ -385,7 +382,6 @@ $stmt->close();
     <tbody>
         <?php foreach ($doctors as $doctor): ?>
             <tr>
-                <td><?= htmlspecialchars($doctor['user_id']) ?></td>
                 <td><?= htmlspecialchars($doctor['user_name'] . " " . $doctor['user_surname']) ?></td>
                 <td><?= htmlspecialchars($doctor['user_username']) ?></td>
                 <td><?= htmlspecialchars($doctor['user_phone_number']) ?></td>
@@ -423,7 +419,6 @@ $stmt->close();
 
     <thead>
         <tr>
-            <th>ID</th>
             <th>Full Name</th>
             <th>Username</th>
             <th>Phone</th>
@@ -440,7 +435,6 @@ $stmt->close();
             }
             ?>
             <tr>
-                <td><?= htmlspecialchars($epidemiologist['user_id']) ?></td>
                 <td><?= htmlspecialchars($name) ?></td>
                 <td><?= htmlspecialchars($epidemiologist['user_username']) ?></td>
                 <td><?= htmlspecialchars($epidemiologist['user_phone_number']) ?></td>
