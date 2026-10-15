@@ -13,6 +13,7 @@ body {
     align-items: center;
     background-color: #519bd2;
     z-index: 1;
+    position: fixed;
   }   
 
   img.navlogo {

@@ -1,115 +1,116 @@
-img.logo{
-    position: absolute;
-    width: 30%; 
-    height:auto;
-    left: 35px;
-    top: 90px;
-    z-index: -1;
-}
-
+/* ---------- Background images ---------- */
 img.virus_bl{
-    position:absolute;
+    position:fixed;
     bottom: 0px;
     left: 0px;
-    width: 25%; 
-    height: auto;
-    z-index: -1;
-}
-
-img.virus_tr{
-    position:absolute;
-    top: 0px;
-    right: 0px;
-    width: 25%; 
+    width: 25%;
     height: auto;
     z-index: -1;
 }
 
 img.rings_br{
-    position:absolute;
+    position:fixed;
     bottom: 0px;
     right: 0px;
-    width: 25%; 
+    width: 25%;
     height: auto;
     z-index: -1;
 }
 
 img.icon {
-    width: 40px; 
+    width: 40px;
     height: 40px;
     object-fit: contain;
     align-self: center;
 }
 
-img.graph {
-    width: 550px;
-    height: auto;
-    display:block;
-}
-
-html, body{
-    height: 100%;
-    margin: 0;
+/* ---------- Page layout ---------- */
+html {
+    min-height: 100%;
+    overflow-y: auto;
 }
 
 body {
     min-height: 100vh;
     margin: 0;
+    height: auto;
+    overflow-y: auto;
 }
 
-.content {
+.stats-content {
+    width: 94%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    padding-top: 70px;
+    box-sizing: border-box;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 520px minmax(0, 3.5fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+    width: 100%;
+    min-width: 0;
+}
+
+.stats-left {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 60px;
-    width: 90%;
-    margin: 150px auto;
+    gap: 20px;
+    min-width: 0;
+    margin-left: 50px;
 }
 
+.stats-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+}
+
+/* ---------- Pathogen / date filter ---------- */
 .inputs {
-    width: 350px;
+    width: 100%;
     flex-shrink: 0;
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
-}
-
-input {
-    height: 35px; 
-    border-radius: 5px;
-    border: 1px solid #004aad;
+    min-width: 0;
     box-sizing: border-box;
-    
 }
 
 .column {
-    display:grid;
+    display: grid;
     grid-template-columns: 50px auto;
     gap: 15px;
     align-items: center;
 }
 
 input, select {
-    width: 300px; 
-    height: 50px; 
+    width: 300px;
+    height: 50px;
     font-size: 20px;
     border-radius: 5px;
     border: 1px solid #004aad;
     margin-bottom: 15px;
+    box-sizing: border-box;
 }
 
 .pathogen {
-        background: linear-gradient(90deg, #cdffd8, #94d9ff);
-        width: 300px;
+    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    width: 300px;
 }
 
 .startdate {
-        background: linear-gradient(90deg, #cdffd8, #94d9ff);
-        width: 140px;
+    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    width: 140px;
 }
+
 .enddate {
-        background: linear-gradient(90deg, #94d9ff, #cdffd8);
-        width: 140px;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    width: 140px;
 }
 
 .date-group {
@@ -129,37 +130,18 @@ input, select {
     border-radius: 10px;
     cursor: pointer;
     display: block;
-    margin-left: 220px;
+    margin-left: 0;
 }
 
 .search_button:hover {
     box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
 }
 
-.sidebar-card {
-    position: fixed !important;
-    top: 70px !important;
-    right: 20px !important;
-    left: auto !important;
-    z-index: 9999 !important;
-}
-.charts {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 800px;
-    padding-bottom: 2rem;
-}
 
 .chart-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     min-width: 0;
-    min-height: 320px;
+    box-sizing: border-box;
+    background: transparent;
 }
 
 .chart-card h3 {
@@ -168,22 +150,23 @@ input, select {
     font-family: sans-serif;
     color: #333;
 }
+
 .chart-card canvas {
     max-width: 100%;
 }
-/* Line chart spans both columns */
-.chart-card:nth-child(1) {
-    grid-column: 1 / 3;
-}
+
 #lineChart {
-    width: 100%;
-    height: 380px;
-}
-#pieChart {
-    max-width: 250px;
-    max-height: 250px;
+    width: 100% !important;
+    height: 350px !important;
 }
 
+#pieChart,
+#barChart {
+    width: 100% !important;
+    height: 150px !important;
+}
+
+/* ---------- Automatic warnings ---------- */
 .automatic-warnings {
     width: 100%;
     max-width: 400px;
@@ -204,21 +187,10 @@ input, select {
     background: #94d9ff;
 }
 
+/* ---------- Infection cases ---------- */
 .cases-section {
-    margin: 1.5rem 0;
-}
-
-.toggle-cases-button {
-    background: #2980b9;
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.95rem;
-}
-.toggle-cases-button:hover {
-    background: #21618c;
+    width: 100%;
+    margin-top: 25px;
 }
 
 .cases-container {
@@ -229,9 +201,11 @@ input, select {
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow-x: auto;
 }
-.cases-container h2 {
-    margin: 0 0 0.75rem 0;
-    font-size: 1.1rem;
+
+.cases-container .empty {
+    color: #888;
+    text-align: center;
+    padding: 1rem 0;
 }
 
 .cases-table {
@@ -239,9 +213,11 @@ input, select {
     border-collapse: collapse;
     font-size: 0.88rem;
 }
+
 .cases-table thead {
     background: #f4f6f9;
 }
+
 .cases-table th,
 .cases-table td {
     padding: 0.55rem 0.75rem;
@@ -249,22 +225,14 @@ input, select {
     text-align: left;
     vertical-align: top;
 }
+
 .cases-table th {
     font-weight: 600;
     color: #333;
 }
+
 .cases-table tr:hover {
     background: #fafbfd;
-}
-.cases-table td:nth-child(1),
-.cases-table td:nth-child(2) {
-    white-space: nowrap;
-    font-variant-numeric: tabular-nums;
-}
-.cases-container .empty {
-    color: #888;
-    text-align: center;
-    padding: 1rem 0;
 }
 
 #status {
@@ -275,7 +243,7 @@ input, select {
     clear: both;
 }
 
-/* Filters */
+/* ---------- Case filters ---------- */
 .cases-filters {
     display: flex;
     flex-wrap: wrap;
@@ -338,11 +306,12 @@ input, select {
     padding: 0.5rem 0.5rem;
     border-radius: 6px;
 }
+
 .cases-reset:hover {
     background: #eef4fb;
 }
 
-/* Pagination */
+/* ---------- Pagination ---------- */
 .cases-pagination {
     display: flex;
     gap: 0.4rem;
@@ -361,9 +330,11 @@ input, select {
     background: #fff;
     font-size: 0.9rem;
 }
+
 .page-link:hover {
     background: #eef4fb;
 }
+
 .page-link.active {
     background: #2980b9;
     color: #fff;

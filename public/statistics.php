@@ -215,20 +215,21 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 <html>
 <head>
     <title>Statistics</title>
-    <link rel="stylesheet" href="/assets/css/statistics.css">
+    <link rel="stylesheet" href="/assets/css/statistics.css?v=123">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
  
 <?php include __DIR__ . "/../src/navigation_bar.php"; ?>
 
-<img src="/assets/img/logo_nobackground.png" class="logo">
 <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
-<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
-<div class="content">
+<div class="stats-content">
+<div class="stats-grid">
 
+    <!-- Column 1: warnings + filter -->
+    <div class="stats-left">
 <?php if ($can_write_announcement): ?>
     <div class="automatic-warnings">
         <h2>Automatic Warnings</h2>
@@ -319,13 +320,16 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
             </div>
         </div>
     </form>
+    </div><!-- /stats-left -->
 
-    <div class="charts">
-        <div class="chart-card">
-            <h3>Top 3 Pathogens — Daily Cases</h3>
-            <canvas id="lineChart"></canvas>
-        </div>
+    <!-- Column 2: big line chart -->
+    <div class="chart-card chart-main">
+        <h3>Top 3 Pathogens — Daily Cases</h3>
+        <canvas id="lineChart"></canvas>
+    </div>
 
+    <!-- Column 3: pie on top of bar -->
+    <div class="stats-right">
         <div class="chart-card">
             <h3>Severity Distribution</h3>
             <canvas id="pieChart"></canvas>
@@ -336,6 +340,9 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
             <canvas id="barChart"></canvas>
         </div>
     </div>
+
+</div><!-- /stats-grid -->
+
     <div class="cases-section">
     <h2>All Infection Cases</h2>
 
@@ -476,9 +483,10 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
             Showing <?= $total_cases ?> case<?= $total_cases === 1 ? '' : 's' ?>
         </p>
     <?php endif; ?>
-    </div>
+    </div><!-- /cases-section -->
+
     <p id="status"></p>
-</div>
+</div><!-- /stats-content -->
 
 <script>
 const statusEl = document.getElementById('status');
@@ -490,12 +498,8 @@ const lineChart = new Chart(document.getElementById('lineChart'), {
     data: { labels: [], datasets: [] },
     options: {
         responsive: true,
-        plugins: { legend: { position: 'bottom' } },
-        scales: {
-            y: { beginAtZero: true, title: { display: true, text: 'Cases' } },
-            x: { title: { display: true, text: 'Date' } },
-        },
-    },
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },    },
 });
 
 const pieChart = new Chart(document.getElementById('pieChart'), {
@@ -509,6 +513,7 @@ const pieChart = new Chart(document.getElementById('pieChart'), {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: { position: 'bottom' },
             tooltip: {
@@ -536,11 +541,8 @@ const barChart = new Chart(document.getElementById('barChart'), {
     },
     options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: {
-            y: { beginAtZero: true, title: { display: true, text: 'Cases' }, ticks: { precision: 0 } },
-            x: { title: { display: true, text: 'Week' } },
-        },
     },
 });
 
