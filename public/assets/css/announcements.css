@@ -32,10 +32,11 @@ img.virus_tr {
 .page {
     min-height: calc(100vh - 80px);
     display: flex;
-    align-items: center;
+    align-items: center !important;
     box-sizing: border-box;
     padding: 20px;
     font-family: 'Open Sans';
+    margin-left: 50px;
 }
 
 .message {
@@ -44,11 +45,11 @@ img.virus_tr {
 }
 
 .message h3 {
-    margin-top: 0;
+    margin-top: 150px;
     margin-bottom: 2px;
     font-family: 'Shrikhand';
     font-size: 35px;
-    color: #35a0e1
+    color: #35a0e1;
 }
 
 textarea {
@@ -62,7 +63,7 @@ textarea {
     border: 2px solid black;
     font-family: 'Open Sans', sans-serif;
     font-size: 17px;
-    color: black
+    color: black;
 }
 
 

@@ -3,9 +3,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
-html,body {
+html {
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+body {
+    min-height: 100vh;
     margin: 0;
-    padding: 0;
+    height: auto;
+    overflow-y: auto;
 }
 
 img.virus_bl {
@@ -66,14 +73,16 @@ img.icon {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    align-items: start;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: center;
 }
 
 .form-column {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    align-items: center;
+    align-items: center !important;
 }
 
 .form-column label {
@@ -81,7 +90,7 @@ img.icon {
     font-weight: bold;
     margin: 0;
     display: flex;
-    align-items: center;
+    align-items: center !important;
     gap: 5px;
 }
 
@@ -90,6 +99,7 @@ img.icon {
     grid-template-columns: 130px 300px;
     column-gap: 15px;
     align-items: center;
+    justify-content: center;
 }
 
 input, select {
@@ -180,13 +190,4 @@ input, select {
 .choices__list--dropdown .choices__item {
     white-space: nowrap !important;
     font-family: 'Open Sans', sans-serif !important;
-}
-
-img.logo {
-    position: absolute;
-    top: 60px;
-    left: 20px;
-    width: 22%;
-    height: auto;
-    z-index: -1;
 }

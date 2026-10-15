@@ -68,29 +68,17 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="/assets/css/home.css?v=1">
+    <link rel="stylesheet" href="/assets/css/home.css?v=12">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>
 
-    <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
-    <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+    <img src="/assets/img/rings_br_nobg.png" class="rings_br">
     
 
     <!--sets boarders for webpages-->
 <div class="container">    
-    <!-- Inserts the logo picture  -->
-
-
-
-    <div class="dashboard">
-        <!-- Log a case button -->  
-        <a href="/cases/register_case.php" style="text-decoration: none;">
-            <button class="logcase_button">
-            <b>Log a Case</b><br> 
-            Click here</button>
-        </a>
-
+<div class="left-column">
         <div class="charts">
             <div class="chart-card">
                 <h3>Top 3 Pathogens — Daily Cases</h3>
@@ -98,10 +86,9 @@ $mwarning_icon = [
             </div>
         </div>
 
-     </div>
+</div>
 
-
-
+<div class='right-column'>
     <div> 
         <div class='header header h1'>   
             <h1> Announcements </h1>
@@ -149,7 +136,7 @@ $mwarning_icon = [
 
 
 </div>
-
+        </div>
 <script>
 const ctx = document.getElementById('lineChart');
 const statusEl = document.getElementById('status');
@@ -159,13 +146,15 @@ const lineChart = new Chart(document.getElementById('lineChart'), {
     data: { labels: [], datasets: [] },
     options: {
         responsive: true,
-        plugins: { legend: { position: 'bottom' } },
-        scales: {
-            y: { beginAtZero: true, title: { display: true, text: 'Cases' } },
-            x: { title: { display: true, text: 'Date' } },
-        },
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },    
+    scales: {
+        y: {beginAtZero: true, ticks: {precision: 0, stepSize: 1},grid: {display: false}},
+        x: {grid: {display: false}}
+            }
+            },
+
     },
-});
+);
 
 (function initCasesToggle() {
     const btn       = document.getElementById('toggleCasesBtn');
@@ -217,7 +206,7 @@ async function loadAllStats(start, end, pid) {
 (function loadHomepageChart() {
     const today = new Date();
     const past  = new Date();
-    past.setDate(today.getDate() - 29);
+    past.setDate(today.getDate() - 6);
 
     const fmt = d => d.toISOString().slice(0, 10);
     const start = fmt(past);

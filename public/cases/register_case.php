@@ -7,9 +7,9 @@ access('Register Case');
 
 date_default_timezone_set('Europe/Stockholm');
 
-include __DIR__ . "/../../src/navigation_bar.php";
 require_once __DIR__ . "/../../config/db.php";
 require_once __DIR__ . "/../../src/patient_id_encryption.php";
+include __DIR__ . "/../../src/navigation_bar.php";
 
 $user_id = $_SESSION['user_id'];
 
@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=5">
+<link rel="stylesheet" href="/assets/css/cases.css?v=133">
 
 <link
 rel="stylesheet"

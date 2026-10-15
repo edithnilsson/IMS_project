@@ -5,7 +5,7 @@ require_once __DIR__ . "/PrivilegedUser.php";
 $pages = $_SESSION['privUser']->getPages();
 ?>
 
-    <link rel="stylesheet" href="/assets/css/navigation_bar.css">
+    <link rel="stylesheet" href="/assets/css/navigation_bar.css?v=2">
 
 <div class="topnav">
     <img src="/assets/img/logo_navbar.png" class="navlogo" alt="Logo">
@@ -28,6 +28,6 @@ $pages = $_SESSION['privUser']->getPages();
             <a href="/account/profile.php">Profile</a>
         </div>
 
-        <a href="/account/logout.php">Log out</a>
+        <a href="/account/logout.php">LogOut</a>
     </div>
 </div>
