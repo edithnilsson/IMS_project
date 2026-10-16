@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/profile.css?v=173">
+    <link rel="stylesheet" href="/assets/css/profile.css?v=343">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>
@@ -182,6 +182,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <?= htmlspecialchars($user['hospital_name']) ?>
             </div>
         </div>
+    <form method="POST"
+        onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
+
+        <button type="submit" class="delbutt">
+            Request Account Deletion
+        </button>
+
+    </form>
 
         <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Cases</h1>
@@ -257,14 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?php endif; ?>
 
     </div>
-    <form method="POST"
-        onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
 
-        <button type="submit" class="delbutt">
-            Request Account Deletion
-        </button>
-
-    </form>
 
     <?php
     if ($message !== "") {echo "<p>" . htmlspecialchars($message) . "</p>";}

@@ -37,6 +37,7 @@ img.virus_tr {
     bottom: auto;
     width: 22%;
     height: auto;
+    z-index: -1;
 }
 
 img.icon {
@@ -101,17 +102,18 @@ h1.titel {
 }
 
 .user-table {
-    width: 100%;
+    width: 95%;
     border-collapse: separate;
     border-spacing: 0;
     border-radius: 12px;
     overflow: hidden;
-    background: transparent;
+    background: white;
+    padding: 20px;
 }
 
 thead {
     background: #519bd2;
-    border-radius: 12px;
+    border-radius: 12px !important;
 }
 thead th {
     text-align: left;
@@ -134,17 +136,19 @@ tbody td {
 .delbutt {
     padding: 10px;
     font-size: 11px;
-    background: linear-gradient(90deg, #94d9ff, #cdffd8 100%);
-    color: black;
-    border: 2px solid #666;
+    background: #519bd2;
+    color: white;
+    border: 1px solid #666;
     border-radius: 10px;
     cursor: pointer;
-    box-shadow: 5px 5px 10px rgba(0,0,0,0.15); 
     box-sizing: border-box; 
     font-family: 'Open Sans';
     font-weight: 400;
-    margin-left: 550px;
-    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.delbutt:hover {
+    box-shadow: 0px 0px 1px 1px grey;
 }
 
 .buttbutt {
@@ -157,3 +161,6 @@ tbody td {
     color: white;
 }
  
+.buttbutt:hover {
+    box-shadow: 0px 0px 1px 1px grey;
+}
