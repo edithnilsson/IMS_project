@@ -205,13 +205,17 @@ $stmt->close();
 
 <?php } else { ?>
 
-<table class="user-table">
-    <tr>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Action</th>
-    </tr>
+<table class="user-table pending-table">
+    <thead>
+        <tr>
+            <th>Full Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
 
     <?php foreach ($pending_users as $pending) { ?>
 
@@ -229,12 +233,21 @@ $stmt->close();
         </td>
 
         <td>
-            <form action="/admin/confirm_user.php" method="GET">
+            <form action="/admin/confirm_user.php" method="POST">
                 <input type="hidden" name="id"
                        value="<?php echo $pending['user_id']; ?>">
 
+                       <input type="hidden" name="action" value="confirm">
+
                 <button type="submit" class='butt'>Confirm</button>
             </form>
+
+            <form action="/admin/confirm_user.php" method="POST"
+               onsubmit="return confirm('Dismiss this account?');">
+                 <input type="hidden" name="id" value="<?php echo $pending['user_id']; ?>">
+                <input type="hidden" name="action" value="dismiss">
+                <button type="submit" class="dismiss-btn">Dismiss</button>
+             </form>
         </td>
     </tr>
 
