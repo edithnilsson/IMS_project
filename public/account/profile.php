@@ -28,6 +28,9 @@ $stmt->close();
 
 $hospital_id = $user['hospital_id'];
 
+// current time stamp
+$current_time = time();
+
 
 // Get all cases/ announcements of the user
 
@@ -226,12 +229,14 @@ $num_results_on_page = 1;
                             <td><?= htmlspecialchars($case['severity_name']) ?></td>
                             <td><?= htmlspecialchars($case['case_comments']) ?></td>
                             <td>
+                                <?php if($current_time - strtotime($case['case_date_issued']) < 48 * 3600): ?>
                                 <form action="/cases/user_edit_case.php" method="POST">
                                     <input type="hidden"
                                         name="case_id"
                                         value="<?= htmlspecialchars($case['case_id']) ?>">
                                     <button type="submit" class="buttbutt">Edit</button>
                                 </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -304,12 +309,14 @@ $num_results_on_page = 1;
                             <td><?= htmlspecialchars($announcement['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars($announcement['department_name']) ?></td>
                             <td>
+                                <?php if($current_time - strtotime($announcement['mwdate_issued']) < 48 * 3600): ?>
                                 <form action="/announcements/edit_announcement.php" method="POST">
                                     <input type="hidden"
                                         name="mwarning_id"
                                         value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
-                                    <button type="submit" class="buttbutt">Edit</button>
+                                    <button type="submit" class="buttbutt">Edit</button> 
                                 </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
