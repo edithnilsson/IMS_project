@@ -236,7 +236,7 @@ $num_results_on_page = 1;
                         </tr>
                     <?php endforeach; ?>
             </tbody>
-        <?php endif; ?>
+        <?php endif;?>
         </table>
 
         <?php  

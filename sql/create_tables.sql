@@ -55,6 +55,7 @@ CREATE TABLE Department(
 department_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 department_name VARCHAR(255) NOT NULL,
 hospital_id VARCHAR(36) NOT NULL,
+department_status ENUM('active', 'deactivated') NOT NULL DEFAULT 'active',
 PRIMARY KEY (department_id),
 FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
 );

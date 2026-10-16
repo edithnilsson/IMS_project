@@ -163,12 +163,12 @@ $stmt->close();
 
 
 //Get Wards
-// Get epidemiologists and chief epidemiologists
 $department= [];
 
 $sql = "SELECT department_id, department_name
         FROM Department
-        WHERE hospital_id = ?";
+        WHERE hospital_id = ?
+        AND department_status = 'active'";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);

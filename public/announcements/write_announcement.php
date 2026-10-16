@@ -193,7 +193,11 @@ try {
 
 //Get departments for the dropdown
 
-$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$sql = "SELECT department_id, department_name 
+        FROM Department 
+        WHERE hospital_id = ? 
+        AND department_status = 'active'";
+
 $stmt= $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();

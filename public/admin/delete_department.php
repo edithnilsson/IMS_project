@@ -30,12 +30,16 @@ if (isset($_POST['department_id'])) {
     die("Department ID is missing.");
 }
 
-$sql = "DELETE FROM Department
-        WHERE department_id = ? AND hospital_id = ?";
+$sql = "UPDATE Department
+        SET department_status = 'deactivated'
+        WHERE department_id = ?
+        AND hospital_id = ?";
+
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("is", $department_id, $hospital_id);
 $result = $stmt->execute();
 $stmt->close();
+
 
 // check if the ward was deleted or not
 if ($result) {
@@ -45,3 +49,4 @@ if ($result) {
 }
 
 ?> 
+
