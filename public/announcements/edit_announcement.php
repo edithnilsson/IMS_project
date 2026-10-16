@@ -149,11 +149,7 @@ if (!$pathogen_result) {
     <img src="/assets/img/rings_br_nobg.png" class="rings_br">
     
     <div class="page">
-        <div class="logo">
-            <a href="/home.php">
-                <img src="/assets/img/logo_nobackground.png" alt="Logo">
-            </a>
-        </div>
+
 
         <form method="POST" action="">
             <input type="hidden" name="action" value="update">
