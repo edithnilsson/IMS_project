@@ -21,7 +21,6 @@ if (isset($_POST['save'])) {
     $email = $_POST['email'];
     $phone_number = $_POST['phone_number'];
     $role_id = $_POST['role_id'];
-    $hospital_id = $_POST['hospital_id'];
  
     $email_format_valid = filter_var($email, FILTER_VALIDATE_EMAIL);
     $phone_number_format_valid = preg_match("/^[0-9+ -]+$/", $phone_number);
@@ -40,14 +39,12 @@ if (isset($_POST['save'])) {
         echo "<script>alert('Phone number can only contain numbers'); window.location.href='/admin/admin.php';</script>";
     } elseif (empty($role_id)) {
         echo "<script>alert('Please pick a role'); window.history.back();</script>";
-    } elseif (empty($hospital_id)) {
-        echo "<script>alert('Please pick a hospital'); window.history.back();</script>";
     } else {
         $sql = "UPDATE System_user
-                SET user_name = ?, user_surname = ?, user_email = ?, user_phone_number = ?, role_id = ?, hospital_id = ?
+                SET user_name = ?, user_surname = ?, user_email = ?, user_phone_number = ?, role_id = ?
                 WHERE user_id = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssiss", $first_name, $last_name, $email, $phone_number, $role_id, $hospital_id, $user_id);
+        $stmt->bind_param("ssssis", $first_name, $last_name, $email, $phone_number, $role_id, $user_id);
         try {
             $stmt->execute();
             echo "<script>alert('User updated.'); window.location.href='/admin/admin.php';</script>";
@@ -63,7 +60,7 @@ if (isset($_POST['save'])) {
 }
 
 // Fetch information about the user using user_id
-$stmt = $conn->prepare("SELECT user_id, user_username, user_name, user_surname, user_email, user_phone_number, role_id, hospital_id
+$stmt = $conn->prepare("SELECT user_id, user_username, user_name, user_surname, user_email, user_phone_number, role_id
                          FROM System_user WHERE user_id = ?");
 $stmt->bind_param("s", $user_id);
 $stmt->execute();
@@ -78,10 +75,6 @@ if (!$target_user) {
 // Get all roles for the dropdown, with the user's current role pre-selected
 $sql = "SELECT role_id, role_name FROM Roles ORDER BY role_name";
 $role_result = $conn->query($sql);
- 
-// Get all hospitals for the dropdown, with the user's current hospital pre-selected
-$sql = "SELECT hospital_id, hospital_name FROM Hospital ORDER BY hospital_name";
-$hospital_result = $conn->query($sql);
 
 ?>
 
@@ -129,16 +122,6 @@ $hospital_result = $conn->query($sql);
                     <option value="<?= htmlspecialchars($row['role_id']) ?>"
                         <?= $row['role_id'] == $target_user['role_id'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($row['role_name']) ?>
-                    </option>
-                <?php } ?>
-            </select>
-        
-            <label for="hospital_id">Hospital</label>
-            <select id="hospital_id" name="hospital_id">
-                <?php while ($row = $hospital_result->fetch_assoc()) { ?>
-                    <option value="<?= htmlspecialchars($row['hospital_id']) ?>"
-                        <?= $row['hospital_id'] == $target_user['hospital_id'] ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($row['hospital_name']) ?>
                     </option>
                 <?php } ?>
             </select>
