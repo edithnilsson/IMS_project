@@ -260,15 +260,15 @@ Pathogen
 
 <select name="pathogen" id="pathogen" required>
 
-<option value="" disabled selected>
-Select Pathogen
+<option value="" hidden>
+    Select pathogen
 </option>
-
-<?php
-while ($row = $pathogen_result->fetch_assoc()) {
-echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
-}
-?>
+    <?php
+    while ($row = mysqli_fetch_assoc($pathogen_result)) {
+    $selected = ($row['pathogen_id'] == $pathogen_id) ? 'selected' : '';
+    echo "<option value='" . $row['pathogen_id'] . "' $selected>" . htmlspecialchars($row['pathogen_name']) . "</option>";
+    }
+    ?>
 
 </select>
 </div>
