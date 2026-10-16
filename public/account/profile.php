@@ -28,9 +28,11 @@ $stmt->close();
 
 $hospital_id = $user['hospital_id'];
 
+// current time stamp
+$current_time = time();
+
 
 // Get all cases/ announcements of the user
-
 
 $cases = []; 
 $announcements = [];
@@ -53,6 +55,8 @@ if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin') {
     }
 
     $stmt->close();
+    
+    $total_cases = count($cases);
 
 }
 
@@ -74,6 +78,8 @@ if ($user['role_name']=== 'Epidemiologist'|| $user['role_name'] === 'Admin') {
         $announcements[] = $row;
     }
     $stmt->close();
+
+    $total_announcements = count($announcements);
 
     }
 
@@ -136,6 +142,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $conn->close();
 }
 
+
+// Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
+$current_case_page = isset($_GET['case_page']) && is_numeric($_GET['case_page']) ? $_GET['case_page'] : 1;
+$current_announcement_page = isset($_GET['announcement_page']) && is_numeric($_GET['announcement_page']) ? $_GET['announcement_page'] : 1;
+
+// Number of results to show on each page.
+$num_results_on_page = 1;
+
 ?>
 
 <!DOCTYPE html>
@@ -144,7 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/profile.css?v=173">
+    <link rel="stylesheet" href="/assets/css/profile.css?v=343">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 
     <title>Document</title>
@@ -182,6 +196,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <?= htmlspecialchars($user['hospital_name']) ?>
             </div>
         </div>
+    <form method="POST"
+        onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
+
+        <button type="submit" class="delbutt">
+            Request Account Deletion
+        </button>
+
+    </form>
 
         <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Cases</h1>
@@ -207,18 +229,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($case['severity_name']) ?></td>
                             <td><?= htmlspecialchars($case['case_comments']) ?></td>
                             <td>
+                                <?php if($current_time - strtotime($case['case_date_issued']) < 48 * 3600): ?>
                                 <form action="/cases/user_edit_case.php" method="POST">
                                     <input type="hidden"
                                         name="case_id"
                                         value="<?= htmlspecialchars($case['case_id']) ?>">
                                     <button type="submit" class="buttbutt">Edit</button>
                                 </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
             </tbody>
-        <?php endif; ?>
+        <?php endif;?>
         </table>
+
+        <?php  
+        // pagination - announcements
+        //how many pages will be needed? 
+        $page_count = ceil($total_cases / $num_results_on_page);
+
+        if ($page_count > 0): ?>
+            <ul class="pagination">
+                <!-- if you are on another page than 1 then show the prev button -->
+                <?php if ($current_case_page  > 1): ?>
+                <li><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>">Prev</a></li>
+                <?php endif; ?>
+
+                <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
+                <?php if ($current_case_page  > 3): ?>
+                <li ><a href="profile.php?case_page=1">1</a></li>
+                <li >...</li>
+                <?php endif; ?>
+
+                <!-- show previous pages if the pagenumber does not become negative -->
+                <?php if ($current_case_page -2 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -2 ?>"><?php echo $current_case_page -2 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page -1 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>"><?php echo $current_case_page -1 ?></a></li><?php endif; ?>
+                    
+                <!-- mark the curren page you are on-->
+                <li class="currentpage"><a href="profile.php?case_page=<?php echo $current_case_page  ?>"><?php echo $current_case_page ?></a></li>
+                
+                <!-- show the up comming pages if they do not exceed the number of pages needed  -->
+                <?php if ($current_case_page +1 < ceil($total_cases/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>"><?php echo $current_case_page +1 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page +2 < ceil($total_cases / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +2 ?>"><?php echo $current_case_page +2 ?></a></li><?php endif; ?>
+                
+                <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
+                <?php if ($current_case_page  < ceil($total_cases/ $num_results_on_page)-2): ?>
+                <li>...</li>
+                <li><a href="profile.php?case_page=<?php echo ceil($total_cases/ $num_results_on_page) ?>"><?php echo ceil($total_cases / $num_results_on_page) ?></a></li>
+                <?php endif; ?>
+            
+                <!-- show the next button if you are not already on the last page -->
+                <?php if ($current_case_page  < ceil($total_cases/ $num_results_on_page)): ?>
+                <li><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>">Next</a></li>
+                <?php endif; ?>
+            </ul>
+            <?php endif; ?>
+        
 
 
         <?php if ($user['role_name'] === 'Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
@@ -242,12 +309,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($announcement['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars($announcement['department_name']) ?></td>
                             <td>
+                                <?php if($current_time - strtotime($announcement['mwdate_issued']) < 48 * 3600): ?>
                                 <form action="/announcements/edit_announcement.php" method="POST">
                                     <input type="hidden"
                                         name="mwarning_id"
                                         value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
-                                    <button type="submit" class="buttbutt">Edit</button>
+                                    <button type="submit" class="buttbutt">Edit</button> 
                                 </form>
+                                <?php endif; ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -255,16 +324,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </tbody>
         </table>
         <?php endif; ?>
+<?php 
+// pagination - announcements
+//how many pages will be needed? 
+$page_count = ceil($total_announcements / $num_results_on_page);
+
+if ($page_count > 0): ?>
+    <ul class="pagination">
+        <!-- if you are on another page than 1 then show the prev button -->
+        <?php if ($current_announcement_page  > 1): ?>
+        <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>">Prev</a></li>
+        <?php endif; ?>
+
+        <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
+        <?php if ($current_announcement_page  > 3): ?>
+        <li ><a href="profile.php?announcement_page=1">1</a></li>
+        <li >...</li>
+        <?php endif; ?>
+
+        <!-- show previous pages if the pagenumber does not become negative -->
+        <?php if ($current_announcement_page -2 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -2 ?>"><?php echo $current_announcement_page -2 ?></a></li><?php endif; ?>
+        <?php if ($current_announcement_page -1 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>"><?php echo $current_announcement_page -1 ?></a></li><?php endif; ?>
+            
+        <!-- mark the curren page you are on-->
+        <li class="currentpage"><a href="profile.php?announcement_page=<?php echo $current_announcement_page  ?>"><?php echo $current_announcement_page ?></a></li>
+        
+        <!-- show the up comming pages if they do not exceed the number of pages needed  -->
+        <?php if ($current_announcement_page +1 < ceil($total_announcements/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>"><?php echo $current_announcement_page +1 ?></a></li><?php endif; ?>
+        <?php if ($current_announcement_page +2 < ceil($total_announcements / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +2 ?>"><?php echo $current_announcement_page +2 ?></a></li><?php endif; ?>
+        
+        <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
+        <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)-2): ?>
+        <li>...</li>
+        <li><a href="profile.php?announcement_page=<?php echo ceil($total_announcements / $num_results_on_page) ?>"><?php echo ceil($total_announcements / $num_results_on_page) ?></a></li>
+        <?php endif; ?>
+    
+        <!-- show the next button if you are not already on the last page -->
+        <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)): ?>
+        <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>">Next</a></li>
+        <?php endif; ?>
+    </ul>
+    <?php endif; ?>
+    
+
 
     </div>
-    <form method="POST"
-        onsubmit="return confirm('Are you sure you want to request for your account to be deleted?');">
 
-        <button type="submit" class="delbutt">
-            Request Account Deletion
-        </button>
-
-    </form>
 
     <?php
     if ($message !== "") {echo "<p>" . htmlspecialchars($message) . "</p>";}

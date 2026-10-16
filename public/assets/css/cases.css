@@ -15,16 +15,6 @@ body {
     overflow-y: auto;
 }
 
-img.virus_bl {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    width: 22%; 
-    height: auto;
-    z-index: -1;
-    margin: 0;
-}
-
 img.rings_br{
     position: fixed;
     bottom: 0px;
@@ -45,9 +35,9 @@ img.virus_tr {
 }
 
 img.icon {
-    width: 40px; 
+    width: 40px;
     height: 40px;
-    z-index: -1;
+    margin-left: auto;
 }
 
 /* Case heading */
@@ -110,7 +100,7 @@ input, select {
     border-radius: 5px;
     border: 1px solid #004aad;
     margin-bottom: 15px;
-    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    background: #dbf2ff;
 }
 
 .comments textarea {
@@ -119,7 +109,7 @@ input, select {
     resize: vertical;
     padding: 10px;
     box-sizing: border-box;
-    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    background: #dbf2ff;
     border-radius: 5px;
     border: 1px solid #004aad;
     font-family: 'Open Sans', sans-serif;
@@ -128,27 +118,24 @@ input, select {
 }
 
 .submit-btn {
-    width: 30% !important;
-    background: linear-gradient(90deg, #94d9ff, #cdffd8);
-    color: #545454;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 30px;
-    font-weight: bold;
-    display: flex;
-    text-align: center;
-    border: 2px solid #545454;
-    border-radius: 20px;
+    width: 100px;
+    height: 40px;
     cursor: pointer;
-    margin-top: auto;
-    padding: 10px;
-    padding-bottom: 10px;
+    background: #35a0e1;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 12px;
+    cursor: pointer;
+    float: right;
     align-self: end;
 }
 
 .submit-btn:hover {
     opacity: 0.9;
     transform: scale(1.05);
-    background: linear-gradient(270deg, #94d9ff, #cdffd8);
+    background: #dbf2ff;
 }
 
 
@@ -170,7 +157,7 @@ input, select {
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 8px !important;
-    background: linear-gradient(90deg, #94d9ff, #cdffd8) !important;
+    background: #dbf2ff !important;
     border-radius: 5px !important;
     border: 1px solid #004aad !important;
     min-height: auto !important;

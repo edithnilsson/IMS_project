@@ -215,7 +215,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 <html>
 <head>
     <title>Statistics</title>
-    <link rel="stylesheet" href="/assets/css/statistics.css?v=123">
+    <link rel="stylesheet" href="/assets/css/statistics.css?v=193">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
@@ -223,7 +223,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 <?php include __DIR__ . "/../src/navigation_bar.php"; ?>
 
 <img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
-<img src="/assets/img/rings_br_nobg.png" class="rings_br">
+<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 
 <div class="stats-content">
 <div class="stats-grid">
@@ -308,7 +308,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
         <div class="column">
             <label class="form-label">
                 <span class="icon">
-                    <img src="/assets/img/calender.icon-bgremoved.png" class="icon">
+                    <img src="/assets/img/calender.icon-bgremoved.png" class="cicon">
                 </span>
             </label>
             <div>
@@ -324,19 +324,18 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 
     <!-- Column 2: big line chart -->
     <div class="chart-card chart-main">
-        <h3>Top 3 Pathogens — Daily Cases</h3>
         <canvas id="lineChart"></canvas>
     </div>
 
     <!-- Column 3: pie on top of bar -->
     <div class="stats-right">
         <div class="chart-card">
-            <h3>Severity Distribution</h3>
+            <h3 class="charthead">Severity Distribution</h3>
             <canvas id="pieChart"></canvas>
         </div>
 
         <div class="chart-card">
-            <h3>Weekly Case Counts</h3>
+            <h3 class="charthead">Weekly Case Counts</h3>
             <canvas id="barChart"></canvas>
         </div>
     </div>
@@ -499,8 +498,12 @@ const lineChart = new Chart(document.getElementById('lineChart'), {
     options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },    },
-});
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },  
+        scales: {
+        y: {beginAtZero: true, ticks: {precision: 0, stepSize: 1},grid: {display: false}},
+        x: {grid: {display: false}}
+            }}
+    });
 
 const pieChart = new Chart(document.getElementById('pieChart'), {
     type: 'pie',

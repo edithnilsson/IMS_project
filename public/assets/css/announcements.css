@@ -33,10 +33,10 @@ img.virus_tr {
     min-height: calc(100vh - 80px);
     display: flex;
     align-items: center !important;
+    justify-content: center !important;
     box-sizing: border-box;
     padding: 20px;
     font-family: 'Open Sans';
-    margin-left: 50px;
 }
 
 .message {
@@ -45,11 +45,11 @@ img.virus_tr {
 }
 
 .message h3 {
-    margin-top: 150px;
     margin-bottom: 2px;
     font-family: 'Shrikhand';
     font-size: 35px;
-    color: #35a0e1
+    color: #35a0e1;
+    margin-top: 100px;
 }
 
 textarea {
@@ -58,9 +58,9 @@ textarea {
     resize: vertical;
     padding: 10px;
     box-sizing: border-box;
-    background: #a8cde8;
+    background: #dbf2ff;
     border-radius: 20px;
-    border: 2px solid black;
+    border: 1px solid black;
     font-family: 'Open Sans', sans-serif;
     font-size: 17px;
     color: black;
@@ -115,9 +115,9 @@ textarea {
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 5px !important;
-    background: linear-gradient(90deg, #cdffd8, #94d9ff) !important;
+    background: #dbf2ff;
     border-radius: 10px !important;
-    border: 2px solid #545454 !important;
+    border: 1px solid #545454 !important;
     min-height: auto !important;
 }
 
@@ -141,9 +141,9 @@ textarea {
     box-sizing: border-box;
     margin: 0;
     padding: 8px;
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    background:  #dbf2ff;
     border-radius: 10px;
-    border: 2px solid #545454
+    border: 1px solid #545454
 }
 
 
@@ -163,7 +163,7 @@ textarea {
     height: 30px;
     border-radius: 50%;
     display: inline-block;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     cursor: pointer;
 }
 
@@ -192,7 +192,7 @@ textarea {
     grid-template-columns: repeat(3, 40px);
     gap: 15px;
     width: 180px;
-    justify-content: center;
+    justify-content: flex-end !important;
 }
 
 .icons input {
@@ -225,37 +225,39 @@ textarea {
     max-height: 100%;
 }
 
-.head-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
-
 .head-row {
     display: flex;
     width: 100%;
     align-items: center;
 }
+
+.head-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: 70px;
+    flex-shrink: 0;
+}
+
 /* submit button */
 
 .button-section {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 150px;
+    margin-left: 100px;
 }
 
 .button-section button {
-    width: 250px;
-    height: 70px;
+    width: 150px;
+    height: 60px;
     cursor: pointer;
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
-    color: #545454;
+    background: #35a0e1;
+    color: white;
     font-size: 30px;
     font-weight: bold;
-    border: 2px solid black;
-    border-radius: 20px;
+    border: 1px solid black;
+    border-radius: 12px;
     cursor: pointer;
     float: right;
 }
@@ -263,7 +265,7 @@ textarea {
 .button-section button:hover {
     opacity: 0.9;
     transform: scale(1.05);
-    background: linear-gradient(270deg, #cdffd8, #94d9ff);
+    background:  #94d9ff;
 }
 
 .logo {

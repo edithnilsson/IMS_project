@@ -68,7 +68,7 @@ $mwarning_icon = [
     <title>Document</title>
 
 <!-- links to the css file -->
-    <link rel="stylesheet" href="/assets/css/home.css?v=12">
+    <link rel="stylesheet" href="/assets/css/home.css?v=123">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0">< </script>
 </head>
 <body>

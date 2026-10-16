@@ -177,19 +177,27 @@ try {
 
     $conn->commit();
 
-    echo "<script>alert('Warning created successfully!');</script>";
+    // Redirect to avoid form resubmission and repopulation
+    header("Location: " . $_SERVER['PHP_SELF'] . "?success=1");
+    exit;
 
-} catch (Exception $e) {
+    } catch (Exception $e) {
 
-    $conn->rollback();
+        $conn->rollback();
 
-    echo "<script>alert('Error creating warning.');</script>";
-}
+        // Redirect to show an error message
+        header("Location: /write_announcement.php?error=1");
+        exit;
+    }
 }
 
 //Get departments for the dropdown
 
-$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$sql = "SELECT department_id, department_name 
+        FROM Department 
+        WHERE hospital_id = ? 
+        AND department_status = 'active'";
+
 $stmt= $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();
@@ -223,7 +231,7 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="/assets/css/announcements.css?v=7">
+    <link rel="stylesheet" href="/assets/css/announcements.css?v=183">
 
 </head>
 
@@ -477,7 +485,7 @@ if (!$pathogen_result) {
                 <!-- THIRD SECTION (BUTTON) -->
 
                 <div class="button-section">
-                    <button type="submit">
+                    <button type="submit" class="submit-btn">
                         Submit
                     </button>
                 </div>

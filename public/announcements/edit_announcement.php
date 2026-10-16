@@ -98,7 +98,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && ($_POST['action'] ?? '') == 'update'
 
 //Get departments for the dropdown
 
-$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$sql = "SELECT department_id, department_name 
+        FROM Department 
+        WHERE hospital_id = ?
+        AND department_status = 'active'";
+
 $stmt= $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();
@@ -133,7 +137,7 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="/assets/css/announcements.css">
+    <link rel="stylesheet" href="/assets/css/announcements.css?v=7">
 
 </head>
 

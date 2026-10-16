@@ -31,7 +31,11 @@ $hospital_id = $user['hospital_id'];
 
 
 // Get departments for the dropdown
-$sql = "SELECT department_id, department_name FROM Department WHERE hospital_id = ?";
+$sql = "SELECT department_id, department_name 
+        FROM Department 
+        WHERE hospital_id = ?
+        AND department_status = 'active'";
+        
 $stmt= $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
 $stmt->execute();
@@ -230,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=133">
+<link rel="stylesheet" href="/assets/css/cases.css?v=763">
 
 <link
 rel="stylesheet"
@@ -239,7 +243,6 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 </head>
 
 <body>
-<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
@@ -260,15 +263,15 @@ Pathogen
 
 <select name="pathogen" id="pathogen" required>
 
-<option value="" disabled selected>
-Select Pathogen
+<option value="" hidden>
+    Select pathogen
 </option>
-
-<?php
-while ($row = $pathogen_result->fetch_assoc()) {
-echo "<option value='" . $row['pathogen_id'] . "'>" . $row['pathogen_name'] . "</option>";
-}
-?>
+    <?php
+    while ($row = mysqli_fetch_assoc($pathogen_result)) {
+    $selected = ($row['pathogen_id'] == $pathogen_id) ? 'selected' : '';
+    echo "<option value='" . $row['pathogen_id'] . "' $selected>" . htmlspecialchars($row['pathogen_name']) . "</option>";
+    }
+    ?>
 
 </select>
 </div>

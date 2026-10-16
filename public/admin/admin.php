@@ -163,12 +163,12 @@ $stmt->close();
 
 
 //Get Wards
-// Get epidemiologists and chief epidemiologists
 $department= [];
 
 $sql = "SELECT department_id, department_name
         FROM Department
-        WHERE hospital_id = ?";
+        WHERE hospital_id = ?
+        AND department_status = 'active'";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $hospital_id);
@@ -189,19 +189,20 @@ $stmt->close();
 
 <head>
     <title>Admin Page</title>
-    <link rel="stylesheet" href="/assets/css/admin.css?v=2">
+    <link rel="stylesheet" href="/assets/css/admin.css?v=123">
 </head>
 
 <body>
-
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 <!-- Pending Accounts checking -->
-
+<div class="table-container">
 <h1 class='title'>Pending Accounts</h1>
 
 <?php if (empty($pending_users)) { ?>
 
-    <p>No pending accounts.</p>
+    <p class="texts">No pending accounts.</p>
 
 <?php } else { ?>
 
@@ -254,7 +255,7 @@ $stmt->close();
     <?php } ?>
 
 </table>
-
+</div>
 <?php } ?>
 
 
@@ -266,7 +267,7 @@ $stmt->close();
 
 <?php if (empty($deletion_requests)): ?>
 
-    <p>No pending account removal requests.</p>
+    <p class="texts">No pending account removal requests.</p>
 
 <?php else: ?>
 
@@ -328,7 +329,7 @@ $stmt->close();
 
 <?php if (empty($admins)): ?>
 
-    <p>No administrators found.</p>
+    <p class="texts">No administrators found.</p>
 
 <?php else: ?>
 
@@ -376,7 +377,7 @@ $stmt->close();
 
 <?php if (empty($doctors)): ?>
 
-    <p>No doctors found.</p>
+    <p class="texts">No doctors found.</p>
 
 <?php else: ?>
 
@@ -424,7 +425,7 @@ $stmt->close();
 
 <?php if (empty($epidemiologists)): ?>
 
-    <p>No epidemiologists found.</p>
+    <p class="texts">No epidemiologists found.</p>
 
 <?php else: ?>
 
@@ -475,14 +476,14 @@ $stmt->close();
 <!-- Wards -->
 <h1 class='title'>Wards</h1>
 
-<form action="" method="post">
-Add a department: <input type="text" name="department_name"><br>
+<form action="" method="post" class="blabla">
+Add a Department: <input type="text" name="department_name"><br>
 <input type="submit" class='butt2'>
 </form>
 
 <?php if (empty($departments)): ?>
 
-    <p>No wards found.</p>
+    <p class="texts">No wards found.</p>
 
 <?php else: ?>
 

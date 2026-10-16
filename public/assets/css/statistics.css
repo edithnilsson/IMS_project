@@ -7,9 +7,9 @@ img.virus_bl{
     z-index: -1;
 }
 
-img.rings_br{
+img.virus_tr{
     position:fixed;
-    bottom: 0px;
+    top: 60px;
     right: 0px;
     width: 25%;
     height: auto;
@@ -21,6 +21,15 @@ img.icon {
     height: 40px;
     object-fit: contain;
     align-self: center;
+    margin-bottom: 10px;
+}
+
+img.cicon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    align-self: center;
+    margin-bottom: 50px;
 }
 
 html {
@@ -36,8 +45,7 @@ body {
 }
 
 .stats-content {
-    width: 94%;
-    max-width: 1600px;
+    width: 96%;
     margin: 0 auto;
     padding-bottom: 40px;
     padding-top: 70px;
@@ -46,7 +54,7 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: 520px minmax(0, 3.5fr) minmax(0, 1fr);
+    grid-template-columns: 400px minmax(0, 3.5fr) minmax(0, 1fr);
     gap: 20px;
     align-items: start;
     width: 100%;
@@ -56,9 +64,8 @@ body {
 .stats-left {
     display: flex;
     flex-direction: column;
-    gap: 20px;
     min-width: 0;
-    margin-left: 50px;
+    margin-left: 20px;
 }
 
 .stats-right {
@@ -96,17 +103,17 @@ input, select {
 }
 
 .pathogen {
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    background: #dbf2ff;
     width: 300px;
 }
 
 .startdate {
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    background: #dbf2ff;
     width: 140px;
 }
 
 .enddate {
-    background: linear-gradient(90deg, #94d9ff, #cdffd8);
+    background: #dbf2ff;
     width: 140px;
 }
 
@@ -118,38 +125,31 @@ input, select {
 }
 
 .search_button {
-    background: linear-gradient(90deg, #94d9ff, #cdffd8);
-    color: #004aad;
-    padding: 5px;
-    font-size: 22px;
-    font-weight: bold;
-    border: 2px solid #004aad;
-    border-radius: 10px;
+    padding: 0.75rem 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
     cursor: pointer;
-    display: block;
-    margin-left: 0;
+    background: #35a0e1;
+    color: white;
 }
 
 .search_button:hover {
-    box-shadow: 0px 0px 2px 2px rgba(4, 91, 240, 0.44);
+    box-shadow: 0px 0px 1px 1px grey;
 }
 
 
 .chart-card {
     min-width: 0;
     box-sizing: border-box;
-    background: transparent;
+    background: white;
+    margin-top: 20px;
 }
 
-.chart-card h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1rem;
-    font-family: sans-serif;
-    color: #333;
-}
 
 .chart-card canvas {
-    max-width: 100%;
+    max-width: 95%;
+    background: white;
 }
 
 #lineChart {
@@ -160,7 +160,15 @@ input, select {
 #pieChart,
 #barChart {
     width: 100% !important;
-    height: 150px !important;
+    height: 100px !important;
+    padding-left: 20px;
+    padding-right: 20px;
+    align-content: center;
+}
+
+.charthead {
+    text-align: center;
+    color: white;
 }
 
 .automatic-warnings {
@@ -210,7 +218,8 @@ input, select {
 }
 
 .cases-table thead {
-    background: #f4f6f9;
+    background: #35a0e1;
+    color: white !important;
 }
 
 .cases-table th,
@@ -224,10 +233,6 @@ input, select {
 .cases-table th {
     font-weight: 600;
     color: #333;
-}
-
-.cases-table tr:hover {
-    background: #fafbfd;
 }
 
 #status {

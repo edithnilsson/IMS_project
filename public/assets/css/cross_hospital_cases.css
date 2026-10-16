@@ -11,7 +11,25 @@ body {
     margin: 0;
     height: auto;
     overflow-y: auto;
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    background: white;
+}
+
+img.virus_bl{
+    position:fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 25%;
+    height: auto;
+    z-index: -1;
+}
+
+img.rings_br{
+    position:fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 25%;
+    height: auto;
+    z-index: -1;
 }
 
 h1.title {
@@ -22,6 +40,7 @@ h1.title {
     font-family: 'Shrikhand';
     color: #35a0e1;
     padding-left: 15px;
+    text-align: center;
 }
 
 p.subs {
@@ -30,16 +49,18 @@ p.subs {
     font-size: 0.9rem;
     font-family: 'Open Sans';
     padding-left: 25px;
+    text-align: center;
 }
 
 .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
-    background: transparent;
+    background: white;
     padding: 1rem 1.25rem;
     border-radius: 12px;
     margin-bottom: 1rem;
+    justify-content: center;
 }
 
 .filter {
@@ -89,10 +110,12 @@ p.subs {
 }
 
 .table-wrapper {
-    background: transparent;
+    background: white;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow: hidden;
+    width: 90%;
+    margin: 0 auto;
 }
 
 table {
@@ -132,10 +155,6 @@ tbody td.num.zero {
 tbody td .contact {
     font-size: 0.8rem;
     color: #7a7a7a;
-}
-
-tbody tr:hover {
-    background: #c6fffa;
 }
 
 td.empty {
