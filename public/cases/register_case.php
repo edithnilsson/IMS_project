@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=133">
+<link rel="stylesheet" href="/assets/css/cases.css?v=763">
 
 <link
 rel="stylesheet"
@@ -239,7 +239,6 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
 </head>
 
 <body>
-<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
 

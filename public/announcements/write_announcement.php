@@ -227,7 +227,7 @@ if (!$pathogen_result) {
     <title>Create Warning</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
-    <link rel="stylesheet" href="/assets/css/announcements.css?v=123">
+    <link rel="stylesheet" href="/assets/css/announcements.css?v=183">
 
 </head>
 

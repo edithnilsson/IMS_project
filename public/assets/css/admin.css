@@ -11,13 +11,32 @@ body {
     margin: 0;
     height: auto;
     overflow-y: auto;
-    background: linear-gradient(90deg, #cdffd8, #94d9ff);
+    background: white;
+}
+
+img.virus_bl{
+    position:fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 25%;
+    height: auto;
+    z-index: -1;
+}
+
+img.rings_br{
+    position:fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 25%;
+    height: auto;
+    z-index: -1;
 }
 
 h1.title {
     display: block;
     margin-top: 80px !important;
     position: relative;
+    text-align: center;
     top: 0;
     font-family: 'Shrikhand';
     color: #35a0e1;
@@ -25,10 +44,11 @@ h1.title {
 }
 
 .table-container {
-    width: 100%;
+    width: 90%;
     overflow-x: auto;
-    border-radius: 12px;
-    background: transparent;
+    border-radius: 12px;;
+    align-items: center;
+    margin: 0 auto;
 }
 
 .user-table {
@@ -37,7 +57,7 @@ h1.title {
     border-spacing: 0;
     border-radius: 12px;
     overflow: hidden;
-    background: transparent;
+    background: white;
 }
 
 thead {
@@ -62,6 +82,19 @@ tbody td {
     color:#40494e
 }
 
+p.texts {
+    text-align: center;
+    color:#9dabb3;
+}
+
+.blabla {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 .butt {
     padding: 0.5rem 1rem;
     border: none;
@@ -82,5 +115,5 @@ tbody td {
     background: #35a0e1;
     color: white;
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 1px;
 }

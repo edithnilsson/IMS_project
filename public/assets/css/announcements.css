@@ -225,18 +225,20 @@ textarea {
     max-height: 100%;
 }
 
-.head-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
-
 .head-row {
     display: flex;
     width: 100%;
     align-items: center;
 }
+
+.head-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    margin-left: 70px;
+    flex-shrink: 0;
+}
+
 /* submit button */
 
 .button-section {
