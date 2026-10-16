@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     }
 
- // Get pending users   checking 
+ // Get pending users   
 $pending_users = [];
 
 $sql = "SELECT user_id, user_name, user_surname,
