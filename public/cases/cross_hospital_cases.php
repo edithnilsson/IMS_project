@@ -43,7 +43,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
         <select id="hospital">
             <option value="">All hospitals</option>
             <?php foreach ($hospitals as $h): ?>
-                <option value="<?= (int)$h['hospital_id'] ?>">
+                <option value="<?= htmlspecialchars($h['hospital_id']) ?>">
                     <?= htmlspecialchars($h['hospital_name']) ?>
                 </option>
             <?php endforeach; ?>
