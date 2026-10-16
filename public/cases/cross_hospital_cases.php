@@ -25,7 +25,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-Hospital Cases</title>
-    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=698">
+    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=133">
 </head>
 <body>
 

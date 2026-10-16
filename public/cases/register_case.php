@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=763">
+<link rel="stylesheet" href="/assets/css/cases.css?v=753">
 
 <link
 rel="stylesheet"

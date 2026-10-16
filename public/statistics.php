@@ -215,15 +215,14 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 <html>
 <head>
     <title>Statistics</title>
-    <link rel="stylesheet" href="/assets/css/statistics.css?v=193">
+    <link rel="stylesheet" href="/assets/css/statistics.css?v=123">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 </head>
 <body>
  
 <?php include __DIR__ . "/../src/navigation_bar.php"; ?>
 
-<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
-<img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 <div class="stats-content">
 <div class="stats-grid">
@@ -232,9 +231,9 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
     <div class="stats-left">
 <?php if ($can_write_announcement): ?>
     <div class="automatic-warnings">
-        <h2>Automatic Warnings</h2>
+        <h2 class="title">Automatic Warnings</h2>
         <?php if (empty($automatic_warnings)): ?>
-            <p>No active automatic warnings.</p>
+            <p class="text">No active automatic warnings.</p>
         <?php else: ?>
             <table>
                 <thead>
@@ -330,12 +329,12 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
     <!-- Column 3: pie on top of bar -->
     <div class="stats-right">
         <div class="chart-card">
-            <h3 class="charthead">Severity Distribution</h3>
+            <h3 class="charthead">Severity</h3>
             <canvas id="pieChart"></canvas>
         </div>
 
         <div class="chart-card">
-            <h3 class="charthead">Weekly Case Counts</h3>
+            <h3 class="charthead">Weekly Cases</h3>
             <canvas id="barChart"></canvas>
         </div>
     </div>
@@ -343,7 +342,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
 </div><!-- /stats-grid -->
 
     <div class="cases-section">
-    <h2>All Infection Cases</h2>
+    <h2 class="rubrik">All Infection Cases</h2>
 
     <!-- ---------------- Filters ---------------- -->
     <form method="GET" class="cases-filters" id="casesFilterForm">

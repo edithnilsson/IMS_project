@@ -69,7 +69,7 @@ thead th {
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: white;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e1ebff;
 }
 thead th.num {
     text-align: right;
@@ -77,14 +77,14 @@ thead th.num {
 
 tbody td {
     padding: 0.65rem 1rem;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #e1ebff;
     vertical-align: top;
-    color:#40494e
+    color:#545454
 }
 
 p.texts {
     text-align: center;
-    color:#9dabb3;
+    color:#a5a6be;
 }
 
 .blabla {
@@ -101,18 +101,19 @@ p.texts {
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #35a0e1;
+    background: #519bd2;
+    border: 1px solid #004aad;
     color: white;
 }
 
 
 .butt2 {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #35a0e1;
+    background: #519bd2;
     color: white;
     margin-left: 20px;
     margin-top: 1px;

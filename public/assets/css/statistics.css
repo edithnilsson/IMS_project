@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 img.virus_bl{
     position:fixed;
     bottom: 0px;
@@ -10,6 +13,15 @@ img.virus_bl{
 img.virus_tr{
     position:fixed;
     top: 60px;
+    right: 0px;
+    width: 25%;
+    height: auto;
+    z-index: -1;
+}
+
+img.rings_br{
+    position:fixed;
+    bottom: 0px;
     right: 0px;
     width: 25%;
     height: auto;
@@ -47,7 +59,7 @@ body {
 .stats-content {
     width: 96%;
     margin: 0 auto;
-    padding-bottom: 40px;
+    padding-bottom: 30px;
     padding-top: 70px;
     box-sizing: border-box;
 }
@@ -83,6 +95,23 @@ body {
     gap: 10px;
     min-width: 0;
     box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.title {
+    font-family: 'Shrikhand';
+    font-style: italic;
+    font-weight: 750;
+    color: #519bd2;
+}
+
+.rubrik {
+    font-family: 'Shrikhand';
+    font-style: italic;
+    font-weight: 750;
+    color: #519bd2;
+    text-align: center !important;
+    margin-top: 20px !important;
 }
 
 .column {
@@ -96,25 +125,28 @@ input, select {
     width: 300px;
     height: 50px;
     font-size: 20px;
-    border-radius: 5px;
+    border-radius: 6px;
     border: 1px solid #004aad;
     margin-bottom: 15px;
     box-sizing: border-box;
+    cursor: pointer;
 }
 
 .pathogen {
-    background: #dbf2ff;
+    background: #e1ebff;
     width: 300px;
 }
 
-.startdate {
-    background: #dbf2ff;
+.startdate,
+.enddate {
+    background: #e1ebff;
     width: 140px;
+    cursor: default;
 }
 
-.enddate {
-    background: #dbf2ff;
-    width: 140px;
+.startdate::-webkit-calendar-picker-indicator,
+.enddate::-webkit-calendar-picker-indicator {
+    cursor: pointer;
 }
 
 .date-group {
@@ -126,16 +158,16 @@ input, select {
 
 .search_button {
     padding: 0.75rem 0.75rem;
-    border: none;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #35a0e1;
+    background: #519bd2;
     color: white;
 }
 
 .search_button:hover {
-    box-shadow: 0px 0px 1px 1px grey;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 
@@ -159,21 +191,31 @@ input, select {
 
 #pieChart,
 #barChart {
-    width: 100% !important;
-    height: 100px !important;
-    padding-left: 20px;
-    padding-right: 20px;
     align-content: center;
+}
+
+#pieChart {
+    width: 100% !important;
+    height: 120px !important;
+}
+
+#barChart {
+    width: 100% !important;
+    height: 60px !important;
 }
 
 .charthead {
     text-align: center;
-    color: white;
+    color: #519bd2;
 }
 
 .automatic-warnings {
     width: 100%;
     max-width: 400px;
+}
+
+.text {
+    color: #a5a6be
 }
 
 .automatic-warnings table {
@@ -184,61 +226,70 @@ input, select {
 .automatic-warnings th,
 .automatic-warnings td {
     border: 1px solid #004aad;
-    padding: 10px;
+    border-radius: 12px;
 }
 
 .automatic-warnings th {
-    background: #94d9ff;
+    background: #519bd2;
 }
 
 .cases-section {
     width: 100%;
-    margin-top: 25px;
+    margin-top: 10px;
 }
 
 .cases-container {
     margin-top: 1rem;
-    background: #fff;
+    background: #e1ebff;
     border-radius: 12px;
-    padding: 1rem 1.25rem;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow-x: auto;
 }
 
 .cases-container .empty {
-    color: #888;
+    color: #a5a6be;
     text-align: center;
-    padding: 1rem 0;
 }
 
 .cases-table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.88rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
 }
 
 .cases-table thead {
-    background: #35a0e1;
-    color: white !important;
+    background: #519bd2;
+    border-radius: 12px !important;
 }
 
 .cases-table th,
 .cases-table td {
-    padding: 0.55rem 0.75rem;
-    border-bottom: 1px solid #f0f0f0;
-    text-align: left;
+    border-bottom: 1px solid #e1ebff;
     vertical-align: top;
 }
 
+.cases-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid #e1ebff;
+    vertical-align: top;
+    color:#545454
+}
+
 .cases-table th {
+    text-align: left;
+    padding: 0.75rem 1rem;
     font-weight: 600;
-    color: #333;
+    color: white;
+    border-bottom: 1px solid #e1ebff;
 }
 
 #status {
     margin-top: 1.5rem;
     font-family: sans-serif;
-    color: #555;
+    color: #545454;
     text-align: center;
     clear: both;
 }
@@ -247,11 +298,10 @@ input, select {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    background: #fff;
+    background: white;
     border-radius: 12px;
     padding: 1rem 1.25rem;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     align-items: flex-end;
 }
 
@@ -264,18 +314,22 @@ input, select {
 
 .cases-filter label {
     font-size: 0.8rem;
-    color: #444;
+    color: #545454;
 }
 
 .cases-filter select,
 .cases-filter input[type="date"] {
     padding: 0.4rem 0.5rem;
-    border: 1px solid #ccc;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
     height: auto;
     width: 100%;
     margin-bottom: 0;
+}
+
+.cases-filter input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
 }
 
 .cases-filter-actions {
@@ -285,8 +339,8 @@ input, select {
 }
 
 .cases-filter-actions button {
-    background: #2980b9;
-    color: #fff;
+    background: #519bd2;
+    color: white;
     border: none;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -295,7 +349,7 @@ input, select {
 }
 
 .cases-filter-actions button:hover {
-    background: #21618c;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 .cases-reset {
@@ -307,7 +361,7 @@ input, select {
 }
 
 .cases-reset:hover {
-    background: #eef4fb;
+    background: #e1ebff;
 }
 
 .cases-pagination {
@@ -321,27 +375,27 @@ input, select {
 
 .page-link {
     padding: 0.4rem 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid #004aad;
     border-radius: 6px;
     text-decoration: none;
-    color: #2980b9;
-    background: #fff;
+    color: #519bd2;
+    background: white;
     font-size: 0.9rem;
 }
 
 .page-link:hover {
-    background: #eef4fb;
+    background: #e1ebff;
 }
 
 .page-link.active {
-    background: #2980b9;
-    color: #fff;
-    border-color: #2980b9;
+    background: #519bd2;
+    color: white;
+    border-color: #519bd2;
     font-weight: 600;
 }
 
 .page-summary {
     margin-left: auto;
     font-size: 0.85rem;
-    color: #666;
+    color: #545454;
 }

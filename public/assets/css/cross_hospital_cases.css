@@ -38,13 +38,13 @@ h1.title {
     position: relative;
     top: 0;
     font-family: 'Shrikhand';
-    color: #35a0e1;
+    color: #519bd2;
     padding-left: 15px;
     text-align: center;
 }
 
 p.subs {
-    color: #555;
+    color: #545454;
     margin: 0.25rem 0 1.25rem 0;
     font-size: 0.9rem;
     font-family: 'Open Sans';
@@ -71,14 +71,22 @@ p.subs {
 }
 .filter label {
     font-size: 0.8rem;
-    color: #444;
+    color: #545454;
 }
 .filter select,
 .filter input[type="date"] {
     padding: 0.4rem 0.5rem;
-    border: 1px solid #9eded9;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
+}
+
+.filter input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+}
+
+.filter select {
+    cursor: pointer;
 }
 
 .filter-actions {
@@ -88,23 +96,28 @@ p.subs {
 }
 .filter-actions button {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
 }
+
+.filter-actions button:hover{
+    box-shadow: 0px 0px 1px 1px #004aad;
+}
+
 .filter-actions button[type="submit"] {
-    background: #35a0e1;
+    background: #519bd2;
     color: white;
 }
 .filter-actions button#resetBtn {
     background: white;
-    color: #35a0e1;
+    color: #519bd2;
 }
 
 .status {
     font-size: 0.9rem;
-    color: #555;
+    color: #545454;
     margin: 0.5rem 0 1rem 1rem;
     font-family: 'Open Sans';
 }
@@ -132,7 +145,7 @@ thead th {
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: white;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e1ebff;
 }
 thead th.num {
     text-align: right;
@@ -140,25 +153,25 @@ thead th.num {
 
 tbody td {
     padding: 0.65rem 1rem;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #e1ebff;
     vertical-align: top;
-    color:#40494e
+    color:#545454
 }
 tbody td.num {
     text-align: right;
     font-variant-numeric: tabular-nums;
 }
 tbody td.num.zero {
-    color: #999;
+    color: #a5a6be;
 }
 
 tbody td .contact {
     font-size: 0.8rem;
-    color: #7a7a7a;
+    color: #a5a6be;
 }
 
 td.empty {
     text-align: center;
-    color: #888;
+    color: #a5a6be;
     padding: 1.5rem;
 }

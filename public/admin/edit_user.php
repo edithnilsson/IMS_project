@@ -84,7 +84,7 @@ $role_result = $conn->query($sql);
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Edit User</title>
-        <link rel="stylesheet" href="/assets/css/edit_user.css">
+        <link rel="stylesheet" href="/assets/css/edit_user.css?v=123">
     </head>
     <body>
         <!-- Logo and background -->

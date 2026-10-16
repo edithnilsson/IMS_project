@@ -16,14 +16,16 @@ session_start();
 <head>
     <title>InfTraction</title>
 
-            <link rel="stylesheet" href="/assets/css/index.css?v=5">
-            <link rel="stylesheet" href="/assets/css/captcha.css">
+            <link rel="stylesheet" href="/assets/css/index.css?v=132">
+            <link rel="stylesheet" href="/assets/css/captcha.css?v=123">
 
 </head>
 
 <body style="background: linear-gradient(90deg, #cdffd8, #94d9ff);">
 <img src="/assets/img/logo_nobackground.png" class= "logo">
-
+<a href="/account/register.php" class="register_link">
+    Click Here to Create a New Account
+</a>
 <form action="/account/login_processing.php" method="post" class="login_form">
 
     <div class="input-row">
@@ -62,10 +64,6 @@ session_start();
     </button>
 
 </form>
-
-<button type="button" onclick="location.href='/account/register.php'" class="register_button">
-        Or sign up here
-    </button>
 
 </body>
 

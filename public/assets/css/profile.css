@@ -51,11 +51,10 @@ h1.rubrik {
     font-family: 'Shrikhand';
     font-style: italic;
     font-weight: 750;
-    color: #35a0e1;
+    color: #519bd2;
     font-size: 50px;
     margin-top: 70px;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     justify-self: center !important;
 }
 
@@ -63,11 +62,10 @@ h1.titel {
     font-family: 'Shrikhand';
     font-style: italic;
     font-weight: 750;
-    color: #35a0e1;
+    color: #519bd2;
     font-size: 50px;
     margin-top: 20px;
     margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     justify-self: center !important;
 }
 
@@ -121,7 +119,7 @@ thead th {
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: white;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e1ebff;
 }
 thead th.num {
     text-align: right;
@@ -129,9 +127,9 @@ thead th.num {
 
 tbody td {
     padding: 0.65rem 1rem;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid #e1ebff;
     vertical-align: top;
-    color:#40494e
+    color:#545454
 }
 
 .delbutt {
@@ -139,7 +137,7 @@ tbody td {
     font-size: 11px;
     background: #519bd2;
     color: white;
-    border: 1px solid #666;
+    border: 1px solid #004aad;
     border-radius: 10px;
     cursor: pointer;
     box-sizing: border-box; 
@@ -149,21 +147,21 @@ tbody td {
 }
 
 .delbutt:hover {
-    box-shadow: 0px 0px 1px 1px grey;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 .buttbutt {
     padding: 0.5rem 1rem;
-    border: none;
+    border: 1px solid #004aad;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #35a0e1;
+    background: #519bd2;
     color: white;
 }
  
 .buttbutt:hover {
-    box-shadow: 0px 0px 1px 1px grey;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 
@@ -181,16 +179,17 @@ tbody td {
 }
 .pagination li a {
 	box-sizing: border-box;
-	background-color: #e2e6e6;
+	background-color: #e1ebff;
 	padding: 8px;
 	text-decoration: none;
 	font-size: 12px;
 	font-weight: bold;
-	color: #616872;
-	border-radius: 4px;
+	color: #545454;
+	border-radius: 6px;
+    border: 1px solid #004aad
 }
 .pagination li a:hover {
-	background-color: #d4dada;
+	background-color: #e1ebff;
 }
 .pagination .next a, .pagination .prev a {
 	text-transform: uppercase;
@@ -198,7 +197,7 @@ tbody td {
 }
 .pagination .currentpage a {
 	background-color: #518acb;
-	color: #fff;
+	color: white;
 }
 .pagination .currentpage a:hover {
 	background-color: #518acb;

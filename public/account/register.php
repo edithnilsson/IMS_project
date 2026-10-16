@@ -146,13 +146,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfTraction Register</title>
-        <link rel="stylesheet" href="/assets/css/register.css?v=5">
+        <link rel="stylesheet" href="/assets/css/register.css?v=123">
 </head>
 <body>
     <!-- Logo and background -->
     <img src="/assets/img/logo_nobackground.png" class= "logo">
     <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
-
+<div class="container">
     <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 
     <!-- Register form --> 
@@ -238,6 +238,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </dialog>
 
     <script src="/assets/js/register.js"></script>
-
+                </div>
 </body>
 </html>

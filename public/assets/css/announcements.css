@@ -48,7 +48,7 @@ img.virus_tr {
     margin-bottom: 2px;
     font-family: 'Shrikhand';
     font-size: 35px;
-    color: #35a0e1;
+    color: #519bd2;
     margin-top: 100px;
 }
 
@@ -58,12 +58,12 @@ textarea {
     resize: vertical;
     padding: 10px;
     box-sizing: border-box;
-    background: #dbf2ff;
+    background: #e1ebff;
     border-radius: 20px;
-    border: 1px solid black;
+    border: 1px solid #004aad;
     font-family: 'Open Sans', sans-serif;
     font-size: 17px;
-    color: black;
+    color: #545454;
 }
 
 
@@ -91,7 +91,6 @@ textarea {
     color: #545454;
     font-size: 16px;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 3px;
 }
 
@@ -115,9 +114,9 @@ textarea {
     box-sizing: border-box !important;
     margin: 0 !important;
     padding: 5px !important;
-    background: #dbf2ff;
+    background: #e1ebff;
     border-radius: 10px !important;
-    border: 1px solid #545454 !important;
+    border: 1px solid #004aad !important;
     min-height: auto !important;
 }
 
@@ -141,9 +140,13 @@ textarea {
     box-sizing: border-box;
     margin: 0;
     padding: 8px;
-    background:  #dbf2ff;
+    background:  #e1ebff;
     border-radius: 10px;
-    border: 1px solid #545454
+    border: 1px solid #004aad;
+}
+
+.input-row input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
 }
 
 
@@ -180,7 +183,7 @@ textarea {
 }
 
 .threat-level input:checked + .bubble {
-    border: 3px solid black;
+    border: 3px solid #545454;
 }
 
 
@@ -249,15 +252,15 @@ textarea {
 }
 
 .button-section button {
-    width: 150px;
-    height: 60px;
+    width: 120px;
+    height: 50px;
     cursor: pointer;
-    background: #35a0e1;
+    background: #519bd2;
     color: white;
     font-size: 30px;
     font-weight: bold;
-    border: 1px solid black;
-    border-radius: 12px;
+    border: 1px solid #004aad;
+    border-radius: 6px;
     cursor: pointer;
     float: right;
 }
@@ -265,18 +268,7 @@ textarea {
 .button-section button:hover {
     opacity: 0.9;
     transform: scale(1.05);
-    background:  #94d9ff;
-}
-
-.logo {
-    flex: 1;
-    min-width: 0;
-}
-
-.logo img {
-    max-width: 100%;
-    width: 350px;
-    height: auto;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 .page form {

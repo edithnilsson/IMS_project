@@ -40,7 +40,7 @@ h1.title {
     top: 0;
     font-family: 'Shrikhand';
 	text-align: center;
-    color: #35a0e1;
+    color: #519bd2;
     padding-left: 15px;
 }
 
@@ -52,7 +52,6 @@ h1.title {
     border-radius: 12px;
     overflow: hidden;
     background: white;
-    padding: 20px;
     margin-left: 30px;
 }
 td, th {
@@ -64,7 +63,7 @@ th {
     text-align: left;
 }
 td {
-	color: #454343;
+	color: #454545;
 }
 
 table td:nth-child(4) {
@@ -87,25 +86,25 @@ table td:nth-child(4) {
 }
 .pagination li a {
 	box-sizing: border-box;
-	background-color: #e2e6e6;
+	background-color: #e1ebff;
 	padding: 8px;
 	text-decoration: none;
 	font-size: 12px;
 	font-weight: bold;
-	color: #616872;
+	color: #a5a6be;
 	border-radius: 4px;
 }
 .pagination li a:hover {
-	background-color: #d4dada;
+	background-color: #e1ebff;
 }
 .pagination .next a, .pagination .prev a {
 	text-transform: uppercase;
 	font-size: 12px;
 }
 .pagination .currentpage a {
-	background-color: #518acb;
-	color: #fff;
+	background-color: #519bd2;
+	color: white;
 }
 .pagination .currentpage a:hover {
-	background-color: #518acb;
+	background-color: #519bd2;
 }

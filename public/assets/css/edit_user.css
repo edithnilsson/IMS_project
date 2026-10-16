@@ -1,27 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Shrikhand&display=swap');
+html {
+    min-height: 100%;
+    overflow-y: auto;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    height: auto;
+    overflow-y: auto;
+}
 
 .title {
     font-family: 'Shrikhand';
     font-style: italic;
     font-weight: 750;
-    color: #35a0e1;
+    color: #519bd2;
     font-size: 50px;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    margin-top: 70px;
     text-align: center;
 }
 img.logo{
-    position:absolute;
-    top: 110px;
-    left: 0px;
-    width: 30%; 
-    height: auto;
-    z-index: -1;
+    display: none;
 }
 
 img.virus_bl{
-    position:absolute;
+    position: fixed;
     bottom: 0px;
     left: 0px;
     width: 22%; 
@@ -30,7 +34,7 @@ img.virus_bl{
 }
 
 img.rings_br{
-    position:absolute;
+    position: fixed;
     bottom: 0px;
     right: 0px;
     width: 25%; 
@@ -39,8 +43,8 @@ img.rings_br{
 }
 
 img.virus_tr{
-    position:absolute;
-    top: 0px;
+    position: fixed;
+    top: 60px;
     right: 0px;
     width: 22%; 
     height: auto;
@@ -53,26 +57,24 @@ img.virus_tr{
     flex-direction: column;
     width: 100%;
     max-width: 400px;
-    margin: 20px auto;
+    margin: 0 auto;
     box-sizing: border-box;
-    border: 1px solid #ddd;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 20px 24px;
-    background-color: white;
 }
 
 .inputs label {
     margin-top: 8px;
     margin-bottom: 4px;
     font-weight: bold;
+    color: #545454;
 }
 
 .inputs input,
 .inputs select {
     padding: 10px;
     font-size: 1rem;
-    border: 1px solid #ccc;
+    border: 1px solid #004aad;
+    background-color: #e1ebff;
     border-radius: 6px;
     box-sizing: border-box;
     width: 100%;
@@ -80,9 +82,13 @@ img.virus_tr{
 
 /* Username can't be edited, grey out*/
 .inputs input:disabled {
-    background-color: #dfdede;
-    color: #767474;
+    background-color: #e1ebff;
+    color: #a5a6be;
     cursor: not-allowed;
+}
+
+.inputs select{
+    cursor: pointer !important;
 }
 
 /* Save + Cancel on one row */
@@ -97,15 +103,16 @@ img.virus_tr{
 .button {
     padding: 10px 20px;
     font-size: 1rem;
-    border: none;
+    border: 1px solid #004aad;
     border-radius: 8px;
     cursor: pointer;
-    background-color: #4a90d9; 
+    background-color: #519bd2; 
     color: white;
+    margin-bottom: 20px;
 }
 
 .button:hover {
-    opacity: 0.85;
+    box-shadow: 0px 0px 1px 1px #004aad;
 }
 
 .cancel_button {

@@ -196,7 +196,7 @@ $stmt->close();
 <head>
 <title>InfecTracker</title>
 
-<link rel="stylesheet" href="/assets/css/cases.css?v=4">
+<link rel="stylesheet" href="/assets/css/edit_case.css?v=143">
 
 <link
 rel="stylesheet"
@@ -209,8 +209,6 @@ href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.c
     <?php include __DIR__ . "/../../src/navigation_bar.php"; ?>
 <div class="img">
 
-<img src="/assets/img/Logo.png" class="logo">
-<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
 <img src="/assets/img/virus_tr_nobg.png" class="virus_tr">
 <img src="/assets/img/rings_br_nobg.png" class="rings_br">
 </div>
