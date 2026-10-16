@@ -308,7 +308,7 @@ while ($row = $res->fetch_assoc()) $case_severities[] = $row;
         <div class="column">
             <label class="form-label">
                 <span class="icon">
-                    <img src="/assets/img/calender.icon-bgremoved.png" class="icon">
+                    <img src="/assets/img/calender.icon-bgremoved.png" class="cicon">
                 </span>
             </label>
             <div>
@@ -498,8 +498,12 @@ const lineChart = new Chart(document.getElementById('lineChart'), {
     options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },    },
-});
+        plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, boxHeight: 8, padding: 20, generateLabels: c => Chart.defaults.plugins.legend.labels.generateLabels(c).map(l => ({ ...l, fillStyle: l.strokeStyle, lineWidth: 0 })) } } },  
+        scales: {
+        y: {beginAtZero: true, ticks: {precision: 0, stepSize: 1},grid: {display: false}},
+        x: {grid: {display: false}}
+            }}
+    });
 
 const pieChart = new Chart(document.getElementById('pieChart'), {
     type: 'pie',

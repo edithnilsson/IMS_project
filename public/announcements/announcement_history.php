@@ -68,15 +68,17 @@ if ($stmt) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="/assets/css/announcement_history.css?v=123">
+    <link rel="stylesheet" href="/assets/css/announcement_history.css?v=923">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0"></script>
 
     <title>Document</title>
 </head>
 <body>
 <h1 class='title'> Announcements </h1>
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
-<table>
+<table class="table">
 	<tr>
 		<th>Date</th>
 		<th>Announcement</th>

@@ -25,11 +25,12 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-Hospital Cases</title>
-    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=898">
+    <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=698">
 </head>
 <body>
 
-
+<img src="/assets/img/virus_bl_nobg.png" class="virus_bl">
+<img src="/assets/img/rings_br_nobg.png" class="rings_br">
 
 <h1 class='title'>Cases Across Hospitals</h1>
 <p class='subs'>

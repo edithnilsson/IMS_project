@@ -21,6 +21,15 @@ img.icon {
     height: 40px;
     object-fit: contain;
     align-self: center;
+    margin-bottom: 10px;
+}
+
+img.cicon {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    align-self: center;
+    margin-bottom: 50px;
 }
 
 html {
@@ -159,6 +168,7 @@ input, select {
 
 .charthead {
     text-align: center;
+    color: white;
 }
 
 .automatic-warnings {
@@ -208,7 +218,8 @@ input, select {
 }
 
 .cases-table thead {
-    background: #f4f6f9;
+    background: #35a0e1;
+    color: white !important;
 }
 
 .cases-table th,
@@ -222,10 +233,6 @@ input, select {
 .cases-table th {
     font-weight: 600;
     color: #333;
-}
-
-.cases-table tr:hover {
-    background: #fafbfd;
 }
 
 #status {
