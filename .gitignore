@@ -4,3 +4,4 @@
 src/mailer.php
 src/mailer.php
 src/patient_id_keys.php
+.env
