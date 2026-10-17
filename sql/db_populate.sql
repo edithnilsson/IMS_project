@@ -63,6 +63,7 @@ VALUES
 ('Candida auris', 'fungus', 'contact', 2),
 ('Plasmodium falciparum', 'parasite', 'vectorborne', 2),
 ('Mycobacterium tuberculosis', 'bacterium', 'droplet', 3),
+('Other', 'bacterium', 'contact', 1),
 ('Ebola', 'virus', 'contact', 4);
 
 UPDATE Pathogen
