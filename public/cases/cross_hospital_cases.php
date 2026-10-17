@@ -26,6 +26,7 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cross-Hospital Cases</title>
     <link rel="stylesheet" href="/assets/css/cross_hospital_cases.css?v=133">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
 </head>
 <body>
 
@@ -97,10 +98,27 @@ while ($row = $res->fetch_assoc()) $pathogens[] = $row;
         </tbody>
     </table>
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 <script>
 const tableBody = document.getElementById('tableBody');
 const statusEl  = document.getElementById('status');
+
+// Make the hospital and pathogen dropdowns searchable
+const hospitalSelect = new Choices('#hospital', {
+    searchEnabled: true,
+    searchPlaceholderValue: 'Search hospitals…',
+    itemSelectText: '',
+    searchChoices: true,
+    fuseOptions: { threshold: 0.3 }
+});
+
+const pathogenSelect = new Choices('#pathogen', {
+    searchEnabled: true,
+    searchPlaceholderValue: 'Search pathogens…',
+    itemSelectText: '',
+    searchChoices: true,
+    fuseOptions: { threshold: 0.3 }
+});
 
 function buildUrl() {
     const url = new URL('/api/cross_hospital_cases.php', location.href);
@@ -185,8 +203,8 @@ document.getElementById('filterForm').addEventListener('submit', e => {
 });
 
 document.getElementById('resetBtn').addEventListener('click', () => {
-    document.getElementById('hospital').value = '';
-    document.getElementById('pathogen').value = '';
+    hospitalSelect.setChoiceByValue('');
+    pathogenSelect.setChoiceByValue('');
     initDates();
     loadTable();
 });
@@ -194,6 +212,5 @@ document.getElementById('resetBtn').addEventListener('click', () => {
 // First load
 loadTable();
 </script>
-
 </body>
 </html>

@@ -175,3 +175,73 @@ td.empty {
     color: #a5a6be;
     padding: 1.5rem;
 }
+
+/* Choices.js Styling to match .pathogen and inputs */
+
+/* The outer wrapper */
+.choices {
+    margin-bottom: 15px;
+    font-size: 20px; /* Matches input font size */
+    font-family: inherit;
+    width: 300px; /* Matches input width */
+}
+
+/* The main box (replaces the native select) */
+.choices__inner {
+    background: #e1ebff;
+    border: 1px solid #004aad;
+    border-radius: 6px;
+    padding: 0 10px;
+    min-height: 50px; /* Matches input height */
+    height: 50px;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+/* Fix the arrow positioning since we changed the height */
+.choices[data-type*="select-one"]::after {
+    border-color: #004aad transparent transparent transparent;
+    right: 15px;
+    margin-top: -2.5px;
+}
+
+/* The dropdown panel that opens */
+.choices__list--dropdown {
+    border: 1px solid #004aad;
+    border-radius: 6px;
+    background: white;
+    z-index: 100; /* Keeps it above the table/charts */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 4px;
+    font-size: 16px; /* Slightly smaller text in the dropdown */
+}
+
+/* The search input field inside the dropdown */
+.choices__input--cloned {
+    background: #f4f8fb;
+    border: 1px solid #e1ebff;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+/* Hovered/highlighted items in the dropdown */
+.choices__list--dropdown .choices__item--selectable.is-highlighted {
+    background-color: #e1ebff;
+    color: #004aad;
+}
+
+/* The selected text inside the box */
+.choices__list--single .choices__item {
+    color: #545454; /* Matches your general text color */
+    font-size: 20px;
+}
+
+/* Placeholder text */
+.choices__placeholder {
+    color: #999;
+    opacity: 1;
+}
