@@ -37,7 +37,6 @@ img.virus_tr {
     bottom: auto;
     width: 22%;
     height: auto;
-    z-index: -1;
 }
 
 img.icon {
@@ -51,10 +50,11 @@ h1.rubrik {
     font-family: 'Shrikhand';
     font-style: italic;
     font-weight: 750;
-    color: #519bd2;
+    color: #35a0e1;
     font-size: 50px;
     margin-top: 70px;
     margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     justify-self: center !important;
 }
 
@@ -62,10 +62,11 @@ h1.titel {
     font-family: 'Shrikhand';
     font-style: italic;
     font-weight: 750;
-    color: #519bd2;
+    color: #35a0e1;
     font-size: 50px;
     margin-top: 20px;
     margin-bottom: 30px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
     justify-self: center !important;
 }
 
@@ -75,7 +76,6 @@ h1.titel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 20px;
 }
 
 .form-row {
@@ -101,25 +101,24 @@ h1.titel {
 }
 
 .user-table {
-    width: 95%;
+    width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     border-radius: 12px;
     overflow: hidden;
-    background: white;
-    padding: 20px;
+    background: transparent;
 }
 
 thead {
     background: #519bd2;
-    border-radius: 12px !important;
+    border-radius: 12px;
 }
 thead th {
     text-align: left;
     padding: 0.75rem 1rem;
     font-weight: 600;
     color: white;
-    border-bottom: 1px solid #e1ebff;
+    border-bottom: 1px solid #e5e7eb;
 }
 thead th.num {
     text-align: right;
@@ -127,78 +126,79 @@ thead th.num {
 
 tbody td {
     padding: 0.65rem 1rem;
-    border-bottom: 1px solid #e1ebff;
+    border-bottom: 1px solid #f0f0f0;
     vertical-align: top;
-    color:#545454
+    color:#40494e
 }
 
 .delbutt {
     padding: 10px;
     font-size: 11px;
-    background: #519bd2;
-    color: white;
-    border: 1px solid #004aad;
+    background: linear-gradient(90deg, #94d9ff, #cdffd8 100%);
+    color: black;
+    border: 2px solid #666;
     border-radius: 10px;
     cursor: pointer;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.15); 
     box-sizing: border-box; 
     font-family: 'Open Sans';
     font-weight: 400;
-    margin-left: 20px;
-}
-
-.delbutt:hover {
-    box-shadow: 0px 0px 1px 1px #004aad;
+    margin-left: 550px;
+    margin-top: 20px;
 }
 
 .buttbutt {
     padding: 0.5rem 1rem;
-    border: 1px solid #004aad;
+    border: none;
     border-radius: 6px;
     font-size: 0.9rem;
     cursor: pointer;
-    background: #519bd2;
+    background: #35a0e1;
     color: white;
 }
  
-.buttbutt:hover {
-    box-shadow: 0px 0px 1px 1px #004aad;
+.delete-btn {
+    background-color: #519bd2;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
+.delete-btn:hover {
+    background-color: #347eaf;
+}
 
-/* PAGINATION */
 .pagination {
-	display: flex;
-	list-style: none;
-	padding: 0;
-	margin: 0;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-family: sans-serif;
 }
 
-.pagination li {
-	box-sizing: border-box;
-	padding-right: 10px;
+.pagination a {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #2980b9;
+    background: #fff;
+    font-size: 0.9rem;
 }
-.pagination li a {
-	box-sizing: border-box;
-	background-color: #e1ebff;
-	padding: 8px;
-	text-decoration: none;
-	font-size: 12px;
-	font-weight: bold;
-	color: #545454;
-	border-radius: 6px;
-    border: 1px solid #004aad
+
+.pagination a:hover {
+    background: #eef4fb;
 }
-.pagination li a:hover {
-	background-color: #e1ebff;
-}
-.pagination .next a, .pagination .prev a {
-	text-transform: uppercase;
-	font-size: 12px;
-}
-.pagination .currentpage a {
-	background-color: #518acb;
-	color: white;
-}
-.pagination .currentpage a:hover {
-	background-color: #518acb;
+
+.pagination a.active {
+    background: #2980b9;
+    color: #fff;
+    border-color: #2980b9;
+    font-weight: 600;
 }
