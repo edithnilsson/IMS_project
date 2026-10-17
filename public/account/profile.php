@@ -26,7 +26,7 @@ $user = $result->fetch_assoc();
 
 $stmt->close();
 
-$hospital_id = $hospital['hospital_id'];
+$hospital_id = $user['hospital_id'];
 
 // current time stamp
 $current_time = time();
