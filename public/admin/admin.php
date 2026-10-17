@@ -190,6 +190,77 @@ while ($row = $result->fetch_assoc()) {
 
 $stmt->close();
 
+// Get announcements
+$announcements = [];
+
+$sql = "SELECT Manual_warning.mwarning_id,
+               Manual_warning.mwarning_message,
+               Manual_warning.mwarning_date,
+               System_user.user_name,
+               System_user.user_surname
+        FROM Manual_warning
+        JOIN System_user
+        ON Manual_warning.user_id = System_user.user_id
+        WHERE Manual_warning.hospital_id = ?
+        ORDER BY Manual_warning.mwarning_date DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $hospital_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $announcements[] = $row;
+}
+
+$stmt->close();
+
+// Get cases
+$cases = [];
+
+$sql = "SELECT Infection_case.case_id,
+               Infection_case.case_diagnosis_date,
+               Pathogen.pathogen_name,
+               Department.department_name,
+               System_user.user_name,
+               System_user.user_surname
+        FROM Infection_case
+        JOIN Pathogen ON Infection_case.pathogen_id = Pathogen.pathogen_id
+        JOIN Department ON Infection_case.department_id = Department.department_id
+        JOIN System_user ON Infection_case.user_id = System_user.user_id
+        WHERE Infection_case.hospital_id = ?
+        AND Infection_case.user_id = ?
+        ORDER BY Infection_case.case_diagnosis_date DESC";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("ss", $hospital_id, $user_id);
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $cases[] = $row;
+}
+
+$stmt->close();
+
+
+ // Pagination for Cases
+$cases_per_page = 5;
+$cases_page = isset($_GET['cases_page']) ? max(1, (int)$_GET['cases_page']) : 1;
+$total_cases_pages = max(1, (int)ceil(count($cases) / $cases_per_page));
+$cases_page = min($cases_page, $total_cases_pages);
+$display_cases = array_slice($cases, ($cases_page - 1) * $cases_per_page, $cases_per_page);
+
+// Pagination for Announcements
+$announcements_per_page = 5;
+$announcements_page = isset($_GET['announcements_page']) ? max(1, (int)$_GET['announcements_page']) : 1;
+$total_announcements_pages = max(1, (int)ceil(count($announcements) / $announcements_per_page));
+$announcements_page = min($announcements_page, $total_announcements_pages);
+$display_announcements = array_slice($announcements, ($announcements_page - 1) * $announcements_per_page, $announcements_per_page);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -525,6 +596,134 @@ Add a Department: <input type="text" name="department_name"><br>
     </tbody>
 </table>
 </div>
+<?php endif; ?>
+
+<!-- Cases -->
+<h1 class='title'>Cases</h1>
+
+<?php if (empty($cases)): ?>
+
+    <p class="texts">No cases found.</p>
+
+<?php else: ?>
+
+<div class="table-container">
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Date of diagnosis</th>
+            <th>Pathogen</th>
+            <th>Ward</th>
+            <th>Doctor's Name</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($display_cases as $case): ?>
+        <tr>
+            <td><?= htmlspecialchars($case['case_diagnosis_date']) ?></td>
+            <td><?= htmlspecialchars($case['pathogen_name']) ?></td>
+            <td><?= htmlspecialchars($case['department_name']) ?></td>
+            <td><?= htmlspecialchars($case['user_name'] . " " . $case['user_surname']) ?></td>
+            <td>
+                <form action="/cases/delete_case.php" method="POST"
+                      onsubmit="return confirm('Delete this case?');">
+                    <input type="hidden" name="case_id"
+                           value="<?= htmlspecialchars($case['case_id']) ?>">
+                    <button type="submit" class="butt">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+
+
+<div class="pagination">
+    <?php if ($cases_page > 1): ?>
+        <a href="?cases_page=<?= $cases_page - 1 ?>&announcements_page=<?= $announcements_page ?>">Previous</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $total_cases_pages; $i++): ?>
+        <a href="?cases_page=<?= $i ?>&announcements_page=<?= $announcements_page ?>"
+           class="<?= $i == $cases_page ? 'active' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($cases_page < $total_cases_pages): ?>
+        <a href="?cases_page=<?= $cases_page + 1 ?>&announcements_page=<?= $announcements_page ?>">Next</a>
+    <?php endif; ?>
+</div>
+
+
+<?php endif; ?>
+
+<!-- Announcements -->
+<h1 class='title'>Announcements</h1>
+
+<?php if (empty($announcements)): ?>
+    <p class="texts">No announcements found.</p>
+<?php else: ?>
+
+<div class="table-container">
+<table class="user-table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Announcement</th>
+            <th>Epidemiologist's Name</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($display_announcements as $announcement): ?>
+        <tr>
+            <td><?= substr($announcement['mwarning_date'], 0, 10) ?></td>
+
+            <td><?= htmlspecialchars($announcement['mwarning_message']) ?></td>
+
+            <td><?= htmlspecialchars($announcement['user_name'] . " " . $announcement['user_surname']) ?></td>
+
+            <td>
+                <form action="/announcements/delete_announcement.php"
+                      method="POST"
+                      onsubmit="return confirm('Delete this announcement?');">
+
+                    <input type="hidden" name="id"
+                           value="<?= htmlspecialchars($announcement['mwarning_id']) ?>">
+
+                    <button type="submit" class="butt">Delete</button>
+                </form>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
+</div>
+
+
+<div class="pagination">
+    <?php if ($announcements_page > 1): ?>
+        <a href="?cases_page=<?= $cases_page ?>&announcements_page=<?= $announcements_page - 1 ?>">Previous</a>
+    <?php endif; ?>
+
+    <?php for ($i = 1; $i <= $total_announcements_pages; $i++): ?>
+        <a href="?cases_page=<?= $cases_page ?>&announcements_page=<?= $i ?>"
+           class="<?= $i == $announcements_page ? 'active' : '' ?>">
+            <?= $i ?>
+        </a>
+    <?php endfor; ?>
+
+    <?php if ($announcements_page < $total_announcements_pages): ?>
+        <a href="?cases_page=<?= $cases_page ?>&announcements_page=<?= $announcements_page + 1 ?>">Next</a>
+    <?php endif; ?>
+</div>
+
+
 <?php endif; ?>
 
 
