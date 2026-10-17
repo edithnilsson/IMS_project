@@ -31,57 +31,91 @@ $hospital_id = $user['hospital_id'];
 // current time stamp
 $current_time = time();
 
+// Number of results to show on each page.
+$num_results_on_page = 10;
 
-// Get all cases/ announcements of the user
+// ---------- Cases -------------
 
-$cases = []; 
-$announcements = [];
-if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin') {
+// Get the total number of cases in the database
+$sql="SELECT COUNT(*) 
+FROM Infection_case
+WHERE hospital_id = ?
+AND user_id = ?";
+
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("ss", $hospital_id, $user_id);
+$stmt->execute();
+$result = $stmt-> get_result();
+$total_cases  = $result->fetch_row()[0];
+$stmt->close();
+
+// Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
+$current_case_page = isset($_GET['case_page']) && is_numeric($_GET['case_page']) ? $_GET['case_page'] : 1;
+
+if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin') 
+{
     $sql = "SELECT inf.*, patho.pathogen_name, s.severity_name, d.department_name
     FROM Infection_case inf
     JOIN Pathogen patho ON inf.pathogen_id = patho.pathogen_id
     JOIN Severity_level s ON inf.severity_id = s.severity_id
     JOIN Department d ON inf.department_id = d.department_id
-    WHERE inf.user_id = ?";
+    WHERE inf.hospital_id = ?
+    AND inf.user_id = ?
+    LIMIT ?,? ";
+
+    $calc_page = ($current_case_page - 1) * $num_results_on_page;
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $cases[] = $row;
-    }
-
-    $stmt->close();
+    if ($stmt) {
+        $stmt->bind_param("ssii", $hospital_id, $user_id, $calc_page, $num_results_on_page);
+        $stmt->execute();
     
-    $total_cases = count($cases);
+        $cases = $stmt->get_result();
 
+        $stmt->close();
+        }
 }
 
-if ($user['role_name']=== 'Epidemiologist'|| $user['role_name'] === 'Admin') {
+// ---------- Announcements -------------
+// Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
+$current_announcement_page = isset($_GET['announcement_page']) && is_numeric($_GET['announcement_page']) ? $_GET['announcement_page'] : 1;
+
+// Get the total number of announcements in the database
+$sql="SELECT COUNT(*) 
+FROM Manual_warning
+WHERE hospital_id = ?
+AND user_id = ?";
+
+$stmt= $conn->prepare($sql);
+$stmt->bind_param("ss", $hospital_id, $user_id);
+$stmt->execute();
+$result = $stmt-> get_result();
+$total_announcements  = $result->fetch_row()[0];
+$stmt->close();
+
+// Get the all information of the  announcements in the database to display
+if ($user['role_name']=== 'Epidemiologist'|| $user['role_name'] === 'Admin') 
+{
     $sql="SELECT mw.*, p.pathogen_name, d.department_name
     FROM Manual_warning mw
     JOIN Pathogen p ON mw.pathogen_id = p.pathogen_id
     JOIN Department d ON mw.department_id = d.department_id
-    WHERE mw.user_id= ?
-    ORDER BY mwarning_date DESC ";
+    WHERE mw.hospital_id =?
+    AND mw.user_id= ?
+    ORDER BY mwarning_date DESC 
+    LIMIT ?,?";
+
+    $calc_page = ($current_announcement_page  - 1) * $num_results_on_page;
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $announcements[] = $row;
+    
+    if($stmt) {
+         $stmt->bind_param("ssii", $hospital_id, $user_id, $calc_page, $num_results_on_page);
+        $stmt->execute();
+        $announcements = $stmt->get_result();
+        $stmt->close();
     }
-    $stmt->close();
-
-    $total_announcements = count($announcements);
-
-    }
+}
 
 // Request to delete user
 
@@ -143,12 +177,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 
-// Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
-$current_case_page = isset($_GET['case_page']) && is_numeric($_GET['case_page']) ? $_GET['case_page'] : 1;
-$current_announcement_page = isset($_GET['announcement_page']) && is_numeric($_GET['announcement_page']) ? $_GET['announcement_page'] : 1;
-
-// Number of results to show on each page.
-$num_results_on_page = 1;
 
 ?>
 
@@ -245,7 +273,7 @@ $num_results_on_page = 1;
         </table>
 
         <?php  
-        // pagination - announcements
+        // pagination - case
         //how many pages will be needed? 
         $page_count = ceil($total_cases / $num_results_on_page);
 

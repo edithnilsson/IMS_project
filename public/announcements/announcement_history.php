@@ -32,7 +32,7 @@ $stmt->execute();
 $result = $stmt-> get_result();
 $total_announcements  = $result->fetch_row()[0];
 $stmt->close();
-// $total_announcements = $conn->query('SELECT COUNT(*) FROM Manual_warning')->fetch_row()[0];
+
 
 // Check if the page number is specified and check if it's a number, if not return the default page number which is 1.
 $current_page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
