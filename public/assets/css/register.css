@@ -185,3 +185,8 @@ label[for="terms"] {
     font-weight: normal !important;
     margin: 0 !important;
 }
+
+.button:disabled {
+    opacity: 0.2;
+    cursor: not-allowed;
+}

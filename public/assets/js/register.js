@@ -150,3 +150,10 @@ document.getElementById("agree_terms").addEventListener("click", function () {
 document.getElementById("close_terms").addEventListener("click", function () {
     termsDialog.close();
 });
+
+// Disable the Register button after submit so the form can't be sent twice
+document.getElementById("register_form").addEventListener("submit", function () {
+    const button = document.getElementById("register_button");
+    button.disabled = true;
+    button.value = "Registering...";
+});

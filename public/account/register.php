@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InfTraction Register</title>
-        <link rel="stylesheet" href="/assets/css/register.css?v=123">
+        <link rel="stylesheet" href="/assets/css/register.css?v=124">
 </head>
 <body>
     <!-- Logo and background -->
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="/index.php" class="login-link">Already Registered? Click here to login</a>
 
     <!-- Register form --> 
-    <form action="/account/register.php" method="POST" class="inputs">
+    <form action="/account/register.php" method="POST" class="inputs" id="register_form">
         <div class="align_columns">
             
             <!-- Left column -->
@@ -188,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number">
                 <span class="error_text" id="phone_number_error"></span>                
                   
-                <input type="submit" value="Register" class="button">
+                <input type="submit" value="Register" class="button" id="register_button">
             </div>
             
             <!-- Right column -->
@@ -237,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </dialog>
 
-    <script src="/assets/js/register.js"></script>
+    <script src="/assets/js/register.js?v2"></script>
                 </div>
 </body>
 </html>
