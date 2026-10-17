@@ -94,7 +94,7 @@ $total_announcements  = $result->fetch_row()[0];
 $stmt->close();
 
 // Get the all information of the  announcements in the database to display
-if ($user['role_name']=== 'Epidemiologist'|| $user['role_name'] === 'Admin') 
+if ($user['role_name']=== 'Epidemiologist'||$user['role_name']=== 'Chief Epidemiologist'|| $user['role_name'] === 'Admin') 
 {
     $sql="SELECT mw.*, p.pathogen_name, d.department_name
     FROM Manual_warning mw
@@ -321,7 +321,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         
 
 
-        <?php if ($user['role_name'] === 'Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
+        <?php if ($user['role_name'] === 'Epidemiologist'||$user['role_name']=== 'Chief Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Announcements</h1>
 
             <table class="user-table">
