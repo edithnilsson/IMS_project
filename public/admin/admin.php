@@ -6,6 +6,14 @@ access('Admin');
 include __DIR__ . "/../../src/navigation_bar.php";
 require __DIR__ . "/../../config/db.php";
 
+// Display a message from the deletion request processing page about the admin profile deletions
+if (isset($_SESSION['admin_message'])) {
+    $message = $_SESSION['admin_message'];
+    unset($_SESSION['admin_message']);
+
+    echo "<script>alert(" . json_encode($message) . ");</script>";
+}
+
 
 $user_id = $_SESSION['user_id'];
 

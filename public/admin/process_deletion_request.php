@@ -60,6 +60,64 @@ if ($action === "approve") {
 
     try {
 
+        //check whether the requested user is an admin
+        $sql = "SELECT r.role_name
+                FROM System_user s
+                JOIN Roles r ON s.role_id = r.role_id
+                WHERE s.user_id = ?
+                AND s.hospital_id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $requested_user_id, $hospital_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $requested_user = $result->fetch_assoc();
+
+        $stmt->close();
+
+        //if the requested user is an admin then check how many active Admins remain
+        if ($requested_user && $requested_user['role_name'] === 'Admin') {
+
+            $sql = "SELECT COUNT(*) AS admin_count
+                    FROM System_user s
+                    JOIN Roles r ON s.role_id = r.role_id
+                    WHERE s.hospital_id = ?
+                    AND r.role_name = 'Admin'
+                    AND s.user_status = 'active'";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $hospital_id);
+            $stmt->execute();
+
+            $result = $stmt->get_result();
+            $admin_count = $result->fetch_assoc()['admin_count'];
+
+            $stmt->close();
+
+            //if less than one remain
+            if ($admin_count <= 1) {
+                //mark the request as rejected
+                $sql = "UPDATE Account_deletion_request
+                        SET request_status = 'rejected',
+                            reviewed_by = ?,
+                            reviewed_at = CURRENT_TIMESTAMP
+                        WHERE request_id = ?";
+
+                $stmt = $conn->prepare($sql);
+                $stmt->bind_param("si", $admin_id, $request_id);
+                $stmt->execute();
+                $stmt->close();
+
+                $conn->commit();
+
+                $_SESSION['admin_message'] = "Request denied. The hospital must have at least one active Admin.";
+
+    header("Location: /admin/admin.php");
+    exit();
+}
+        }
+
         // Remove the user's account info
         $sql = "UPDATE System_user
                 SET user_email = NULL,
