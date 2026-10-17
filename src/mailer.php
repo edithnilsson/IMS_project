@@ -35,7 +35,7 @@ $mail->Username = $config['username'];
 $mail->Password = $config['password']; // Generated app password from gmail
 
 // What recipients see as the sender
-$mail->setFrom($config['username'], $config['password']);
+$mail->setFrom($config['username'], 'InfTraction');
 
 // Send the email body as HTML (so the <a> link renders as a clickable link)
 $mail->isHTML(true);
