@@ -262,7 +262,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($case['severity_name']) ?></td>
                             <td><?= htmlspecialchars($case['case_comments']) ?></td>
                             <td>
-                                <?php if($current_time - strtotime($case['case_date_issued']) < 48 * 3600): ?>
+                                <?php if($current_time - strtotime($case['case_date_issued']) < 24 * 3600): ?>
                                 <form action="/cases/user_edit_case.php" method="POST">
                                     <input type="hidden"
                                         name="case_id"
@@ -342,7 +342,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             <td><?= htmlspecialchars($announcement['pathogen_name']) ?></td>
                             <td><?= htmlspecialchars($announcement['department_name']) ?></td>
                             <td>
-                                <?php if($current_time - strtotime($announcement['mwdate_issued']) < 48 * 3600): ?>
+                                <?php if($current_time - strtotime($announcement['mwdate_issued']) < 24 * 3600): ?>
                                 <form action="/announcements/edit_announcement.php" method="POST">
                                     <input type="hidden"
                                         name="mwarning_id"
