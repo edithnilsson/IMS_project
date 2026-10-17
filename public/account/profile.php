@@ -26,7 +26,7 @@ $user = $result->fetch_assoc();
 
 $stmt->close();
 
-$hospital_id = $user['hospital_id'];
+$hospital_id = $hospital['hospital_id'];
 
 // current time stamp
 $current_time = time();
@@ -131,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->execute();
 
     $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+    $hospital = $result->fetch_assoc();
 
     $stmt->close();
 
@@ -173,7 +173,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     $stmt->close();
-    $conn->close();
 }
 
 
@@ -232,6 +231,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </button>
 
     </form>
+
+    <?php if ($message !== ""): ?>
+    <p class="deletion-message">
+        <?= htmlspecialchars($message) ?>
+    </p>
+    <?php endif; ?>
 
         <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Cases</h1>
@@ -397,10 +402,5 @@ if ($page_count > 0): ?>
 
 
     </div>
-
-
-    <?php
-    if ($message !== "") {echo "<p>" . htmlspecialchars($message) . "</p>";}
-    ?>
 </body>
 </html>
