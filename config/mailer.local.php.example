@@ -1,0 +1,9 @@
+<?php
+// Example mail credentials. Copy this file to mailer.local.php
+// and fill in the real values. Do not commit mailer.local.php.
+
+return [
+    'username' => 'your-smtp-username@gmail.com',
+    'password' => 'your-smtp-app-password',
+    'from_name' => 'InfTraction',
+];

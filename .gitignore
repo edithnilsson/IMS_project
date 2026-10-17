@@ -1,7 +1,15 @@
-/tests
-/vendor
-.DS_Store
-src/mailer.php
-src/mailer.php
+# Secrets — local mail credentials
+config/mailer.local.php
+
+# Secrets — patient ID keys
 src/patient_id_keys.php
+
+# Dependencies
+/vendor
+
+# Environment
 .env
+
+# Tests — ignore all except the confusion matrix
+/tests
+!/tests/confusion_matrix.php

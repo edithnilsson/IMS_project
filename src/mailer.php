@@ -7,6 +7,17 @@ use PHPMailer\PHPMailer\Exception;
 // Load PHPMailer (and all other Composer packages) via the autoloader
 require_once __DIR__ . "/../vendor/autoload.php";
 
+
+$configPath = __DIR__ . "/../config/mailer.local.php";
+if (!file_exists($configPath)) {
+    throw new RuntimeException(
+        "Missing config/mailer.local.php. Copy config/mailer.local.php.example and fill in the credentials."
+    );
+}
+
+$config = require $configPath;
+
+
 // Enable exceptions to see if send() throws an exception or not when sending a mail
 $mail = new PHPMailer(true); 
 
@@ -20,11 +31,11 @@ $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // encrypt connection
 $mail->Port = 587; //Gmail port
 
 // The sending account
-$mail->Username = "inftraction.noreply@gmail.com";
-$mail->Password = "changepwd"; // Generated app password from gmail
+$mail->Username = $config['username'];
+$mail->Password = $config['password']; // Generated app password from gmail
 
 // What recipients see as the sender
-$mail->setFrom("inftraction.noreply@gmail.com", "InfTraction");
+$mail->setFrom($config['username'], $config['password']);
 
 // Send the email body as HTML (so the <a> link renders as a clickable link)
 $mail->isHTML(true);
