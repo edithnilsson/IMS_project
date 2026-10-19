@@ -6,51 +6,64 @@
 
 
 ## Table of Contents
--  [About](#about)
--   [Quick Start Guide](#quick-start-guide)
--   [Repository Architecture](#repository-architecture)
--   [Deployment](#deployment)
--   [License](#license)
--   [Authors](#authors)
-
+- [About](#about)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Quick Start Guide](#quick-start-guide)
+- [Repository Architecture](#repository-architecture)
+- [Database](#database)
+- [Security & Privacy](#security--privacy)
+- [Limitations and Future Work](#limitations-and-future-work)
+- [Environment Variables](#environment-variables)
+- [License](#license)
+- [Authors](#authors)
 
 ## About 
 
-InfTraction is a web-based infection surveillance system designed to support the logging and monitoring of infections within a hospital. The system aims to support the early detection of unusual patterns and increases in infection rates, allowing healthcare professionals to investigate potential causes and take preventive measures before a larger outbreak occurs.
+InfTraction supports the logging and monitoring of infections within a hospital. The system aims to help healthcare staff detect unusual increases in infection cases early, so that they can investigate possible causes and take preventive measures before a larger outbreak occurs.
 
-Doctors can report infection cases using structured forms, including information such as patient ID, pathogen, date, ward and additional comments. The reported information is stored in a relational database and used to display statistics and visualisations of infection trends.
-Epidemiologists can monitor reported infection data, identify unusual patterns and, when necessary, create announcements to inform hospital staff and communicate warnings and preventative measures.
-Administrators can manage users and roles, approve new user accounts, remove existing users, and manage and edit infection cases, wards and announcements.
-The current system focuses on infection reporting, monitoring and communication within a hospital environment.
+The system is used by three groups of users:
+
+- *Doctors* report infection cases using a structured form (pathogen, diagnosis date, infection date, ward, patient ID, severity and comments).
+- *Epidemiologists* view statistics and trends, review automatic warnings, and publish announcements with warnings and preventive measures for hospital staff.
+- *Administrators* approve new user accounts, handle account removal requests, edit user information, manage wards, and edit or delete infection cases and announcements.
+
+The reported data is stored in a relational database. The system compares the number of reported cases for each pathogen in a given time window against predefined thresholds and creates an automatic warning when a threshold is reached.
+InfTraction works at the level of a single hospital, in contrast to larger surveillance systems such as HealthMap and OutbreakNow.
+
+### Features
+USER AND ACCESS
+
+- User registration with input validation and email verification
+- Login protected by a text-based CAPTCHA
+- Admin approval of new accounts before users can log in
+- Role-based access control (doctor, epidemiologist, chief epidemiologist and admin) with a navigation bar that only shows the pages a role can access
+- Session timeout after 20 minutes of inactivity and a logout function that clears the session
+
+INFECTION REPORTING 
+
+- Structured case form with drop-down lists for pathogen, ward and severity, plus a free-text comments field
+- Patient IDs are encrypted, and patients are matched with a keyed hash so that duplicate patient records are not created
+- Case registration is handled in a database transaction
+  
+MONITOR AND WARNING 
+
+- Home page with a line chart of the three most common pathogens and the three latest announcements
+- Statistics page with a line chart, pie chart and bar chart, filtering by date, ward and pathogen, and a searchable table of cases
+- Automatic warnings when the number of cases in a ward within a time window reaches a pathogen's threshold
+- Email notification to hospital staff (and epidemiologists in other hospitals) when a case with a dangerous pathogen, for example Ebola, is reported
+- Epidemiologists can prepare an automatic warning for publishing, which pre-fills the announcement form, or dismiss it
 
 ### Technologies Used
 
-- HTML
-- CSS
+- HTML, CSS and JavaScript
+- PHP, with PHPMailer for sending email through Gmail SMTP
 - JavaScript
-- PHP
 - MySQL
-- Apache
-- MAMP
+- Apache and MAMP (local server environment)
+- Choices.js for searchable drop-down lists
 - Git and GitHub
-
-### Features
-
-- User registration and login
-- Infection case reporting
-- Patient ID, pathogen, date and ward selection
-- Additional comments when reporting a case
-- Storage of infection data in a relational database
-- Infection statistics and visualisations
-- Monitoring of infection trends
-- Identification of unusual increases in infection cases
-- Epidemiologist announcements
-- Communication of warnings and preventative measures
-- Admin approval of pending users and removal of existing users
-- Admin management of registered users and roles
-- Admin management and editing of infection cases, wards and announcements
-
-
+  
 ## Quick Start Guide
 
 ### Prerequisites & Dependencies
@@ -67,39 +80,24 @@ Before running InfTraction, the following software is required:
 1. Clone the repository from GitHub.
 2. Place the project folder in the MAMP `htdocs` directory.
 3. Start Apache and MySQL using MAMP.
-4. Create the required MySQL database.
+4. Create the database infection_tracking in MySQL.
 5. Import the database schema into MySQL.
-6. Open the project in a web browser through the local MAMP server.
+6. Configure the database connection in config/db.php
+7. Open the project in a web browser: http://localhost:3333/IMS_Project/
+
+First use
+> The first user who registers for a hospital is given the admin role. Later users must have a verified email address and be approved by an admin before they can log in.
+> Wards are added by the admin after registration, because every hospital organises its departments differently.
+> Only simulated data should be used when testing the system.
 
 ## Repository Architecture
-### Frontend
-The frontend part of the LIMS is the user interface, it is the part which the user will interact with. The user will be met by a log in page requesting a username/mail as well as a password. Because our system will store infection data and sensitive information linked to patients such as patient IDs it is very important to limit the access to the LIMS by requesting that the user have a proper account and login information. This is essential so that only authorized personnel can access the information and keep the data secure. 
+InfTraction uses a three-tier architecture:
+ 
+- **Presentation tier:** the pages users interact with: login and registration, home, report new case, statistics, new announcement, announcements history and the admin page. All pages except the login page have a navigation bar.
+- **Application tier:** Apache serves the pages and PHP handles authentication, input validation, business logic and database access. The statistics page gets its data through a `StatisticsService` class, so SQL is kept out of the page code.
+- **Database tier:** a MySQL database called `infection_tracking`.
 
-Once the user is logged in it will see the dashboard page displaying key statistics in graphs, recent outbreak alerts, automatic recommendations and preventative measures generated by the IMS as well as official recommendations from an epidemiologist. The purpose of this page is to give the doctor access to the most important information quickly. By gathering the most important information on the home page it enables the user to immediately get a clear overview of the current infection situation without having to navigate through different pages. This will save the healthcare professionals important time. 
-
-The user can use the hamburger menu which is available on all pages to choose which page to proceed to. The LIMS will contain a page where the doctor can fill out a form reporting new cases, a page for more detailed statistics with the possibility of filtering, a page where the epidemiologist can input official messages to the staff. 
-
-To report new cases of infection, the doctor will fill out a pre-made form that uses drop-down lists to avoid the use of different abbreviations, spelling errors, different use of upper and lower case letters and other inconsistencies. This will make it easier to store in the database. We chose this solution over the doctor sending in free-text formats such as PDF documents because unstructured reports often contain inconsistencies in both content and terminology. Furthermore, it also eliminates the need to convert unstructured data into structured data before analysis.
-
-The most important statistics will be displayed on the homepage, but to get a deeper insight into the situation, more detailed data and statistics are available on another page. This is especially important for epidemiologists to be able to identify significant trends and patterns in the infection situation of the hospital. It also supports close monitoring of ongoing situations and potential outbreaks. Users will be able to filter the displayed data based on specific interests, such as department or time period. The page will also include graphs and other visualizations to make it easier to interpret and analyze the data.
-
-After epidemiologists have identified an unusual increase in infections or other noteworthy patterns, they can notify staff by publishing a message on a dedicated announcement page. This ensures that important information is quickly accessible. Epidemiologists will be able to assign a priority level to each message and write it using free text. 
-
-### Backend
-**Web server**
-	The web server stores, process and delivers web pages in response to the user request via HTTPs, this is preferred over HTTP because it is secure as we are dealing with sensitive data such as users data and patient information. We prefer working with open-source platforms such as Apache, additionally they are also known for being efficient.
-**Version control**
-	To maintain consistency and tracking of changes to the code we are using Git. It is widely known and popular as a version control tool, it makes it easy to merge branches, is free and open-source.
-**Web security** 
-	Using HTTPs handles security threats via 3 main points, encryption, data integrity and authentication. Aside from that we aim to create periodic back-ups and check-ups on those back-ups. Additionally to access and change any content or media in the back-ups 2 person authorization is necessary.
-**API**
-	Most common APIs are JSON, SOAP or REST. This may be used to update the parts of the web page or to improve the user experience.
-**Cloud providers**
-	Having access to virtual machines, databases and storage is a good idea not only for testing purposes but also for detecting bugs in different operating systems. In this case Google Cloud will be considered.
-**Deployment**
-	Tasks and other deployment parts of the project will follow 5 phases consisting of planning, development, testing, deploying and monitoring. 
-
-### Security & Privacy Considerations
+### Security & Privacy 
 
 - **Password Hashing:** User passwords are securely hashed using PHP's `password_hash()` function before being stored in the database. This means passwords are not stored as plain text.
 
@@ -110,33 +108,57 @@ After epidemiologists have identified an unusual increase in infections or other
 - **Input Validation:** User input is validated before being processed. Structured dropdown menus are used for fields such as pathogens, wards and severity levels to reduce inconsistent data entry.
 
 - **Role-Based Access:** Different users have different responsibilities. Doctors can report infection cases, while epidemiologists can create official announcements and warnings.
+  
+- **SESSIONS:** the session cookie uses the `httponly` and `samesite` settings, and sessions expire after 20 minutes of inactivity.
+    
+- **Email verification** uses a random token. Only a hash of the token is stored in the database.
+  
+-  **SQL injection:** user input is handled with prepared statements
+  
+-  **Patient IDs** are encrypted with AES-256-GCM. A keyed hash (HMAC-SHA-256) is used to recognise existing patients without decrypting their IDs
+
+	
 
 ### Database
 
 InfTraction uses MySQL as its relational database management system. The database consists of several tables connected through primary and foreign keys.
+ 
+| Table | Description |
+|---|---|
+| Hospital | Hospitals and their cities |
+| System_user | User accounts: name, email, phone, username, password hash and account status |
+| Role | The user roles |
+| Permission | The pages that can be accessed |
+| Role_permission | Connects roles with permissions |
+| Account_deletion_request | Requests to remove user accounts |
+| Department | Wards of each hospital |
+| Pathogen | Pathogen name, type, transmission, risk category and whether it is dangerous |
+| Severity_level | Predefined severity levels and risk scores |
+| Patient | Internal patient IDs |
+| Patient_ID_Mapping | Encrypted hospital patient ID, keyed hash, nonce and authentication tag |
+| Infection_case | Reported cases, connected to user, ward, patient, pathogen and severity |
+| Manual_warning | Announcements written by epidemiologists |
+| Automatic_warning | Automatic warnings with message, time and status (active, published or dismissed) |
+| Threshold | Case count and time window for each pathogen |
 
-- **System_user** – stores user account information, including username, password hash, email, phone number and user role.
-- **Patient** – stores patient information, including patient ID, age and sex.
-- **Infection_case** – stores reported infection cases and connects them  to the relevant user, department, pathogen, severity level and patient.
-- **Department** – stores hospital department information.
-- **Pathogen** – stores information about pathogens, including type, transmission and risk category.
-- **Protocol** – stores preventative measures associated with pathogens.
-- **Severity_level** – stores the predefined severity levels and their risk scores.
-- **Manual_warning** – stores warnings and announcements created by epidemiologists.
-- **Automatic_warning** – stores automatic warning information.
-- **Threshold** – stores the threshold values and time windows used for automatic warning functionality.
-- **Hospital** – stores hospital information.
-- **Roles** – stores the different user roles in the system.
-- **Permissions** – stores the permissions available in the system
-- **Role_permission** – connects roles with their permissions.
-- **Account_deletion_request** – stores requests to remove existing user accounts
+The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
 
-The database uses primary and foreign keys to establish relationships between the tables and organise the infection-related information. The database is designed according to Third Normal Form (3NF) to reduce data redundancy and avoid duplication.
-
+## Limitations and Future Work
+ 
+The system currently runs locally over HTTP, and only simulated data has been used. Planned improvements are:
+ 
+- HTTPS
+- Mobile-friendly pages
+- A "Forgot password" function
+- Bot protection (rate limiting of login attempts and a CAPTCHA on registration)
+- Trusted devices, so the CAPTCHA is not needed on every login
+- A clearer statistics page and more filter functions
+- A map on the other hospitals page
+- Sharing anonymised data with public health authorities
 
 ### Environment Variables
 
-The application requires the following database configuration settings:
+The application requires the following database configuration settings(config/db.php)
 
 
 DB_HOST=localhost
@@ -146,26 +168,9 @@ DB_USER=username
 DB_PASSWORD=password;
 
 
-
 ### Versioning & Changelog
 
 The project is managed using Git and GitHub. Changes to the project are tracked through Git commits and branches.
-
-
-### Deployment
-
-The application currently runs locally using Apache and MySQL through MAMP.
-
-1. Clone or download the repository.
-2. Place the project folder inside the MAMP `htdocs` directory.
-3. Start the Apache and MySQL servers in MAMP.
-4. Create the `infection_tracking` database in MySQL.
-5. Import the required database schema.
-6. Configure the database connection in `config/db.php`.
-7. Open the application in a web browser using:
-
-   `http://localhost:3333/IMS_Project/`
-
 
 
 ## License
