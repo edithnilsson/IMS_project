@@ -202,3 +202,13 @@ tbody td {
 .pagination .currentpage a:hover {
 	background-color: #518acb;
 }
+
+.page-summary {
+    margin-left: 75%;
+    font-size: 0.85rem;
+    color: #6a6969;
+}
+
+#case-table {
+    scroll-margin-top: 200px;
+}

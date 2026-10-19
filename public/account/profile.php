@@ -32,7 +32,7 @@ $hospital_id = $user['hospital_id'];
 $current_time = time();
 
 // Number of results to show on each page.
-$num_results_on_page = 4;
+$num_results_on_page = 10;
 
 // ---------- Cases -------------
 
@@ -110,7 +110,7 @@ if ($user['role_name']=== 'Epidemiologist'||$user['role_name']=== 'Chief Epidemi
     $stmt = $conn->prepare($sql);
     
     if($stmt) {
-         $stmt->bind_param("ssii", $hospital_id, $user_id, $calc_page, $num_results_on_page);
+        $stmt->bind_param("ssii", $hospital_id, $user_id, $calc_page, $num_results_on_page);
         $stmt->execute();
         $announcements = $stmt->get_result();
         $stmt->close();
@@ -237,10 +237,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <?= htmlspecialchars($message) ?>
     </p>
     <?php endif; ?>
-
+        
+    <!-- Cases tables -->
         <?php if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Cases</h1>
-        <table class="user-table">
+        <table class="user-table" id="case-table">
             <thead>
             <tr>
                 <th>Date of diagnosis</th>
@@ -273,58 +274,68 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </td>
                         </tr>
                     <?php endforeach; ?>
+                <?php else: ?>
+                    <td> No cases found</td>
+                <?php endif; ?>
             </tbody>
-        <?php endif;?>
         </table>
+        <?php if ($total_cases === 0): ?>
+                    No cases found
+        <?php endif; ?>
 
         <?php  
         // pagination - case
         //how many pages will be needed? 
         $page_count = ceil($total_cases / $num_results_on_page);
 
+        
         if ($page_count > 0): ?>
             <ul class="pagination">
                 <!-- if you are on another page than 1 then show the prev button -->
                 <?php if ($current_case_page  > 1): ?>
-                <li><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>">Prev</a></li>
+                <li><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>#case-table">Prev</a></li>
                 <?php endif; ?>
 
                 <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
                 <?php if ($current_case_page  > 3): ?>
-                <li ><a href="profile.php?case_page=1">1</a></li>
+                <li><a href="profile.php?case_page=1#case-table">1</a></li>
                 <li >...</li>
                 <?php endif; ?>
 
                 <!-- show previous pages if the pagenumber does not become negative -->
-                <?php if ($current_case_page -2 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -2 ?>"><?php echo $current_case_page -2 ?></a></li><?php endif; ?>
-                <?php if ($current_case_page -1 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>"><?php echo $current_case_page -1 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page -2 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -2 ?>#case-table"><?php echo $current_case_page -2 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page -1 > 0): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page -1 ?>#case-table"><?php echo $current_case_page -1 ?></a></li><?php endif; ?>
                     
                 <!-- mark the curren page you are on-->
-                <li class="currentpage"><a href="profile.php?case_page=<?php echo $current_case_page  ?>"><?php echo $current_case_page ?></a></li>
+                <li class="currentpage"><a href="profile.php?case_page=<?php echo $current_case_page  ?>#case-table"><?php echo $current_case_page ?></a></li>
                 
                 <!-- show the up comming pages if they do not exceed the number of pages needed  -->
-                <?php if ($current_case_page +1 < ceil($total_cases/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>"><?php echo $current_case_page +1 ?></a></li><?php endif; ?>
-                <?php if ($current_case_page +2 < ceil($total_cases / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +2 ?>"><?php echo $current_case_page +2 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page +1 < ceil($total_cases/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>#case-table"><?php echo $current_case_page +1 ?></a></li><?php endif; ?>
+                <?php if ($current_case_page +2 < ceil($total_cases / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?case_page=<?php echo $current_case_page +2 ?>#case-table"><?php echo $current_case_page +2 ?></a></li><?php endif; ?>
                 
                 <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
                 <?php if ($current_case_page  < ceil($total_cases/ $num_results_on_page)-2): ?>
                 <li>...</li>
-                <li><a href="profile.php?case_page=<?php echo ceil($total_cases/ $num_results_on_page) ?>"><?php echo ceil($total_cases / $num_results_on_page) ?></a></li>
+                <li><a href="profile.php?case_page=<?php echo ceil($total_cases/ $num_results_on_page) ?>#case-table"><?php echo ceil($total_cases / $num_results_on_page) ?></a></li>
                 <?php endif; ?>
             
                 <!-- show the next button if you are not already on the last page -->
                 <?php if ($current_case_page  < ceil($total_cases/ $num_results_on_page)): ?>
-                <li><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>">Next</a></li>
+                <li><a href="profile.php?case_page=<?php echo $current_case_page +1 ?>#case-table">Next</a></li>
                 <?php endif; ?>
             </ul>
+            <span class="page-summary">
+                    Showing <?= $cases->num_rows ?> of <?= $total_cases ?> announcements
+                </span>
             <?php endif; ?>
-        
 
 
+
+        <!-- Announcement table -->
         <?php if ($user['role_name'] === 'Epidemiologist'||$user['role_name']=== 'Chief Epidemiologist'|| $user['role_name'] === 'Admin'): ?>
             <h1 class='titel'>Announcements</h1>
 
-            <table class="user-table">
+            <table class="user-table" id="announcement-table">
             <thead>
             <tr>
                     <th>Date</th>
@@ -353,51 +364,57 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </td>
                         </tr>
                     <?php endforeach; ?>
-
+                
             </tbody>
         </table>
+        <?php if ($total_announcements === 0): ?>
+                    No announcements found
         <?php endif; ?>
-<?php 
-// pagination - announcements
-//how many pages will be needed? 
-$page_count = ceil($total_announcements / $num_results_on_page);
+        <?php endif; ?>
+            <?php 
+            // pagination - announcements
+            //how many pages will be needed? 
+            $page_count = ceil($total_announcements / $num_results_on_page);
 
-if ($page_count > 0): ?>
-    <ul class="pagination">
-        <!-- if you are on another page than 1 then show the prev button -->
-        <?php if ($current_announcement_page  > 1): ?>
-        <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>">Prev</a></li>
-        <?php endif; ?>
+            if ($page_count > 0): ?>
+                <ul class="pagination">
+                    <!-- if you are on another page than 1 then show the prev button -->
+                    <?php if ($current_announcement_page  > 1): ?>
+                    <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>#announcement-table">Prev</a></li>
+                    <?php endif; ?>
 
-        <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
-        <?php if ($current_announcement_page  > 3): ?>
-        <li ><a href="profile.php?announcement_page=1">1</a></li>
-        <li >...</li>
-        <?php endif; ?>
+                    <!-- if you are on a page further down than 3 then show ... instead of all the previous pages  -->
+                    <?php if ($current_announcement_page  > 3): ?>
+                    <li ><a href="profile.php?announcement_page=1#announcement-table">1</a></li>
+                    <li >...</li>
+                    <?php endif; ?>
 
-        <!-- show previous pages if the pagenumber does not become negative -->
-        <?php if ($current_announcement_page -2 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -2 ?>"><?php echo $current_announcement_page -2 ?></a></li><?php endif; ?>
-        <?php if ($current_announcement_page -1 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>"><?php echo $current_announcement_page -1 ?></a></li><?php endif; ?>
-            
-        <!-- mark the curren page you are on-->
-        <li class="currentpage"><a href="profile.php?announcement_page=<?php echo $current_announcement_page  ?>"><?php echo $current_announcement_page ?></a></li>
-        
-        <!-- show the up comming pages if they do not exceed the number of pages needed  -->
-        <?php if ($current_announcement_page +1 < ceil($total_announcements/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>"><?php echo $current_announcement_page +1 ?></a></li><?php endif; ?>
-        <?php if ($current_announcement_page +2 < ceil($total_announcements / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +2 ?>"><?php echo $current_announcement_page +2 ?></a></li><?php endif; ?>
-        
-        <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
-        <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)-2): ?>
-        <li>...</li>
-        <li><a href="profile.php?announcement_page=<?php echo ceil($total_announcements / $num_results_on_page) ?>"><?php echo ceil($total_announcements / $num_results_on_page) ?></a></li>
-        <?php endif; ?>
-    
-        <!-- show the next button if you are not already on the last page -->
-        <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)): ?>
-        <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>">Next</a></li>
-        <?php endif; ?>
-    </ul>
-    <?php endif; ?>
+                    <!-- show previous pages if the pagenumber does not become negative -->
+                    <?php if ($current_announcement_page -2 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -2 ?>#announcement-table"><?php echo $current_announcement_page -2 ?></a></li><?php endif; ?>
+                    <?php if ($current_announcement_page -1 > 0): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page -1 ?>#announcement-table"><?php echo $current_announcement_page -1 ?></a></li><?php endif; ?>
+                        
+                    <!-- mark the curren page you are on-->
+                    <li class="currentpage"><a href="profile.php?announcement_page=<?php echo $current_announcement_page  ?>#announcement-table"><?php echo $current_announcement_page ?></a></li>
+                    
+                    <!-- show the up comming pages if they do not exceed the number of pages needed  -->
+                    <?php if ($current_announcement_page +1 < ceil($total_announcements/ $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>#announcement-table"><?php echo $current_announcement_page +1 ?></a></li><?php endif; ?>
+                    <?php if ($current_announcement_page +2 < ceil($total_announcements / $num_results_on_page)+1): ?><li class="page"><a href="profile.php?announcement_page=<?php echo $current_announcement_page +2 ?>#announcement-table"><?php echo $current_announcement_page +2 ?></a></li><?php endif; ?>
+                    
+                    <!-- if the current page is furhter away from the end page than 2 pages then show ... -->
+                    <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)-2): ?>
+                    <li>...</li>
+                    <li><a href="profile.php?announcement_page=<?php echo ceil($total_announcements / $num_results_on_page) ?>#announcement-table"><?php echo ceil($total_announcements / $num_results_on_page) ?></a></li>
+                    <?php endif; ?>
+                
+                    <!-- show the next button if you are not already on the last page -->
+                    <?php if ($current_announcement_page  < ceil($total_announcements/ $num_results_on_page)): ?>
+                    <li><a href="profile.php?announcement_page=<?php echo $current_announcement_page +1 ?>#announcement-table">Next</a></li>
+                    <?php endif; ?>
+                </ul>
+                <span class="page-summary">
+                    Showing <?= $announcements->num_rows ?> of <?= $total_announcements ?> announcements
+                </span>
+                <?php endif; ?>
     
 
 
