@@ -6,8 +6,6 @@ class PrivilegedUser
     protected $user_id;
     protected $role_id;
     protected $username;
-    protected $user_password_hash;
-    protected $email_addr;
 
     // only this class can use this variable
     private $roles;
@@ -36,8 +34,6 @@ class PrivilegedUser
             $privUser->user_id            = $row["user_id"];
             $privUser->role_id            = $row["role_id"];
             $privUser->username           = $row["user_username"];
-            $privUser->user_password_hash = $row["user_password_hash"];
-            $privUser->email_addr         = $row["user_email"];
 
             // calls the initRoles function
             $privUser->initRoles();
