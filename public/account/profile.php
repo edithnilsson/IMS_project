@@ -61,6 +61,7 @@ if ($user['role_name'] === 'Doctor'|| $user['role_name'] === 'Admin')
     JOIN Department d ON inf.department_id = d.department_id
     WHERE inf.hospital_id = ?
     AND inf.user_id = ?
+    ORDER BY case_diagnosis_date DESC 
     LIMIT ?,? ";
 
     $calc_page = ($current_case_page - 1) * $num_results_on_page;
