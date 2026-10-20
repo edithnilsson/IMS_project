@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else {
         // Check if the department already exists for this hospital active or not 
-        $sql = "SELECT department_id FROM Department WHERE department_name = ? AND hospital_id = ?";
+        $sql = "SELECT department_id, department_status FROM Department WHERE department_name = ? AND hospital_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $department_name, $hospital_id);
         $stmt->execute();
@@ -57,6 +57,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result = $stmt->execute();
             $stmt -> close();
             }
+         elseif ($existingDepartment['department_status'] == 'active') {
+            echo "<script>alert('Department already exists'); window.location.href='/admin/admin.php';</script>";
+         }
         
         else {
             // Department exists already, reactivate it
