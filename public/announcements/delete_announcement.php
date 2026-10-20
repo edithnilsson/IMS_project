@@ -21,6 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
 
 $conn->close();
 
-header("Location: /account/profile.php");
+header("Location: /admin/admin.php");
 exit();
 ?>

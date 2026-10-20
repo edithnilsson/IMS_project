@@ -34,6 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['case_id'])) {
 
 $conn->close();
 
-header("Location: /account/profile.php");
+header("Location: /admin/admin.php");
 exit();
 ?>
