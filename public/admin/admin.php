@@ -41,19 +41,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Department name can not be empty');</script>";
     }
     else {
-        $sql = "INSERT INTO Department (department_name, hospital_id) VALUES (?,?)";
+        // Check if the department already exists for this hospital active or not 
+        $sql = "SELECT department_id FROM Department WHERE department_name = ? AND hospital_id = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $department_name, $hospital_id);
-        $result = $stmt->execute();
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $existingDepartment = $result->fetch_assoc();
+        $stmt->close();
+
+        if (!$existingDepartment) {
+            $sql = "INSERT INTO Department (department_name, hospital_id) VALUES (?,?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $department_name, $hospital_id);
+            $result = $stmt->execute();
+            $stmt -> close();
+            }
         
+        else {
+            // Department exists already, reactivate it
+            $sql = "UPDATE Department SET department_status = 'active' WHERE department_id = ? AND hospital_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ss", $existingDepartment['department_id'],$hospital_id);
+            $result = $stmt->execute();
+            $stmt->close();
+        }
 
-        $stmt -> close(); 
 
-
-        if ($result) {
-            echo "<script>alert('Department added!'); window.location.href='/admin/admin.php';</script>";
-        } else {
-            echo "<script>alert('Something went wrong');</script>";
+    if ($result) {
+        echo "<script>alert('Department added!'); window.location.href='/admin/admin.php';</script>";
+    } else {
+        echo "<script>alert('Something went wrong');</script>";
         }
 
     }
