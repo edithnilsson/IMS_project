@@ -574,7 +574,7 @@ $display_announcements = array_slice($announcements, ($announcements_page - 1) *
 <h1 class='title'>Wards</h1>
 
 <form action="" method="post" class="blabla">
-Add a Department: <input type="text" name="department_name"><br>
+Add a Ward: <input type="text" name="department_name"><br>
 <input type="submit" class='butt2'>
 </form>
 
@@ -590,7 +590,7 @@ Add a Department: <input type="text" name="department_name"><br>
 
     <thead>
         <tr>
-            <th>Departments</th>
+            <th>Wards</th>
             <th></th>
         </tr>
     </thead>
