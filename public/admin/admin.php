@@ -347,7 +347,7 @@ $display_announcements = array_slice($announcements, ($announcements_page - 1) *
                onsubmit="return confirm('Dismiss this account?');">
                  <input type="hidden" name="id" value="<?php echo $pending['user_id']; ?>">
                 <input type="hidden" name="action" value="dismiss">
-                <button type="submit" class="dismiss-btn">Dismiss</button>
+                <button type="submit" class="butt">Dismiss</button>
              </form>
         </td>
     </tr>
