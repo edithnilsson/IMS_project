@@ -9,9 +9,10 @@ $pages = $_SESSION['privUser']->getPages();
 
 <div class="topnav">
     <img src="/assets/img/logo_navbar.png" class="navlogo" alt="Logo">
-
+   
     <a href="/home.php">Home</a>
-
+ 
+    <!-- pages specific for roles -->
     <?php foreach ($pages as $desc => $url): ?>
         <a href="<?php echo htmlspecialchars($url); ?>">
             <?php echo htmlspecialchars($desc); ?>

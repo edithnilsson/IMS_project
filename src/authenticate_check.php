@@ -32,7 +32,7 @@ if(isset($_SESSION['user_id'])) {
          // if less than 20 minutes have passed reset the time
         $_SESSION['last_activity'] = time();
     
-        // loads the privilegeuser object again and checks if it is valid, if not then 
+        // loads the privilegeuser object again and checks if it is valid, if not then log out the user 
         $fresh = PrivilegedUser::getByUsername($_SESSION['user_username']);
         if ($fresh instanceof PrivilegedUser) {
             $_SESSION['privUser'] = $fresh;
